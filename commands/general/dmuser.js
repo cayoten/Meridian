@@ -13,7 +13,10 @@ module.exports = {
         let dMessage = args.slice(1).join(" ");
         if (dMessage.length < 1) return message.reply('You must supply a message!');
 
-        await member.send(`__You have a new message:__\n\n**${dMessage}**`);
+        try {
+            await member.send(`__You have a new message:__\n\n**${dMessage}**`);
+        } catch(e) { return message.channel.send("I couldn't deliver the message, their DMs are closed.")}
+
         let logChannel = message.guild.channels.cache.find(x => x.name === "mod-logs");
 
         function numToDateString(num) {
