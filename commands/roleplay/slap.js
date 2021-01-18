@@ -1,0 +1,16 @@
+module.exports = {
+    name: "slap",
+    usage: "amount of messages",
+    run: async function (client, message, args) {
+
+        if(message.deletable) message.delete();
+
+        let bsUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+        if (!bsUser) return message.reply("user not found.");
+        if (message.mentions.members.first().user === message.author) return message.reply("you can't roleplay with yourself!");
+
+        let array = ["bitch slapped", "slapped the FUCK out of", "decided to slap", "playfully slapped", "angrily slapped"];
+        await message.channel.send(`${message.author} ${array[Math.round(Math.random() * (array.length - 1))]} ${bsUser}!`);
+
+    }
+}

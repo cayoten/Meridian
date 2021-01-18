@@ -1,0 +1,17 @@
+module.exports = {
+    name: "kiss",
+    usage: "< id / mention >",
+    run: async function (client, message, args) {
+
+        if(message.deletable) message.delete();
+
+        let kissUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+        if (!kissUser) return message.reply("user not found.");
+        if (message.mentions.members.first().user === message.author) return message.reply("you can't roleplay with yourself!");
+
+        let array = ["happily kisses", "blushes and then kisses", "surprise-kisses", "hastily kisses", "sneakily kisses"];
+
+        await message.channel.send(`${message.author} ${array[Math.round(Math.random() * (array.length - 1))]} ${kissUser}!`);
+    }
+
+};

@@ -1,0 +1,30 @@
+module.exports = {
+    name: "lick",
+    usage: "< id / mention >",
+    run: async function (client, message, args) {
+
+        if(message.deletable) message.delete();
+
+        let user = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+        if (!args[0]) return message.reply("Please specify whether you want to lick their `face`, `paws`, or `talons`!")
+        if (!user) return message.reply("user not found.");
+
+        if (message.mentions.members.first().user === message.author) return message.reply("you can't roleplay with yourself!");
+
+        let array = ["grins and licks", "flops and licks", "gets up and licks", "happily licks", "submissively licks", "smooches and licks", "pushed over and licked"];
+
+        if (args[0] === "face") {
+            await message.channel.send(`${message.author} ${array[Math.round(Math.random() * (array.length - 1))]} ${user}'s face!`);
+        }
+
+        if (args[0] === "paws") {
+            await message.channel.send(`${message.author} ${array[Math.round(Math.random() * (array.length - 1))]} ${user}'s paws!`);
+        }
+
+        if (args[0] === "talons") {
+            await message.channel.send(`${message.author} ${array[Math.round(Math.random() * (array.length - 1))]} ${user}'s talons!`);
+        }
+
+    }
+
+};
