@@ -6,16 +6,20 @@ module.exports = {
     run: async function (client, message, args) {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, "BAN_MEMBERS"))
             return;
-        
-        const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
-        if (!member) return message.channel.send("Can't find the user!");
+
+        let member;
+        try {
+            member = message.mentions.users.first() || await client.users.fetch(args[0]);
+        } catch(e) {}
+
+        if (!member) return message.channel.send('Unable to find user.');
 
         let dMessage = args.slice(1).join(" ");
         if (dMessage.length < 1) return message.reply('You must supply a message!');
 
         try {
             await member.send(`__You have a new message:__\n\n**${dMessage}**`);
-        } catch(e) { return message.channel.send("I couldn't deliver the message, their DMs are closed.")}
+        } catch(e) { return message.channel.send("I couldn't deliver the message, their DMs are closed or they aren't in the server.")}
 
         let logChannel = message.guild.channels.cache.find(x => x.name === "mod-logs");
 
