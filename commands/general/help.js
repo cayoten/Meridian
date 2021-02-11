@@ -22,7 +22,7 @@ module.exports = {
             .addField("stealemote", `Staff only command to add the emote corresponded, counted by the messages above with the ^ symbol.`)
             .addField("usercount", `Displays the current user count.`)
             .addField("userinfo", `Display's the @'ed user's information.`)
-            .setFooter("Developed by Raimu Akuna")
+            .setFooter("Developed by Cayoten")
             .setTimestamp();
 
         let miscHelpEmbed = new Discord.MessageEmbed()
@@ -66,13 +66,14 @@ module.exports = {
             .addField("kiss", `Kiss the tagged user.`)
             .addField("lick", `Gives you the option to lick somebody's "face", "paws", or "talons".`)
             .addField("microwave", `SLAM the tagged user into a microwave.`)
+            .addField("nom", `Noms the tagged user.`)
             .addField("obliterate", `Wipe the tagged user from existence.`)
             .addField("pat", `Pats the tagged user.`)
             .addField("poke", `Poke the tagged user.`)
+            .addField("pounce", `Pounce on the tagged user.`)
             .addField("punch", `Punches the tagged user.`)
             .addField("slap", `Slaps the tagged user.`)
             .addField("snug", `Snuggles the tagged user.`)
-            .addField("nom", `Noms the tagged user.`)
             .setFooter("Developed by Cayoten")
             .setTimestamp();
 
