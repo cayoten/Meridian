@@ -6,7 +6,7 @@ module.exports = {
 
         if (message.deletable) message.delete();
 
-        if (!utils.checkPermissionAndNotify(message.member, message.channel, "KICK_MEMBERS"))
+        if (!utils.checkPermissionAndNotify(message.member, message.channel, "MANAGE_MESSAGES"))
             return;
 
         let verrole = message.guild.roles.cache.find(r => r.name === "Unverified");
