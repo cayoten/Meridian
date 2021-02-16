@@ -5,7 +5,9 @@ client.commands = new Discord.Collection();
 require('dotenv').config();
 
 const DataStorage = require('./lib/dataStorage.js');
+const Utils = require('./lib/utils.js');
 client.dataStorage = new DataStorage(client)
+client.cooldownManager = new Utils.CooldownManager();
 
 //Read Event Directory
 fs.readdir("./events", (err, files) => {
