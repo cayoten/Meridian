@@ -1,8 +1,5 @@
-const fs = require("fs");
-const Discord = require("discord.js");
-
 const spaceRegex = / /g
-const specialCharRegex = /[^a-zA-Z ]/g
+const specialCharRegex = /[^a-zA-Z0-9 ]/g
 module.exports = async function (message) {
 
     if (message.guild == null) return;

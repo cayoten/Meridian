@@ -3,11 +3,17 @@ module.exports = {
     usage: "< id / mention >",
     run: async function (client, message, args) {
 
-        if(message.deletable) message.delete();
+        if (client.cooldownManager.checkCooldownAndNotify("rp", message.author.id, message)) {
+            return;
+        }
+
+        if (message.deletable) message.delete();
 
         let patUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
         if (!patUser) return message.reply("user not found.");
         if (message.mentions.members.first().user === message.author) return message.reply("you can't roleplay with yourself!");
+
+        client.cooldownManager.setCoolDown("rp", message.author.id, 60);
 
         let array = ["gives headpats to", "pats", "pets the fluffy head of", "happily pets"];
 

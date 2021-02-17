@@ -3,13 +3,19 @@ module.exports = {
     usage: "< id / mention >",
     run: async function (client, message, args) {
 
-        if(message.deletable) message.delete();
+        if (client.cooldownManager.checkCooldownAndNotify("rp", message.author.id, message)) {
+            return;
+        }
+
+        if (message.deletable) message.delete();
 
         let user = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
         if (!args[0]) return message.reply("Please specify whether you want to lick their `face`, `paws`, or `talons`!")
         if (!user) return message.reply("user not found.");
 
         if (message.mentions.members.first().user === message.author) return message.reply("you can't roleplay with yourself!");
+
+        client.cooldownManager.setCoolDown("rp", message.author.id, 60);
 
         let array = ["grins and licks", "flops and licks", "gets up and licks", "happily licks", "submissively licks", "smooches and licks", "pushed over and licked"];
 
