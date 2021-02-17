@@ -1,5 +1,5 @@
 const spaceRegex = / /g
-const specialCharRegex = /[^a-zA-Z0-9 ]/g
+const specialCharRegex = /[^a-zA-Z ]/g
 module.exports = async function (message) {
 
     if (message.guild == null) return;
