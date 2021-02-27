@@ -21,7 +21,7 @@ module.exports = async function (message) {
             let flaggedAt = flaggedUsers.get(message.author.id);
             if ((forgetAfter * 1000) > Date.now() - flaggedAt) {
                 message.delete();
-                await message.member.kick("Spamming");
+                await message.member.kick("[AutoMod] Spamming");
                 await message.channel.send(`**${message.author}** has been kicked for spamming.`);
                 return;
             }
