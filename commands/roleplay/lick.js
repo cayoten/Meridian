@@ -15,7 +15,7 @@ module.exports = {
 
         if (message.mentions.members.first().user === message.author) return message.reply("you can't roleplay with yourself!");
 
-        client.cooldownManager.setCoolDown("rp", message.author.id, 60);
+        client.cooldownManager.setCoolDown("rp", message.author.id, 45);
 
         let array = ["grins and licks", "flops and licks", "gets up and licks", "happily licks", "submissively licks", "smooches and licks", "pushed over and licked"];
 

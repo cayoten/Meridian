@@ -14,7 +14,7 @@ module.exports = {
         if (!boopUser) return message.reply("user not found.");
         if (message.mentions.members.first().user === message.author) return message.reply("you can't roleplay with yourself!");
 
-        client.cooldownManager.setCoolDown("rp", message.author.id, 60);
+        client.cooldownManager.setCoolDown("rp", message.author.id, 45);
 
 
         let array = ["has booped", "playfully boops", "giggles and boops", "squeals and then boops"];

@@ -13,7 +13,7 @@ module.exports = {
         if (!cudUser) return message.reply("user not found.");
         if (message.mentions.members.first().user === message.author) return message.reply("you can't roleplay with yourself!");
 
-        client.cooldownManager.setCoolDown("rp", message.author.id, 60);
+        client.cooldownManager.setCoolDown("rp", message.author.id, 45);
 
         let array = ["playfully cuddles with", "happily cuddles with", "gets cold and cuddles with", "cuddles with", "smooches and then cuddles with"];
 

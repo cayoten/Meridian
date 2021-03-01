@@ -13,7 +13,7 @@ module.exports = {
         if (!pounceUser) return message.reply("user not found.");
         if (message.mentions.members.first().user === message.author) return message.reply("you can't roleplay with yourself!");
 
-        client.cooldownManager.setCoolDown("rp", message.author.id, 60);
+        client.cooldownManager.setCoolDown("rp", message.author.id, 45);
 
         let array = ["giggles and pounces on", "pounces on", "sneaks up to and pounces on", "playfully pounces on", "happily pounces on"];
         await message.channel.send(`${message.author} ${array[Math.round(Math.random() * (array.length - 1))]} ${pounceUser}!`);
