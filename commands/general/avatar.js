@@ -4,8 +4,12 @@ module.exports = {
     usage: "display amount of users",
     run: async function (client, message) {
 
+        if (message.guild.channels.cache.find(x => x.name === "general-chat") && !message.member.hasPermission("MANAGE_MESSAGES")) {
+            return message.reply("you cannot use that command in this channel!")
+        }
+
         const user = message.mentions.users.first() || message.author;
-        if(!user) return message.reply("user not found.");
+        if (!user) return message.reply("user not found.");
 
         const avatarEmbed = new Discord.MessageEmbed()
             .setColor("RANDOM")
