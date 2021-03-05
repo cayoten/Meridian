@@ -5,7 +5,7 @@ module.exports = async function (member) {
         return console.log(`A join and leave log channel doesn't exist!`)
     }
 
-    jlChannel.send(`➖ ${member} (**${member.user.tag}**) has left.`);
+    jlChannel.send(`➖ ${member} (**${member.user.tag}**) has left. (${member.guild.memberCount}M)`);
 
 
 };
