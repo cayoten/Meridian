@@ -12,6 +12,6 @@ module.exports = async function (member) {
     if (!vrole) return;
 
     member.roles.add(vrole);
-    jlChannel.send(`➕ ${member} (**${member.user.tag}**) has joined.`);
+    jlChannel.send(`➕ ${member} (**${member.user.tag}**) has joined. (${member.guild.memberCount}M)`);
 
 };
