@@ -1,7 +1,9 @@
 const Discord = require("discord.js");
-module.exports = async function (client) {
+module.exports = async function (message) {
 
-    let cLogChannel = client.guild.channels.cache.find(chan => chan.name === "chat-logs");
+    if (this.dataStorage.serverData[message.guild.id]["nolog"].includes(message.channel.id)) return;
+
+    let cLogChannel = message.guild.channels.cache.find(chan => chan.name === "chat-logs");
 
     if (cLogChannel === undefined) {
         return console.log(`Logging channel does not exist!`)
@@ -9,14 +11,13 @@ module.exports = async function (client) {
 
     let cLog = new Discord.MessageEmbed()
         .setColor("#e82631")
-        .setDescription(`${client.content}`);
+        .setDescription(`${message.content}`);
 
     function numToDateString(num) {
         let date = new Date(num)
         return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
     }
 
-
-    cLogChannel.send(`\`[${numToDateString(Date.now())}]\` :x: **${client.author.tag}** *(${client.author.id})*'s message has been deleted from ${client.channel}:`);
+    cLogChannel.send(`\`[${numToDateString(Date.now())}]\` :x: **${message.author.tag}** *(${message.author.id})*'s message has been deleted from ${message.channel}:`);
     cLogChannel.send(cLog);
 };
