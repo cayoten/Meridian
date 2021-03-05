@@ -1,7 +1,7 @@
 const streamBuffers = require('stream-buffers'); //For sending everthin as a file.
 module.exports = async function (msgCollection) {
-
-    var bufferedMessage = new streamBuffers.WritableStreamBuffer({
+    if (this.dataStorage.serverData[msgCollection.array()[0].guild.id]["nolog"].includes(msgCollection.array()[0].channel.id)) return;
+    const bufferedMessage = new streamBuffers.WritableStreamBuffer({
         initialSize: (100 * 1024),   // start at 100 kilobytes.
         incrementAmount: (10 * 1024) // grow by 10 kilobytes each time buffer overflows.
     });

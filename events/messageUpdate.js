@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 module.exports = async function (oldMessage, newMessage) {
 
+    if (this.dataStorage.serverData[newMessage.guild.id]["nolog"].includes(newMessage.channel.id)) return;
+
     if (oldMessage.content === newMessage.content) {
         return;
     }
