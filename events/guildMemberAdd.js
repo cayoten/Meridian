@@ -8,10 +8,6 @@ module.exports = async function (member) {
         return console.log(`A join and leave log channel doesn't exist!`)
     }
 
-    let vrole = member.guild.roles.cache.find(role => role.name === "Unverified");
-    if (!vrole) return;
-
-    member.roles.add(vrole);
     jlChannel.send(`➕ ${member} (**${member.user.tag}**) has joined. (${member.guild.memberCount}M)`);
 
 };
