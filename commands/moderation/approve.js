@@ -9,10 +9,6 @@ module.exports = {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, "MANAGE_MESSAGES"))
             return;
 
-        let verrole = message.guild.roles.cache.find(r => r.name === "Unverified");
-        if (!verrole) {
-            return message.reply(`There isn't an "Unverified" role!`);
-        }
         let restricted = message.guild.roles.cache.find(b => b.name === "Server Restricted");
         if (!restricted) {
             return message.reply(`There isn't a "Server Restricted" role!`);
@@ -22,7 +18,7 @@ module.exports = {
         let canVerify = [];
 
         members.forEach(member => {
-            if (member.roles.cache.some(r => r.name === "Unverified"))
+            if (!member.roles.cache.has(r => r.name === "Member"))
                 canVerify.push(member);
         })
 
@@ -51,7 +47,6 @@ module.exports = {
             } else {
                 await log.send(`\`[${numToDateString(Date.now())}]\` :cloud: **${toVerify.user.tag}** (*${toVerify.id}*) has been approved.`);
             }
-            await (toVerify.roles.remove(verrole.id));
             await (toVerify.roles.add(memberrole));
             await genchat.send(`Welcome to the server, ${toVerify}!`);
         }
