@@ -26,7 +26,14 @@ module.exports = {
             return message.channel.send("There are no users to be verified!");
 
 
-        let memberrole = message.guild.roles.cache.find(r => r.name === "Member"); //null/undefined if there's no member role.
+        let roles = {
+            "214193731283320832": "252637745531322378", // Glitch's Server
+            "241268522792124416": "444518133018132480", // FoxedIn
+            "588127059700613120": "693168060294496366" // Testing Server
+        };
+
+
+        let memberrole = message.guild.roles.cache.get(roles[message.guild.id]); //null/undefined if there's no member role.
 
         let log = message.guild.channels.cache.find(x => x.name === "join-approval-logs");
         if (!log) return message.channel.send(`Couldn't find "join-approval-logs" channel.`);
