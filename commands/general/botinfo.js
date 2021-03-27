@@ -11,8 +11,8 @@ module.exports = {
             .addField("Bot Name:", "Meridian")
             .addField("Bot Creator", "<@714663951320744037>", true)
             .addField("Creation Date", `Tuesday, May 14th 2019`, true)
-            .addField("API Ping:", `${Math.round(client.ws.ping)}`, true)
-            .addField("Command Count:", `41 Commands`)
+            .addField("API Ping:", `${Math.round(client.ws.ping)} ms`, true)
+            .addField("Command Count:", `${client.commands.size} Commands`)
             .setFooter("Developed by Cayoten")
             .setTimestamp();
 
