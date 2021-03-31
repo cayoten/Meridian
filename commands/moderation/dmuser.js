@@ -3,6 +3,9 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "dmuser",
     usage: "amount of messages",
+    permlevel: "BAN_MEMBERS",
+    catergory: "moderation",
+    description: `DMs the tagged user with the specified text.`,
     run: async function (client, message, args) {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, "BAN_MEMBERS"))
             return;

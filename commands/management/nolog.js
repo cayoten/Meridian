@@ -2,6 +2,9 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "nolog",
     usage: "nolog add / remove",
+    permlevel: "MANAGE_CHANNELS",
+    catergory: "management",
+    description: `A command to allow whitelisting of channels from logging.`,
     run: async function (client, message, args) {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, "MANAGE_CHANNELS"))
             return;

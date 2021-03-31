@@ -2,6 +2,9 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "approve",
     usage: "< id / mention >",
+    permlevel: "MANAGE_MESSAGES",
+    catergory: "moderation",
+    description: `Verifies the @'ed user and sends them to the main lobby.`,
     run: async function (client, message) {
 
         if (message.deletable) message.delete();
@@ -25,7 +28,7 @@ module.exports = {
         if (canVerify.length === 0)
             return message.channel.send("There are no users to be verified!");
 
-
+        // TODO: make this not hard-coded, add a command to change these
         let roles = {
             "214193731283320832": "252637745531322378", // Glitch's Server
             "241268522792124416": "444518133018132480", // FoxedIn

@@ -2,6 +2,9 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "kick",
     usage: "< id / mention >",
+    permlevel: "KICK_MEMBERS",
+    catergory: "moderation",
+    description: `Kicks the tagged user with a reason.`,
     run: async function (client, message, args) {
 
         if (message.deletable) message.delete();

@@ -2,6 +2,9 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "ban",
     usage: "< id / mention >",
+    permlevel: "BAN_MEMBERS",
+    catergory: "moderation",
+    description: `Bans the tagged user with a reason.`,
     run: async function (client, message, args) {
 
         if (message.deletable) message.delete();

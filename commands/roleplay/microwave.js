@@ -1,6 +1,9 @@
 module.exports = {
     name: "microwave",
     usage: "< id / mention >",
+    permlevel: "SEND_MESSAGES",
+    catergory: "roleplay",
+    description: `SLAM the tagged user into a microwave.`,
     run: async function (client, message, args) {
 
         if (client.cooldownManager.checkCooldownAndNotify("rp", message.author.id, message)) {
