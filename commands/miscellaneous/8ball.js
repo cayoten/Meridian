@@ -4,6 +4,9 @@ const responses = ["Oh HELL nah", "Try again when I feel like answering", "Did y
 module.exports = {
     name: "8ball",
     usage: "< question > ",
+    permlevel: "SEND_MESSAGES",
+    catergory: "miscellaneous",
+    description: `Roll the 8ball with a question.`,
     run: async function (client, message, args) {
         if (client.cooldownManager.checkCooldownAndNotify("8ball", message.author.id, message)) {
             return;

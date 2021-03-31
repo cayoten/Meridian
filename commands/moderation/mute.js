@@ -4,6 +4,9 @@ const ms = require("ms");
 module.exports = {
     name: "mute",
     usage: "< id / mention > <reason>",
+    permlevel: "KICK_MEMBERS",
+    catergory: "moderation",
+    description: `Mutes the tagged user with a time and reason.`,
     run: async function (client, message, args) {
 
         //!mute @user 1s/m/h/d

@@ -1,6 +1,9 @@
 module.exports = {
     name: "pat",
     usage: "< id / mention >",
+    permlevel: "SEND_MESSAGES",
+    catergory: "roleplay",
+    description: `Pats the tagged user.`,
     run: async function (client, message, args) {
 
         if (client.cooldownManager.checkCooldownAndNotify("rp", message.author.id, message)) {

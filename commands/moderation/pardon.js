@@ -2,6 +2,9 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "pardon",
     usage: "< id > < warnId>",
+    permlevel: "MANAGE_MESSAGES",
+    catergory: "moderation",
+    description: `Pardons a strike from the tagged user.`,
     run: async function (client, message, args) {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, "MANAGE_MESSAGES"))
             return;

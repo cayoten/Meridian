@@ -2,6 +2,9 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "strikes",
     usage: "< id / mention > ",
+    permlevel: "MANAGE_MESSAGES",
+    catergory: "moderation",
+    description:  `Shows the amount of Strikes for a user.`,
     run: async function (client, message, args) {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, "MANAGE_MESSAGES"))
             return;

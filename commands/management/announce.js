@@ -3,6 +3,9 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "announce",
     usage: "announcement message",
+    permlevel: "MANAGE_ROLES",
+    catergory: "management",
+    description: `Staff only command to make an announcement.`,
     run: async function (client, message, args) {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, "MANAGE_ROLES"))
             return;

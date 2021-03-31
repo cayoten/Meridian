@@ -3,6 +3,9 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "poll",
     usage: "{question}",
+    permlevel: "SEND_MESSAGES",
+    catergory: "general",
+    description: `Staff only command to create a poll with the specified question.`,
     run: async function (client, message, args) {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, "MANAGE_ROLES"))
             return;
