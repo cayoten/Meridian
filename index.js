@@ -68,9 +68,16 @@ const antiSpam = new AntiSpam({
 client.on("message", async function (message) {
     antiSpam.message(message);
 
-//client prefixes and reading them
+    // important return for some servers
+    if (message.author.bot) return;
+
+    //  client prefixes and reading them
 
     let prefixes = ['$', '🐾', 'paw'];
+    //  if the guild has a prefix set, add that to the prefixes array
+	if (client.dataStorage.serverData[message.guild.id]) {
+		if (client.dataStorage.serverData[message.guild.id]["prefix"]) prefixes.push(client.dataStorage.serverData[message.guild.id]["prefix"])
+	}
     let foundPrefix = '';
     prefixes.forEach((prefix, index) => {
         if (message.content.startsWith(prefix)) foundPrefix = prefix;

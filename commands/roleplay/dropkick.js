@@ -1,6 +1,9 @@
 module.exports = {
     name: "dropkick",
     usage: "< id / mention >",
+    permlevel: "SEND_MESSAGES",
+    catergory: "roleplay",
+    description: `Dropkicks the user tagged.`,
     run: async function (client, message, args) {
 
         if (client.cooldownManager.checkCooldownAndNotify("rp", message.author.id, message)) {

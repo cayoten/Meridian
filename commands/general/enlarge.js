@@ -1,6 +1,9 @@
 module.exports = {
     name: "enlarge",
     usage: "send emote",
+    permlevel: "SEND_MESSAGES",
+    catergory: "general",
+    description: `Enlarge the specified emote.`,
     run: async function (client, message) {
         const arg = message.content.split(" ");
 

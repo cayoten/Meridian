@@ -2,6 +2,9 @@ const ms = require("ms");
 module.exports = {
     name: "selfmute",
     usage: "mutes yourself",
+    permlevel: "SEND_MESSAGES",
+    catergory: "general",
+    description: `Mute yourself for 10 minutes.`,
     run: async function (client, message) {
 
         let array = ["I have shut up", "I poofed", "GET THE FUCK OUTTA HERE", "*forces a muzzle onto*", "I pressed the mute button on"];

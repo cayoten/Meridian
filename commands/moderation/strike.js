@@ -3,6 +3,9 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "strike",
     usage: "< id / mention > < reason >",
+    permlevel: "MANAGE_MESSAGES",
+    catergory: "moderation",
+    description: `Strikes the tagged user with a reason.`,
     run: async function (client, message, args) {
         //$strike @Raimu being a bean
         //Check perms

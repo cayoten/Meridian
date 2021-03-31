@@ -2,6 +2,9 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "clear",
     usage: "amount of messages",
+    permlevel: "MANAGE_MESSAGES",
+    catergory: "moderation",
+    description: `Clears the specified amount of messages from a channel.`,
     run: async function (client, message, args) {
 
         if (!utils.checkPermissionAndNotify(message.member, message.channel, "MANAGE_MESSAGES"))
