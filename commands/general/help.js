@@ -65,10 +65,10 @@ module.exports = {
                 }
             }
         )
-        await message.channel.send(gHelpEmbed)
-        await message.channel.send(miscHelpEmbed)
-        await message.channel.send(mHelpEmbed)
-        await message.channel.send(rpHelpEmbed)
-        await message.channel.send(manageHelpEmbed)
+        await message.author.send(gHelpEmbed)
+        await message.author.send(miscHelpEmbed)
+        await message.author.send(mHelpEmbed)
+        await message.author.send(rpHelpEmbed)
+        await message.author.send(manageHelpEmbed)
     }
 };
