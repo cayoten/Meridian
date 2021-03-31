@@ -2,6 +2,9 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "unmute",
     usage: "< id / mention >",
+    permlevel: "KICK_MEMBERS",
+    catergory: "moderation",
+    description: `Unbans the tagged user.`,
     run: async function (client, message, args) {
 
         //!mute @user 1s/m/h/d reason

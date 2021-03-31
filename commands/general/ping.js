@@ -1,6 +1,9 @@
 module.exports = {
     name: "ping",
     usage: "shows bot ping",
+    permlevel: "SEND_MESSAGES",
+    catergory: "general",
+    description: `Shows the bot's ping.`,
     run: async function (client, message) {
 
         const msg = await message.channel.send("WHO HATH PING ME???");

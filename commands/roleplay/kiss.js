@@ -1,6 +1,9 @@
 module.exports = {
     name: "kiss",
     usage: "< id / mention >",
+    permlevel: "SEND_MESSAGES",
+    catergory: "roleplay",
+    description: `Kiss the tagged user.`,
     run: async function (client, message, args) {
 
         if (client.cooldownManager.checkCooldownAndNotify("rp", message.author.id, message)) {

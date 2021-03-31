@@ -2,6 +2,9 @@ const Discord = require("discord.js");
 module.exports = {
     name: "avatar",
     usage: "display amount of users",
+    permlevel: "SEND_MESSAGES",
+    catergory: "general",
+    description: `Display's the @'ed user's avatar.`,
     run: async function (client, message) {
 
         if (message.channel.name === "general-chat" && !message.member.hasPermission("MANAGE_MESSAGES")) {

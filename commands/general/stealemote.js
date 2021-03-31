@@ -2,6 +2,9 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "stealemote",
     usage: "{^ + however many times above the command the emote is} {emotename}",
+    permlevel: "ADMINISTRATOR",
+    catergory: "general",
+    description: `Staff only command to add the emote corresponded, counted by the messages above with the ^ symbol.`,
     run: async function (client, message) {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, "ADMINISTRATOR"))
             return;

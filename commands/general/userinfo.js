@@ -2,6 +2,9 @@ const Discord = require("discord.js");
 module.exports = {
     name: "userinfo",
     usage: "display amount of users",
+    permlevel: "SEND_MESSAGES",
+    catergory: "general",
+    description: `Display's the @'ed user's information.`,
     run: async function (client, message, args) {
 
         let tocheck = message.mentions.members.first() || message.guild.members.cache.get(args[0])

@@ -3,6 +3,9 @@ const ms = require("ms");
 module.exports = {
     name: "tempban",
     usage: "< id / mention >",
+    permlevel: "BAN_MEMBERS",
+    catergory: "moderation",
+    description: `Temporarily ban a user. For example, $tempban @user 30m Reason`,
     run: async function (client, message, args) {
 
         if (message.deletable) message.delete();
