@@ -75,9 +75,12 @@ client.on("message", async function (message) {
 
     let prefixes = ['$', '🐾', 'paw'];
     //  if the guild has a prefix set, add that to the prefixes array
-	if (client.dataStorage.serverData[message.guild.id]) {
-		if (client.dataStorage.serverData[message.guild.id]["prefix"]) prefixes.push(client.dataStorage.serverData[message.guild.id]["prefix"])
-	}
+    try {
+        if (client.dataStorage.serverData[message.guild.id]) {
+            if (client.dataStorage.serverData[message.guild.id]["prefix"]) prefixes.push(client.dataStorage.serverData[message.guild.id]["prefix"])
+        }
+    } catch (e) {
+    }
     let foundPrefix = '';
     prefixes.forEach((prefix, index) => {
         if (message.content.startsWith(prefix)) foundPrefix = prefix;
