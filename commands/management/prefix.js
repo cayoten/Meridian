@@ -15,7 +15,7 @@ module.exports = {
             
             client.dataStorage.serverData[message.guild.id]["prefix"] = args.slice(1).join(" ")
             message.channel.send(`This guild's prefix has been set to \`${args.slice(1).join(" ")}\``)
-        } else if (args[0] === "del" {
+        } else if (args[0] === "del") {
              if (!utils.checkPermissionAndNotify(message.member, message.channel, "MANAGE_SERVER")) return;
              if (!client.dataStorage.serverData[message.guild.id]) client.dataStorage.serverData[message.guild.id] = {};
              if (client.dataStorage.serverData[message.guild.id]["prefix"]) delete client.dataStorage.serverData[message.guild.id]["prefix"]
