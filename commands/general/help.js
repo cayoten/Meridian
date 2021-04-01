@@ -39,27 +39,47 @@ module.exports = {
 
         client.commands.forEach((cmd, i) => {
                 if (cmd.catergory === 'general') {
-                    if (message.member.hasPermission(cmd.permlevel)) {
+                    if (!message.guild === null) {
+                        if (message.member.hasPermission(cmd.permlevel)) {
+                            gHelpEmbed.addField(cmd.name, cmd.description)
+                        }
+                    } else {
                         gHelpEmbed.addField(cmd.name, cmd.description)
                     }
                 }
                 else if (cmd.catergory === 'miscellaneous') {
-                    if (message.member.hasPermission(cmd.permlevel)) {
+                    if (!message.guild === null) {
+                        if (message.member.hasPermission(cmd.permlevel)) {
+                            miscHelpEmbed.addField(cmd.name, cmd.description)
+                        }
+                    } else {
                         miscHelpEmbed.addField(cmd.name, cmd.description)
                     }
                 }
                 else if (cmd.catergory === 'moderation') {
-                    if (message.member.hasPermission(cmd.permlevel)) {
+                    if (!message.guild === null) {
+                        if (message.member.hasPermission(cmd.permlevel)) {
+                            mHelpEmbed.addField(cmd.name, cmd.description)
+                        }
+                    } else {
                         mHelpEmbed.addField(cmd.name, cmd.description)
                     }
                 }
                 else if (cmd.catergory === 'management') {
-                    if (message.member.hasPermission(cmd.permlevel)) {
+                    if (!message.guild === null) {
+                        if (message.member.hasPermission(cmd.permlevel)) {
+                            manageHelpEmbed.addField(cmd.name, cmd.description)
+                        }
+                    } else {
                         manageHelpEmbed.addField(cmd.name, cmd.description)
                     }
                 }
                 else if (cmd.catergory === 'roleplay') {
-                    if (message.member.hasPermission(cmd.permlevel)) {
+                    if (!message.guild === null) {
+                        if (message.member.hasPermission(cmd.permlevel)) {
+                            rpHelpEmbed.addField(cmd.name, cmd.description)
+                        }
+                    } else {
                         rpHelpEmbed.addField(cmd.name, cmd.description)
                     }
                 }
