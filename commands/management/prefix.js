@@ -19,7 +19,7 @@ module.exports = {
              if (!utils.checkPermissionAndNotify(message.member, message.channel, "MANAGE_SERVER")) return;
              if (!client.dataStorage.serverData[message.guild.id]) client.dataStorage.serverData[message.guild.id] = {};
              if (client.dataStorage.serverData[message.guild.id]["prefix"]) delete client.dataStorage.serverData[message.guild.id]["prefix"]
-             message.reply("deleted the prefix!")
+             message.reply("I deleted the prefix!")
         }
         else {
             const prefixes = ['$', '🐾', 'paw']
