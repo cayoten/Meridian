@@ -12,11 +12,22 @@ module.exports = {
             if (!client.dataStorage.serverData[message.guild.id]) client.dataStorage.serverData[message.guild.id] = {};
             if (message.deletable)
                 message.delete()
+            
             client.dataStorage.serverData[message.guild.id]["prefix"] = args.slice(1).join(" ")
             message.channel.send(`This guild's prefix has been set to \`${args.slice(1).join(" ")}\``)
-        } else {
+        } else if (args[0] === "del" {
+             if (!utils.checkPermissionAndNotify(message.member, message.channel, "MANAGE_SERVER")) return;
+             if (!client.dataStorage.serverData[message.guild.id]) client.dataStorage.serverData[message.guild.id] = {};
+             if (client.dataStorage.serverData[message.guild.id]["prefix"]) delete client.dataStorage.serverData[message.guild.id]["prefix"]
+             message.reply("deleted the prefix!")
+        }
+        else {
             const prefixes = ['$', '🐾', 'paw']
-            if (client.dataStorage.serverData[message.guild.id]["prefix"]) prefixes.push(client.dataStorage.serverData[message.guild.id]["prefix"])
+            try {
+                if (client.dataStorage.serverData[message.guild.id]) {
+                    if (client.dataStorage.serverData[message.guild.id]["prefix"]) prefixes.push(client.dataStorage.serverData[message.guild.id]["prefix"])
+                }
+            } catch(e) {}
             message.channel.send(`This guild's prefixes: ${prefixes.join(', ')}`)
         }
     }
