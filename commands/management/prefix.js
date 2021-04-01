@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
 const utils = require('../../lib/utils.js');
 module.exports = {
-    name: "filter",
-    usage: "filter add / remove",
+    name: "prefix",
+    usage: "prefix add / remove",
     permlevel: "MANAGE_SERVER",
     catergory: "moderation",
     description: `Sets the server's prefix.`,
@@ -13,7 +13,7 @@ module.exports = {
             if (message.deletable)
                 message.delete()
             client.dataStorage.serverData[message.guild.id]["prefix"] = args.slice(1).join(" ")
-            message.channel.send(`This guild's prefix has been set to '${args.slice(1).join(" ")}`)
+            message.channel.send(`This guild's prefix has been set to \`${args.slice(1).join(" ")}\``)
         } else {
             const prefixes = ['$', '🐾', 'paw']
             if (client.dataStorage.serverData[message.guild.id]["prefix"]) prefixes.push(client.dataStorage.serverData[message.guild.id]["prefix"])
