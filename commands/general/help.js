@@ -7,6 +7,8 @@ module.exports = {
     description: `Well, this command, of course!`,
     run: async function (client, message, args) {
 
+        if (message.deletable) message.delete({reason: "Auto-Delete"});
+
         let gHelpEmbed = new Discord.MessageEmbed()
             .setDescription("**General Commands**")
             .setColor("#8be099")
@@ -85,10 +87,16 @@ module.exports = {
                 }
             }
         )
-        await message.author.send(gHelpEmbed)
-        await message.author.send(miscHelpEmbed)
-        await message.author.send(mHelpEmbed)
-        await message.author.send(rpHelpEmbed)
-        await message.author.send(manageHelpEmbed)
+        let embedArray = [gHelpEmbed, miscHelpEmbed, mHelpEmbed, rpHelpEmbed, manageHelpEmbed]
+        const Pagination = require('discord-paginationembed');
+
+        await new Pagination.Embeds(embedArray)
+            .setArray(embedArray)
+            .setAuthorizedUsers([message.author.id])
+            .setChannel(message.channel)
+            .setPageIndicator(true)
+            .setPage(1)
+            // Methods below are for customising all embeds
+            .build();
     }
 };

@@ -1,10 +1,9 @@
-const Discord = require("discord.js");
 const utils = require('../../lib/utils.js');
 module.exports = {
     name: "prefix",
     usage: "prefix add / remove",
     permlevel: "MANAGE_SERVER",
-    catergory: "moderation",
+    catergory: "management",
     description: `Sets the server's prefix.`,
     run: async function (client, message, args) {
         if (args[0] === "set") {
@@ -12,7 +11,7 @@ module.exports = {
             if (!client.dataStorage.serverData[message.guild.id]) client.dataStorage.serverData[message.guild.id] = {};
             if (message.deletable)
                 message.delete()
-            
+
             client.dataStorage.serverData[message.guild.id]["prefix"] = args.slice(1).join(" ")
             message.channel.send(`This guild's prefix has been set to \`${args.slice(1).join(" ")}\``)
         } else if (args[0] === "del") {
