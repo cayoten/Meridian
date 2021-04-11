@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const fs = require("fs");
 const client = new Discord.Client();
+const readline = require('readline');
 client.commands = new Discord.Collection();
 require('dotenv').config();
 
@@ -110,3 +111,15 @@ process.on(`unhandledRejection`, err => {
 //The bot's token to login
 client.login(process.env.TOKEN);
 
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+rl.on('close', () => {
+    console.info('SIGTERM signal received.');
+    process.kill(process.pid, 'SIGTERM')
+})
+
+process.on('SIGTERM', () => {
+    client.destroy();
+})
