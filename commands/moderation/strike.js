@@ -82,16 +82,16 @@ module.exports = {
             } else if (WarnAmount === 4) {
                 await member.kick(wReason);
                 await message.channel.send(`${wUser} has been automatically kicked for passing the **4** strike threshold.`);
-                await warnchannel.send(`\`[${numToDateString(Date.now())}]\` :boot: **${message.author.tag}**  has kicked **${wUser.tag}** *(${wUser.id})* \n\`Kick Reason:\` Automatic - **4** strikes reached.`);
+                await warnchannel.send(`\`[${numToDateString(Date.now())}]\` :boot: **AUTOMOD**  has kicked **${wUser.tag}** *(${wUser.id})* \n\`Kick Reason:\` Automatic - **4** strikes reached.`);
 
             } else if (WarnAmount === 5) {
                 await wUser.send("------------------------------\n⚠ __**Automated Alert**__ ⚠\n------------------------------\nYou are on your **fifth** strike. Your next strike will result in an automatic ban.")
-                await warnchannel.send(`\`[${numToDateString(Date.now())}]\`‼ The user **${wUser.tag}** *(${wUser.id})* has reached **5** strikes.`)
+                await warnchannel.send(`\`[${numToDateString(Date.now())}]\`‼ The user **${wUser.tag}** *(${wUser.id})* has reached **5/6** strikes.`)
             }
             if (WarnAmount >= 6) {
                 await message.guild.members.ban(wUser, {reason: wReason});
                 await message.channel.send(`${wUser} has been banned for reaching 6 strikes.`);
-                await warnchannel.send(`\`[${numToDateString(Date.now())}]\` :boot: **${message.author.tag}**  has banned **${wUser.tag}** *(${wUser.id})* \n\`Ban Reason:\` Automatic - **6** strikes reached.`);
+                await warnchannel.send(`\`[${numToDateString(Date.now())}]\` :boot: **AUTOMOD**  has banned **${wUser.tag}** *(${wUser.id})* \n\`Ban Reason:\` Automatic - **6** strikes reached.`);
             }
 
             //If this shit goes bonkers ignore it (It won't, but I'm a bad coder too so...)
