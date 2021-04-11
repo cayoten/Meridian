@@ -42,7 +42,7 @@ module.exports = {
             return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
         }
 
-        warnchannel.send(`\`[${numToDateString(Date.now())}]\` :heavy_minus_sign: **${message.author.tag}** has pardoned **${wUser.tag}** *(${wUser.id})* from ${removedWarn[0]}\n\`Strike Count:\` ${warns[message.guild.id][wUser.id].length}`);
+        warnchannel.send(`\`[${numToDateString(Date.now())}]\` :heavy_minus_sign: **${message.author.tag}** has pardoned **${wUser.tag}** *(${wUser.id})*\n\`Strike Reason:\`${removedWarn[0]}\n\`Active Strike Count:\` ${warns[message.guild.id][wUser.id].length}`);
         message.channel.send("The user has been pardoned!");
     }
 };
