@@ -66,6 +66,7 @@ const antiSpam = new AntiSpam({
     banEnabled: false
 });
 
+// Trigger antispam
 client.on("message", async function (message) {
     antiSpam.message(message);
 
@@ -116,7 +117,7 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 rl.on('close', () => {
-    console.info('SIGTERM signal received.');
+    console.info('Bot shutdown command recieved. Shutting down!');
     process.kill(process.pid, 'SIGTERM')
 })
 
