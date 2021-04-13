@@ -1,4 +1,5 @@
 const utils = require('../../lib/utils.js');
+const responses = ["Welcome, glad to have you here", "Welcome to the server,", "NEW MEMBER INCOMING WELCOME TO", "Welcome on in,"]
 module.exports = {
     name: "approve",
     usage: "< id / mention >",
@@ -58,7 +59,7 @@ module.exports = {
                 await log.send(`\`[${numToDateString(Date.now())}]\` :cloud: **${toVerify.user.tag}** (*${toVerify.id}*) has been approved.`);
             }
             await (toVerify.roles.add(memberrole));
-            await genchat.send(`Welcome to the server, ${toVerify}!`);
+            await genchat.send(`${responses[Math.round(Math.random() * (responses.length - 1))]} ${toVerify}!`);
         }
         await message.channel.send(`User(s) approved.`);
     }
