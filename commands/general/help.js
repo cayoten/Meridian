@@ -5,7 +5,7 @@ module.exports = {
     permlevel: "SEND_MESSAGES",
     catergory: "general",
     description: `Well, this command, of course!`,
-    run: async function (client, message, args) {
+    run: async function (client, message) {
 
         if (message.deletable) message.delete({reason: "Auto-Delete"});
 
@@ -28,13 +28,13 @@ module.exports = {
             .setTimestamp();
 
         let rpHelpEmbed = new Discord.MessageEmbed()
-            .setTitle("**Roleplay Commands**")
+            .setDescription("**Roleplay Commands**")
             .setColor("#a82fff")
             .setFooter("Developed by Cayoten")
             .setTimestamp();
 
         let manageHelpEmbed = new Discord.MessageEmbed()
-            .setTitle("**Management Commands**")
+            .setDescription("**Management Commands**")
             .setColor("#ffd394")
             .setFooter("Developed by Cayoten")
             .setTimestamp();
