@@ -27,7 +27,7 @@ module.exports = async function (message) {
             }
         }
         flaggedUsers.set(message.author.id, Date.now());
-        message.delete().then(message.channel.send(`${message.author}, you've been flagged for spam! Please stop doing that.`));
+        message.delete().then(message.channel.send(`${message.author}, you've been flagged for chat flood. [WARN]`));
         return;
     }
 
