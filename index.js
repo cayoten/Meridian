@@ -58,7 +58,7 @@ const antiSpam = new AntiSpam({
     maxDuplicatesKick: 10,
     maxDuplicatesBan: 10,
     maxDuplicatesMute: 9,
-    exemptPermissions: ["MANAGE_MESSAGES"],
+    ignoredPermissions: ["MANAGE_MESSAGES"],
     ignoreBots: true,
     warnEnabled: true,
     kickEnabled: true,
