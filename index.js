@@ -7,9 +7,10 @@ require('dotenv').config();
 
 const DataStorage = require('./lib/dataStorage.js');
 const Utils = require('./lib/utils.js');
+const JoinThrottler = require('./lib/joinThrottler.js');
 client.dataStorage = new DataStorage(client)
 client.cooldownManager = new Utils.CooldownManager();
-
+client.joinThrottler = new JoinThrottler(client);
 //Read Event Directory
 fs.readdir("./events", (err, files) => {
     if (err) {
