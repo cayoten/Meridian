@@ -113,6 +113,7 @@ process.on(`unhandledRejection`, err => {
 //The bot's token to login
 client.login(process.env.TOKEN);
 
+//Terminate on SIGTERM
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
