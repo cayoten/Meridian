@@ -47,4 +47,12 @@ module.exports = async function () {
             }
         }
     }, 60)
+
+    setInterval(() => {
+       this.guilds.cache.forEach((guild, guildId, map) => {
+           if (this.joinThrottler.getGuildPersistentData(guild).enabled) {
+               this.joinThrottler.doCleanup(guild);
+           }
+       });
+    }, 15000);
 };
