@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 module.exports = async function (message) {
 
-    if (this.dataStorage.serverData[message.guild.id]["nolog"].includes(message.channel.id)) return;
+    if (this.dataStorage.serverData[message.guild.id]?.["nolog"]?.includes(message.channel.id)) return;
 
     let cLogChannel = message.guild.channels.cache.find(chan => chan.name === "chat-logs");
 

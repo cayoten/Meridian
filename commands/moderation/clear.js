@@ -26,8 +26,14 @@ module.exports = {
         }
 
         let deletedMessages = await message.channel.bulkDelete(pinned.first(parseInt(args[0])), true).catch(console.error);
-        if(!args[0]) return message.channel.send("You didn't define an amount to clear.")
-        message.channel.send(`${deletedMessages.size} messages have been cleared from this chat.`).then(m => m.delete({timeout: 5000, reason: "Auto-Delete"}));
+        if (!args[0]) return message.channel.send("You didn't define an amount to clear.")
+        if (deletedMessages === undefined || deletedMessages.size === 0) {
+            return message.channel.send("Unable to clear messages.")
+        }
+        message.channel.send(`${deletedMessages.size} messages have been cleared from this chat.`).then(m => m.delete({
+            timeout: 5000,
+            reason: "Auto-Delete"
+        }));
         await incidents.send(`\`[${numToDateString(Date.now())}]\` :broom: **${message.author.tag}** (*${message.author.id}*) has cleared **${deletedMessages.size}** messages.`);
 
     }
