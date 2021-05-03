@@ -8,6 +8,7 @@ const forgetAfter = 5; //time in seconds to forget about a flagged user
 module.exports = async function (message) {
 
     if (message.guild == null) return;
+    if (message.author.bot) return;
     if (message.member.hasPermission("MANAGE_MESSAGES")) return; //Replace with your role id for bypass, you might want to change it to permission based, like member has permission to delete message it will ignore.
 
     let count = {};
