@@ -46,7 +46,7 @@ const antiSpam = new AntiSpam({
     muteThreshold: 6,
     maxInterval: 5000,
     maxDuplicatesInterval: 5000,
-    muteRoleName: "Muzzled",
+    muteRoleName: "Muted",
     warnMessage: "{@user} has been flagged for spamming. [WARN]",
     muteMessage: '**{user_tag}** has been muted for spamming. [MUTE]',
     kickMessage: '**{user_tag}** has been kicked for spamming. [KICK]',
