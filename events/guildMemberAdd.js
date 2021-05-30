@@ -10,4 +10,9 @@ module.exports = async function (member) {
 
     jlChannel.send(`➕ ${member} (**${member.user.tag}**) has joined. (${member.guild.memberCount}M)`);
 
+
+    if(this.dataStorage.isUserMuted(member.user.id, member.guild.id)) {
+        let muterole = member.guild.roles.cache.find(role => role.name === "Muted");
+        member.roles.add(muterole.id);
+    }
 };
