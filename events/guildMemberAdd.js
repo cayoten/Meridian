@@ -4,11 +4,11 @@ module.exports = async function (member) {
         .catch(console.error);
 
     let jlChannel = member.guild.channels.cache.find(chan => chan.name === "join-leave-log");
-    // if (jlChannel === undefined) {
-    //     return console.log(`A join and leave log channel doesn't exist!`)
-    // }
+    if (jlChannel === undefined) {
+         return console.log(`A join and leave log channel doesn't exist!`)
+    }
 
-    // jlChannel.send(`➕ ${member} (**${member.user.tag}**) has joined. (${member.guild.memberCount}M)`);
+    jlChannel.send(`➕ ${member} (**${member.user.tag}**) has joined. (${member.guild.memberCount}M)`);
 
 
     if(this.dataStorage.isUserMuted(member.user.id, member.guild.id)) {
