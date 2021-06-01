@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
 module.exports = async function (oldMember, newMember) {
+  
+  if (newMember.roles.cache.has('444518133018132480')) return;
   const roleList = [
     "361648335674671105", // Omega Bork
     "361648353789870082", // Furry Trash
@@ -17,7 +19,7 @@ module.exports = async function (oldMember, newMember) {
   roleList.forEach((i) => {
     if (newMember.roles.cache.has(i)) {
       // probably a bad way of doing it, but there's almost no documentation for Collection.hasAny, so this will work
-      if (!newMember.roles.cache.has('444518133018132480')) newMember.roles.add("444518133018132480"); // adds the Member role to user if they dont already have it
+      newMember.roles.add("444518133018132480"); // adds the Member role to user
     }
   });
 };
