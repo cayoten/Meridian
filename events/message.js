@@ -23,12 +23,12 @@ module.exports = async function (message) {
             if ((forgetAfter * 1000) > Date.now() - flaggedAt) {
                 message.delete();
                 await message.member.kick("[AutoMod] Spamming");
-                await message.channel.send(`**${message.author}** has been kicked for spamming.`);
+                await message.channel.send(`**${message.author}** has been kicked for chat flood. [ACTION]`);
                 return;
             }
         }
         flaggedUsers.set(message.author.id, Date.now());
-        message.delete().then(message.channel.send(`${message.author}, you've been flagged for chat flood. [WARN]`));
+        message.delete().then(message.channel.send(`${message.author}, you've been flagged for chat flood. [ALERT]`));
         return;
     }
 
