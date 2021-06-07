@@ -63,7 +63,7 @@ const antiSpam = new AntiSpam({
     ignoreBots: true,
     warnEnabled: true,
     kickEnabled: true,
-    muteEnabled: true,
+    muteEnabled: false,
     banEnabled: false
 });
 
