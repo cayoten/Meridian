@@ -38,7 +38,7 @@ module.exports = async function (member) {
     let foundBan;
     for (let i = 0; i < entriesBan.length; i++) {
         let log = entriesBan[i];
-        if (15000 > (Date.now() - log.createdTimestamp) && log.target.id === member.user.id && log.executor !== member.client.user) {
+        if (30000 > (Date.now() - log.createdTimestamp) && log.target.id === member.user.id && log.executor !== member.client.user) {
             foundBan = log;
         }
     }
