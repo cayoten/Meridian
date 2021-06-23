@@ -1,7 +1,7 @@
 module.exports = async function () {
     console.log(`\n-------------------------\n${this.user.username} is online!\n-------------------------`);
 
-    await this.user.setActivity(`https://github.com/cayoten | v3.0.1`, {type: "WATCHING"});
+    await this.user.setActivity(`https://github.com/cayoten | v3.0.2`, {type: "WATCHING"});
 
     setInterval(() => {
         for (const guildId in this.dataStorage.mutes) {

@@ -5,7 +5,7 @@ module.exports = {
     usage: "< id / mention >",
     permlevel: "MANAGE_MESSAGES",
     catergory: "moderation",
-    description: `Verifies the @'ed user and sends them to the main lobby.`,
+    description: `Verifies the @'ed user and sends them to the main lobby.\nAvailable flags: -sr, -c`,
     run: async function (client, message) {
 
         if (message.deletable) message.delete();
@@ -31,7 +31,6 @@ module.exports = {
 
         // TODO: make this not hard-coded, add a command to change these
         let roles = {
-            "214193731283320832": "252637745531322378", // Glitch's Server
             "241268522792124416": "444518133018132480", // FoxedIn
             "588127059700613120": "693168060294496366" // Testing Server
         };
@@ -53,14 +52,37 @@ module.exports = {
         for (const toVerify of canVerify) {
 
             if (message.content.includes("-sr")) {
+
                 await toVerify.roles.add(restricted.id);
                 log.send(`\`[${numToDateString(Date.now())}]\` :lock: **${toVerify.user.tag}** *(${toVerify.id})* has been approved as __**Server Restricted**__.`);
+
+            } if (message.content.includes("-c")) {
+
+            const pinned = (await message.channel.messages.fetch()).filter(msg => !msg.pinned)
+                let deletedMessages = await message.channel.bulkDelete(pinned.first(parseInt("15")), true).catch(console.error);
+                if (deletedMessages === undefined || deletedMessages.size === 0) {
+                    message.channel.send("Error while attempting to clear messages, continuing...").then(m => m.delete({
+                        timeout: 5000,
+                        reason: "Auto-Delete"
+                    }));
+
+                }
+                else {
+                    message.channel.send(":warning: Chat cleared via flag").then(m => m.delete({
+                        timeout: 5000,
+                        reason: "Auto-Delete"
+                    }));
+                }
+
             } else {
                 await log.send(`\`[${numToDateString(Date.now())}]\` :cloud: **${toVerify.user.tag}** (*${toVerify.id}*) has been approved.`);
             }
             await (toVerify.roles.add(memberrole));
             await genchat.send(`${responses[Math.round(Math.random() * (responses.length - 1))]} ${toVerify}!`);
         }
-        await message.channel.send(`User(s) approved.`);
+        await message.channel.send(`:white_check_mark: User(s) approved.`).then(m => m.delete({
+            timeout: 5000,
+            reason: "Auto-Delete"
+        }));;
     }
 };
