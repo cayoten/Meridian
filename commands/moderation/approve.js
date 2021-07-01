@@ -51,6 +51,13 @@ module.exports = {
 
         for (const toVerify of canVerify) {
 
+            if(toVerify.roles.cache.has(roles[message.guild.id])) {
+                return message.channel.send(":x: The user is already verified!").then(m => m.delete({
+                    timeout: 5000,
+                    reason: "Auto-Delete"
+                }));
+            }
+
             if (message.content.includes("-sr")) {
 
                 await toVerify.roles.add(restricted.id);
@@ -83,6 +90,6 @@ module.exports = {
         await message.channel.send(`:white_check_mark: User(s) approved.`).then(m => m.delete({
             timeout: 5000,
             reason: "Auto-Delete"
-        }));;
+        }));
     }
 };
