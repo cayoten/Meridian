@@ -10,8 +10,6 @@ module.exports = {
             return;
         }
 
-        if (message.deletable) message.delete();
-
         let bapUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
         if (!bapUser) return message.reply("user not found.");
         if (message.mentions.members.first().user === message.author) return message.reply("you can't roleplay with yourself!");
