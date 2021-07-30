@@ -32,7 +32,8 @@ module.exports = {
         // TODO: make this not hard-coded, add a command to change these
         let roles = {
             "241268522792124416": "444518133018132480", // FoxedIn
-            "588127059700613120": "693168060294496366" // Testing Server
+            "588127059700613120": "693168060294496366", // Testing Server
+            "866825824966541332": "866827310199341117" // Glitch's New Server
         };
 
 
