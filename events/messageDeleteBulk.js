@@ -1,4 +1,4 @@
-const streamBuffers = require('stream-buffers'); //For sending everthin as a file.
+const streamBuffers = require('stream-buffers'); //For sending everthing as a file.
 module.exports = async function (msgCollection) {
     if (this.dataStorage.serverData[msgCollection.array()[0].guild.id]?.["nolog"]?.includes(msgCollection.array()[0].channel.id)) return;
     const bufferedMessage = new streamBuffers.WritableStreamBuffer({
