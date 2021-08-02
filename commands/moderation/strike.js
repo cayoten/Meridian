@@ -55,7 +55,7 @@ module.exports = {
 
         //Sends the warn to chat & DMs
         warnchannel.send(`\`[${numToDateString(Date.now())}]\` :triangular_flag_on_post: **${message.author.tag}** has applied action: \`strike\` \n\`Affected User:\` **${wUser.tag}** *(${wUser.id})* \n\`Reason:\` ${wReason}`);
-        await message.channel.send(`Action \`unmute\` on user ${wUser} applied successfully.`);
+        await message.channel.send(`Action \`strike\` on user ${wUser} applied successfully.`);
         try {
             await wUser.send(`__**New Strike Received**__ \n You have been given a strike for the reason: **${wReason}**`);
         } catch (e) {
