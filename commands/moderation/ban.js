@@ -50,7 +50,7 @@ module.exports = {
         } catch (e) {
         }
         await message.channel.send(`The user ${bUser} has been banned.`);
-        incidents.send(`\`[${numToDateString(Date.now())}]\` :hammer: **${message.author.tag}** has banned **${bUser.tag}** *(${bUser.id})* \n\`Ban Reason:\` ${reason}`);
+        incidents.send(`\`[${numToDateString(Date.now())}]\` :hammer: **${message.author.tag}** has applied action: \`ban\` \n\`Affected User:\` **${bUser.tag}** *(${bUser.id})* \n\`Reason:\` ${reason}`);
         await message.guild.members.ban(bUser, {days: 7, reason: reason});
     }
 

@@ -30,11 +30,11 @@ module.exports = {
         if (deletedMessages === undefined || deletedMessages.size === 0) {
             return message.channel.send("Unable to clear messages.")
         }
-        message.channel.send(`${deletedMessages.size} messages have been cleared from this chat.`).then(m => m.delete({
+        message.reply(`${deletedMessages.size} messages have been cleared from this chat.`).then(m => m.delete({
             timeout: 5000,
             reason: "Auto-Delete"
         }));
-        await incidents.send(`\`[${numToDateString(Date.now())}]\` :broom: **${message.author.tag}** (*${message.author.id}*) has cleared **${deletedMessages.size}** messages.`);
+        await incidents.send(`\`[${numToDateString(Date.now())}]\` :broom: **${message.author.tag}** (*${message.author.id}*) has applied action: \`chat clear\`\n\`Cleared:\` **${deletedMessages.size}** messages.`);
 
     }
 
