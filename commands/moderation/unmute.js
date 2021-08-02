@@ -39,7 +39,7 @@ module.exports = {
 
         client.dataStorage.removeMute(member.id, message.guild.id);
         await (member.roles.remove(muterole.id));
-        unmutechannel.send(`\`[${numToDateString(Date.now())}]\` :speaking_head:  **${message.author.tag}** has unmuted **${tomute.tag}** *(${tomute.id})*`);
+        unmutechannel.send(`\`[${numToDateString(Date.now())}]\` :speaking_head:  **${message.author.tag}** has applied action: \`unmute\` \n\`Affected User:\` **${tomute.tag}** *(${tomute.id})*`);
         await message.channel.send(`${tomute} has been unmuted!`);
 
     }

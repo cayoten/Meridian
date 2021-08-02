@@ -34,6 +34,7 @@ module.exports = {
         if (!mutetime) {
             return message.reply("You didn't specify a time!");
         }
+        if((ms(mutetime) === undefined)) { return message.reply("an invalid mute time was supplied.")}
 
         let reason = args.slice(2).join(' ') || "No reason specified";
 
@@ -47,7 +48,7 @@ module.exports = {
             return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
         }
 
-        await mutechannel.send(`\`[${numToDateString(Date.now())}]\` :no_mouth: **${message.author.tag}** has muted **${tomute.tag}** *(${tomute.id})* for ${mutetime}. \n\`Mute Reason:\` ${reason}`);
+        await mutechannel.send(`\`[${numToDateString(Date.now())}]\` :no_mouth: **${message.author.tag}** has applied action: \`mute\`. \n**\`Affected User:\`${tomute.tag}** *(${tomute.id})*. \n\`Duration:\` ${mutetime}\n\`Reason:\` ${reason}`);
 
         try {
             await tomute.send(`You have been muted for \`${ms(ms(mutetime))}\` with the reason: **${reason}**`);

@@ -54,8 +54,8 @@ module.exports = {
         }
 
         //Sends the warn to chat & DMs
-        warnchannel.send(`\`[${numToDateString(Date.now())}]\` :triangular_flag_on_post: **${message.author.tag}** has given a strike to **${wUser.tag}** *(${wUser.id})* \n\`Warn Reason:\` ${wReason}`);
-        await message.channel.send(`The user ${wUser} has been given a strike for the reason **${wReason}**.`);
+        warnchannel.send(`\`[${numToDateString(Date.now())}]\` :triangular_flag_on_post: **${message.author.tag}** has applied action: \`strike\` \n\`Affected User:\` **${wUser.tag}** *(${wUser.id})* \n\`Reason:\` ${wReason}`);
+        await message.channel.send(`Action \`unmute\` on user ${wUser} applied successfully.`);
         try {
             await wUser.send(`__**New Strike Received**__ \n You have been given a strike for the reason: **${wReason}**`);
         } catch (e) {
@@ -82,7 +82,7 @@ module.exports = {
             } else if (WarnAmount === 4) {
                 await member.kick(wReason);
                 await message.channel.send(`${wUser} has been automatically kicked for passing the **4** strike threshold.`);
-                await warnchannel.send(`\`[${numToDateString(Date.now())}]\` :boot: **AUTOMOD**  has kicked **${wUser.tag}** *(${wUser.id})* \n\`Kick Reason:\` Automatic - **4** strikes reached.`);
+                await warnchannel.send(`\`[${numToDateString(Date.now())}]\` :boot: **AUTOMOD**  has applied action: \`kick\`\n\`Affected User:\` **${wUser.tag}** *(${wUser.id})* \n\`Reason:\` Automatic - **4** strikes reached.`);
 
             } else if (WarnAmount === 5) {
                 await wUser.send("------------------------------\n⚠ __**Automated Alert**__ ⚠\n------------------------------\nYou are on your **fifth** strike. Your next strike will result in an automatic ban.")
@@ -91,7 +91,7 @@ module.exports = {
             if (WarnAmount >= 6) {
                 await message.guild.members.ban(wUser, {reason: wReason});
                 await message.channel.send(`${wUser} has been banned for reaching 6 strikes.`);
-                await warnchannel.send(`\`[${numToDateString(Date.now())}]\` :boot: **AUTOMOD**  has banned **${wUser.tag}** *(${wUser.id})* \n\`Ban Reason:\` Automatic - **6** strikes reached.`);
+                await warnchannel.send(`\`[${numToDateString(Date.now())}]\` :boot: **AUTOMOD**  has applied action: \`ban\`\n\`Affected User:\` **${wUser.tag}** *(${wUser.id})* \n\`Reason:\` Automatic - **6** strikes reached.`);
             }
 
             //If this shit goes bonkers ignore it (It won't, but I'm a bad coder too so...)

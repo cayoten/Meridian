@@ -34,6 +34,8 @@ module.exports = {
             return message.reply("You didn't specify a time!");
         }
 
+        if((ms(bantime) === undefined)) { return message.reply("an invalid ban time was supplied.")}
+
 
         const reason = args.slice(2).join(' ') || 'No reason specified.';
 
@@ -51,8 +53,8 @@ module.exports = {
             await bUser.send(`You have been banned for ${ms(ms(bantime))} for the reason: **${reason}**`);
         } catch (e) {
         }
-        await message.channel.send(`The user ${bUser} has been temp-banned.`);
-        incidents.send(`\`[${numToDateString(Date.now())}]\` :timer: **${message.author.tag}** has temp-banned **${bUser.tag}** *(${bUser.id})* for ${ms(ms(bantime))}\n\`Ban Reason:\` ${reason}`);
+        await message.channel.send(`Action \`tempban\` on user ${bUser} has been applied successfully.`);
+        incidents.send(`\`[${numToDateString(Date.now())}]\` :timer: **${message.author.tag}** has applied action: \`tempban\` \n\`Affected User:\` **${bUser.tag}** *(${bUser.id})*\n\`Duration:\` ${ms(ms(bantime))} \n\`Reason:\` ${reason}`);
         await message.guild.members.ban(bUser, {reason: reason});
 
         client.dataStorage.addUserBan(bUser.id, message.guild.id, ms(bantime));
