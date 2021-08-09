@@ -28,7 +28,7 @@ module.exports = async function (member) {
             return;
         }
 
-        incidents.send(`\`[${numToDateString(Date.now())}]\` __AUDIT LOG__ :boot: **${foundLog.executor.tag}** has kicked **${foundLog.target.tag}** *(${foundLog.target.id})*. \n\`Kick Reason:\` ${foundLog.reason ?? "No reason specified"}`);
+        incidents.send(`\`[${numToDateString(Date.now())}]\` :boot: **${foundLog.executor.tag}** has performed action: \`kick\` \n\`Affected User:\` **${foundLog.target.tag}** *(${foundLog.target.id})* \n\`Reason:\` ${foundLog.reason ?? "No reason specified"}`);
 
     }
 
@@ -47,7 +47,7 @@ module.exports = async function (member) {
         if (!incidents) {
             return
         }
-        incidents.send(`\`[${numToDateString(Date.now())}]\` __AUDIT LOG__ :hammer: **${foundBan.executor.tag}** has banned **${foundBan.target.tag}** *(${foundBan.target.id})* \n\`Ban Reason:\` ${foundBan.reason ?? "No reason specified"}`);
+        incidents.send(`\`[${numToDateString(Date.now())}]\` :hammer: **${foundBan.executor.tag}** has performed action: \`ban\` \n\`Affected User:\` **${foundBan.target.tag}** *(${foundBan.target.id})* \n\`Reason:\` ${foundBan.reason ?? "No reason specified"}` );
     }
 
 };
