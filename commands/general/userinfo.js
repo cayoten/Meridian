@@ -20,8 +20,12 @@ module.exports = {
         const sec = joinDate.getSeconds();
         const joinTime = month + ' ' + date + ' ' + year + ' ' + '@' + ' ' + hour + ':' + min + ':' + sec;
 
+        const merge = "https://images.google.com/searchbyimage?image_url=";
+
+
         const memberinfo = new Discord.MessageEmbed()
             .setTitle(`${tocheck.user.username}`)
+            .setDescription(`[**Avatar Reverse Image Search**](${merge + tocheck.user.displayAvatarURL()})`)
             .addField("ID", `${tocheck.id}`)
             .addField("Created At", `${tocheck.user.createdAt}`)
             .addField("Joined At", joinTime)
