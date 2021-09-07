@@ -68,6 +68,7 @@ module.exports = {
 
             const pinned = (await message.channel.messages.fetch()).filter(msg => !msg.pinned)
                 let deletedMessages = await message.channel.bulkDelete(pinned.first(parseInt("15")), true).catch(console.error);
+                await log.send(`\`[${numToDateString(Date.now())}]\` :cloud: **${toVerify.user.tag}** (*${toVerify.id}*) has been approved, and chat was cleared.`);
                 if (deletedMessages === undefined || deletedMessages.size === 0) {
                     message.channel.send("Error while attempting to clear messages, continuing...").then(m => m.delete({
                         timeout: 5000,
