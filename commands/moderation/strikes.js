@@ -23,11 +23,11 @@ module.exports = {
         let userWarns = warns[message.guild.id][wUser.id];
         //Let's list warns by index
         if (userWarns.length > 0) {
-            let warnMessage = `This user has **${userWarns.length}** strikes.\n`;
+            let warnMessage = `Listing **${userWarns.length}** strikes for user ${wUser}.\n`;
             userWarns.forEach((item, index) => {
                 warnMessage = warnMessage + `\`Strike ID:\` ${index} \`Strike Reason:\` ${item}\n`;
             })
-            await message.reply(warnMessage);
+            await message.channel.send(warnMessage);
         } else {
             await message.reply(`this user doesn't have any strikes. They're a role model!`);
         }
