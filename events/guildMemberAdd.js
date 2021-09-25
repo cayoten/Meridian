@@ -1,6 +1,6 @@
 module.exports = async function (member) {
     this.joinThrottler.handleMember(member);
-    member.send(`Welcome to **${member.guild.name}**. Please enjoy your stay!`)
+    member.send(`Welcome to **${member.guild.name}**. Check #verification in the server to get started. Please enjoy your stay!`)
         .catch(console.error);
 
     let jlChannel = member.guild.channels.cache.find(chan => chan.name === "join-leave-log");
