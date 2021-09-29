@@ -1,6 +1,15 @@
 const Discord = require("discord.js");
 const fs = require("fs");
-const client = new Discord.Client();
+const client = new Discord.Client({
+    intents: [
+        Discord.Intents.FLAGS.GUILDS,
+        Discord.Intents.FLAGS.GUILD_BANS,
+        Discord.Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+        Discord.Intents.FLAGS.GUILD_MEMBERS,
+        Discord.Intents.FLAGS.GUILD_MESSAGES, // too bad it will become privileged - juan
+        Discord.Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+    ]
+});
 const readline = require('readline');
 client.commands = new Discord.Collection();
 require('dotenv').config();
