@@ -7,7 +7,7 @@ const client = new Discord.Client({
         Discord.Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
         Discord.Intents.FLAGS.GUILD_MEMBERS,
         Discord.Intents.FLAGS.GUILD_MESSAGES, // too bad it will become privileged - juan
-        Discord.Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+        Discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS
     ]
 });
 const readline = require('readline');
@@ -77,7 +77,7 @@ const antiSpam = new AntiSpam({
 });
 
 // Trigger antispam
-client.on("message", async function (message) {
+client.on("messageCreate", async function (message) {
     antiSpam.message(message);
 
     // important return for some servers
