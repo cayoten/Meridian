@@ -15,11 +15,17 @@ module.exports = async function (message) {
 
     let cLog = new Discord.MessageEmbed()
         .setColor("#e82631")
-        .setDescription(`${message.content}`);
+        .setTitle("Deleted Message")
+        .setDescription(`|| ${utils.isBlank(message.content)? "<empty>" : message.content} ||`);
 
-    cLogChannel.send({
-        content:`\`[${utils.epochToHour(Date.now())}]\` :x: **${message.author.tag}** *(${message.author.id})*'s message has been deleted from ${message.channel}:`,
-        embeds:[cLog]
+    let urls = [...message.attachments.values()];
+    for (let i = 0; i < urls.length; i++) {
+        cLog.addField("Attachments", urls[i].proxyURL)
+    }
+
+    await cLogChannel.send({
+        content: `\`[${utils.epochToHour(Date.now())}]\` :x: **${message.author.tag}** *(${message.author.id})*'s message has been deleted from ${message.channel}:`,
+        embeds: [cLog]
     });
 
 };
