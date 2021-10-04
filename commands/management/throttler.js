@@ -1,4 +1,4 @@
-require("discord.js");
+const Discord = require("discord.js");
 const utils = require('../../lib/utils.js');
 const numberOnly = /^[0-9]+/;
 module.exports = {
@@ -9,12 +9,12 @@ module.exports = {
     description: `Allows to configure the join throttler.`,
     /**
      * @param client {Discord.Client}
-     * @param message {Message}
-     * @param args {[]}
-     * @returns {Promise<void>}
+     * @param message {Discord.Message}
+     * @param args {string[]}
+     * @return {Promise<?>}
      */
     run: async function (client, message, args) {
-        if (!utils.checkPermissionAndNotify(message.member, message.channel, "BAN_MEMBERS")) {
+        if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.BAN_MEMBERS)) {
             return;
         }
 
@@ -28,10 +28,10 @@ module.exports = {
             case "warnOnRaid":
                 if (value.toLowerCase() === "true" || value.toLowerCase() === "false") {
                     cfg[configKey] = value === "true";
-                    await message.channel.send(`Changed \`${configKey}\` to ${value}!`);
+                    await message.channel.send({content:`Changed \`${configKey}\` to ${value}!`});
                     client.dataStorage.saveData();
                 } else {
-                    await message.channel.send(`\`${value}\` is not a valid value!`);
+                    await message.channel.send({content:`\`${value}\` is not a valid value!`});
                 }
                 break;
             case "warnChannel":
@@ -48,22 +48,23 @@ module.exports = {
 
                 if (channel) {
                     cfg.warnChannel = channel.id;
-                    await message.channel.send(`Changed \`${configKey}\` to <#${channel.id}>!`);
+                    await message.channel.send({content:`Changed \`${configKey}\` to <#${channel.id}>!`});
                     client.dataStorage.saveData();
                 } else {
-                    await message.channel.send(`Unable to find \`${value.match(numberOnly) ? `<#${value}>` : value}\`.`);
+                    await message.channel.send({content:`Unable to find \`${value.match(numberOnly) ? `<#${value}>` : value}\`.`});
                 }
                 break;
             case "warnMessage":
                 if (args.length >= 2) {
                     let text = args.slice(1, args.length).join(" ");
                     cfg.warnMessage = text;
-                    await message.channel.send(`Changed \`${configKey}\` to "${text}"!`, {
-                        disableMentions: "all"
+                    await message.channel.send({ 
+                        content:`Changed \`${configKey}\` to "${text}"!`,
+                        allowedMentions: {parse:[]}
                     });
                     client.dataStorage.saveData();
                 } else {
-                    await message.channel.send(`I need a valid text!`);
+                    await message.channel.send({content: `I need a valid text!`});
                 }
                 break;
             case "maxViolationLevel":
@@ -72,14 +73,14 @@ module.exports = {
                 let number = parseInt(value);
                 if (isFinite(number) && number > 0 && number < 2147483647) {
                     cfg[configKey] = number;
-                    await message.channel.send(`Changed \`${configKey}\` to ${number}!`);
+                    await message.channel.send({content:`Changed \`${configKey}\` to ${number}!`});
                     client.dataStorage.saveData();
                 } else {
-                    await message.channel.send(`\`${value}\` is not a valid value!`);
+                    await message.channel.send({content:`\`${value}\` is not a valid value!`});
                 }
                 break;
             default:
-                await message.channel.send(`No such option \`${configKey}\` \n
+                await message.channel.send({ content:`No such option \`${configKey}\` \n
 Available options - possible values - current value - description
     \`enabled\` - true | false - ${cfg.enabled} - if true the anti-raid will be enabled.
     \`banOnRaid\` - true | false - ${cfg.banOnRaid} - if true will ban detected users instead of kicking them.
@@ -89,8 +90,8 @@ Available options - possible values - current value - description
     \`maxViolationLevel\` - positive number - ${cfg.maxViolationLevel} - maximum violations the bot will tolerate before enabling the anti-raid.
     \`violationPeriod\` - time in milliseconds - ${cfg.violationPeriod} - the minimum time between joins, if someone joins while in a violation period the violation level will increase by one.
     \`forgetTime\` - time in seconds - ${cfg.forgetTime} - if nobody joins after the configured time the bot will forget about any previous violation level and raid status.
-`, {
-                    disableMentions: "all"
+`,
+                allowedMentions: {parse:[]}
                 });
                 break;
         }

@@ -1,11 +1,17 @@
+const Discord = require("discord.js");
+const utils = require('../lib/utils.js');
+/**
+ * @param member {Discord.GuildMember}
+ * @returns {Promise<void>}
+ */
 module.exports = async function (member) {
-
-    let jlChannel = member.guild.channels.cache.find(chan => chan.name === "join-leave-log");
-    if (jlChannel === undefined) {
+    /** @type{Discord.TextChannel}*/
+    let jlChannel = utils.findTextChannel(member.guild, "join-leave-log")
+    if (!jlChannel) {
         return console.log(`A join and leave log channel doesn't exist!`)
     }
 
-    jlChannel.send(`➖ ${member} (**${member.user.tag}**) has left. (${member.guild.memberCount}M)`);
+    jlChannel.send({content:`➖ ${member} (**${member.user.tag}**) has left. (${member.guild.memberCount}M)`});
 
     function numToDateString(num) {
         let date = new Date(num)
@@ -13,8 +19,9 @@ module.exports = async function (member) {
     }
 
     //Check if someone was kicked
+    /** @type{Discord.GuildAuditLogs}*/
     let logs = await member.guild.fetchAuditLogs({type: 'MEMBER_KICK'});
-    let entries = logs.entries.array();
+    let entries = [...logs.entries.values()];
     let foundLog;
     for (let i = 0; i < entries.length; i++) {
         let log = entries[i];
@@ -23,18 +30,19 @@ module.exports = async function (member) {
         }
     }
     if (foundLog) {
-        let incidents = member.guild.channels.cache.find(x => x.name === "mod-logs");
+        let incidents = utils.findTextChannel(member.guild, "mod-logs");
         if (!incidents) {
             return;
         }
 
-        incidents.send(`\`[${numToDateString(Date.now())}]\` :boot: **${foundLog.executor.tag}** has performed action: \`kick\` \n\`Affected User:\` **${foundLog.target.tag}** *(${foundLog.target.id})* \n\`Reason:\` ${foundLog.reason ?? "No reason specified"}`);
+        incidents.send({content: `\`[${numToDateString(Date.now())}]\` :boot: **${foundLog.executor.tag}** has performed action: \`kick\` \n\`Affected User:\` **${foundLog.target.tag}** *(${foundLog.target.id})* \n\`Reason:\` ${foundLog.reason ?? "No reason specified"}`});
 
     }
 
-    //Check if someone was
+    //Check if someone was banned
+    /** @type{Discord.GuildAuditLogs}*/
     let logsBan = await member.guild.fetchAuditLogs({type: 'MEMBER_BAN_ADD'});
-    let entriesBan = logsBan.entries.array();
+    let entriesBan = [...logsBan.entries.values()];
     let foundBan;
     for (let i = 0; i < entriesBan.length; i++) {
         let log = entriesBan[i];
@@ -43,11 +51,11 @@ module.exports = async function (member) {
         }
     }
     if (foundBan) {
-        let incidents = member.guild.channels.cache.find(x => x.name === "mod-logs");
+        let incidents = utils.findTextChannel(member.guild, "mod-logs");
         if (!incidents) {
             return
         }
-        incidents.send(`\`[${numToDateString(Date.now())}]\` :hammer: **${foundBan.executor.tag}** has performed action: \`ban\` \n\`Affected User:\` **${foundBan.target.tag}** *(${foundBan.target.id})* \n\`Reason:\` ${foundBan.reason ?? "No reason specified"}` );
+        incidents.send({content:`\`[${numToDateString(Date.now())}]\` :hammer: **${foundBan.executor.tag}** has performed action: \`ban\` \n\`Affected User:\` **${foundBan.target.tag}** *(${foundBan.target.id})* \n\`Reason:\` ${foundBan.reason ?? "No reason specified"}`});
     }
 
 };

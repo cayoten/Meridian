@@ -11,7 +11,7 @@ const client = new Discord.Client({
     ]
 });
 const readline = require('readline');
-client.commands = new Discord.Collection();
+client.chatCommands = new Discord.Collection();
 require('dotenv').config();
 
 const DataStorage = require('./lib/dataStorage.js');
@@ -105,7 +105,7 @@ client.on("messageCreate", async function (message) {
 
     if(message.author.bot) return;
 
-    let commandfile = client.commands.get(cmd.slice(foundPrefix.length));
+    let commandfile = client.chatCommands.get(cmd.slice(foundPrefix.length));
     if (commandfile) commandfile.run(client, message, args);
 
 });

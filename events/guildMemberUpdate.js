@@ -1,4 +1,9 @@
 const Discord = require("discord.js");
+/**
+ * @param oldMember {Discord.GuildMember}
+ * @param newMember {Discord.GuildMember}
+ * @return {Promise<void>}
+ */
 module.exports = async function (oldMember, newMember) {
   
   if (newMember.roles.cache.has('444518133018132480')) return;

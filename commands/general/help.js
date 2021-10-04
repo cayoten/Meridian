@@ -5,6 +5,11 @@ module.exports = {
     permlevel: "SEND_MESSAGES",
     catergory: "general",
     description: `Well, this command, of course!`,
+     /**
+     * @param client {Discord.Client}
+     * @param message {Discord.Message}
+     * @return {Promise<?>}
+     */
     run: async function (client, message) {
 
         if (message.deletable) message.delete({reason: "Auto-Delete"});
@@ -39,7 +44,7 @@ module.exports = {
             .setFooter("Developed by Cayoten")
             .setTimestamp();
 
-        client.commands.forEach((cmd, i) => {
+        client.chatCommands.forEach((cmd, i) => {
                 if (cmd.catergory === 'general') {
                     if (!message.guild === null) {
                         if (message.member.hasPermission(cmd.permlevel)) {

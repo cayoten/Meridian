@@ -1,3 +1,4 @@
+const Discord = require("discord.js");
 const utils = require('../../lib/utils.js');
 module.exports = {
     name: "ban",
@@ -5,38 +6,39 @@ module.exports = {
     permlevel: "BAN_MEMBERS",
     catergory: "moderation",
     description: `Bans the tagged user with a reason.`,
+    /**
+     * @param client {Discord.Client}
+     * @param message {Discord.Message}
+     * @param args {string[]}
+     * @return {Promise<?>}
+     */
     run: async function (client, message, args) {
 
         if (message.deletable) message.delete();
 
-        if (!utils.checkPermissionAndNotify(message.member, message.channel, "BAN_MEMBERS"))
+        if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.BAN_MEMBERS))
             return;
 
-        if (!args[0]) return message.reply("Where the hell is the member I need to ban?");
+        if (!args[0]) return message.reply({content:"Where the hell is the member I need to ban?"});
 
         let bUser;
         try {
             bUser = message.mentions.users.first() || await client.users.fetch(args[0]);
         } catch(e) {}
 
-        if (!bUser) return message.channel.send('Unable to find user.');
+        if (!bUser) return message.channel.send({content:'Unable to find user.'});
 
         const member = message.guild.members.cache.get(bUser.id);
-        if (member && member.permissions.has("MANAGE_MESSAGES")) {
-            return message.reply("I can't ban that person.")
-                .then(m => m.delete({timeout: 5000}));
+        if (member && member.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)) {
+            return message.reply({content:"I can't ban that person."})
+            .then(m => setTimeout(() => m.delete(), 5000));
         }
 
         const reason = args.slice(1).join(' ') || 'No reason specified.';
 
-        function numToDateString(num) {
-            let date = new Date(num)
-            return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-        }
-
-        let incidents = message.guild.channels.cache.find(x => x.name === "mod-logs");
+        let incidents = utils.findTextChannel(message.guild, "mod-logs")
         if (!incidents) {
-            return message.channel.send(`:warning: Cannot find the "mod-logs" channel.`);
+            return message.channel.send({content:`:warning: Cannot find the "mod-logs" channel.`});
         }
 
         const userId = bUser.id;
@@ -46,11 +48,11 @@ module.exports = {
         }
 
         try {
-            await bUser.send(`You have been banned for the reason: **${reason}**`);
+            await bUser.send({content:`You have been banned for the reason: **${reason}**`});
         } catch (e) {
         }
-        await message.channel.send(`The user ${bUser} has been banned.`);
-        incidents.send(`\`[${numToDateString(Date.now())}]\` :hammer: **${message.author.tag}** has applied action: \`ban\` \n\`Affected User:\` **${bUser.tag}** *(${bUser.id})* \n\`Reason:\` ${reason}`);
+        await message.channel.send({content:`The user ${bUser} has been banned.`});
+        incidents.send({content:`\`[${utils.epochToHour(Date.now())}]\` :hammer: **${message.author.tag}** has applied action: \`ban\` \n\`Affected User:\` **${bUser.tag}** *(${bUser.id})* \n\`Reason:\` ${reason}`});
         await message.guild.members.ban(bUser, {days: 7, reason: reason});
     }
 

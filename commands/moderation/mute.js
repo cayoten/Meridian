@@ -1,3 +1,4 @@
+const Discord = require("discord.js");
 const utils = require('../../lib/utils.js');
 const ms = require("ms");
 
@@ -7,10 +8,16 @@ module.exports = {
     permlevel: "KICK_MEMBERS",
     catergory: "moderation",
     description: `Mutes the tagged user with a time and reason.`,
+    /**
+     * @param client {Discord.Client}
+     * @param message {Discord.Message}
+     * @param args {string[]}
+     * @return {Promise<?>}
+     */
     run: async function (client, message, args) {
 
         //!mute @user 1s/m/h/d
-        if (!utils.checkPermissionAndNotify(message.member, message.channel, "KICK_MEMBERS"))
+        if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.KICK_MEMBERS))
             return;
 
         let tomute;
@@ -18,44 +25,39 @@ module.exports = {
             tomute = message.mentions.users.first() || await client.users.fetch(args[0]);
         } catch(e) {}
 
-        if (!tomute) return message.channel.send('Unable to find user.');
+        if (!tomute) return message.channel.send({content:'Unable to find user.'});
         
         const member = message.guild.members.cache.get(tomute.id);
         try {
-            if (member.hasPermission("MANAGE_MESSAGES")) {
-                return message.channel.send(":heavy_multiplication_x: You cannot mute them!");
+            if (member.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)) {
+                return message.channel.send({content:":heavy_multiplication_x: You cannot mute them!"});
             }
-        } catch(e) { return message.channel.send("This user isn't in the server.."); }
+        } catch(e) { return message.channel.send({content:"This user isn't in the server.."}); }
 
         let muterole = message.guild.roles.cache.find(role => role.name === "Muted");
-        if (!muterole) return message.channel.send(`There's no role called \`Muted\`, please create one.`);
+        if (!muterole) return message.channel.send({content:`There's no role called \`Muted\`, please create one.`});
 
         let mutetime = args[1];
         if (!mutetime) {
-            return message.reply("You didn't specify a time!");
+            return message.reply({content:"You didn't specify a time!"});
         }
-        if((ms(mutetime) === undefined)) { return message.reply("an invalid mute time was supplied.")}
+        if((ms(mutetime) === undefined)) { return message.reply({content:"an invalid mute time was supplied."})}
 
         let reason = args.slice(2).join(' ') || "No reason specified";
 
-        let mutechannel = message.guild.channels.cache.find(x => x.name === "mod-logs");
+        let mutechannel = utils.findTextChannel(message.guild, "mod-logs");
         if (!mutechannel) {
-            return message.channel.send(`:warning: Cannot find the "mod-logs" channel.`);
+            return message.channel.send({content:`:warning: Cannot find the "mod-logs" channel.`});
         }
 
-        function numToDateString(num) {
-            let date = new Date(num)
-            return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-        }
-
-        await mutechannel.send(`\`[${numToDateString(Date.now())}]\` :no_mouth: **${message.author.tag}** has applied action: \`mute\`. \n**\`Affected User:\`${tomute.tag}** *(${tomute.id})*. \n\`Duration:\` ${mutetime}\n\`Reason:\` ${reason}`);
+        await mutechannel.send({content:`\`[${utils.epochToHour(Date.now())}]\` :no_mouth: **${message.author.tag}** has applied action: \`mute\`. \n**\`Affected User:\`${tomute.tag}** *(${tomute.id})*. \n\`Duration:\` ${mutetime}\n\`Reason:\` ${reason}`});
 
         try {
-            await tomute.send(`You have been muted for \`${ms(ms(mutetime))}\` with the reason: **${reason}**`);
+            await tomute.send({content:`You have been muted for \`${ms(ms(mutetime))}\` with the reason: **${reason}**`});
         } catch (e) {
         }
         await (member.roles.add(muterole.id));
-        await message.channel.send(`<@${tomute.id}> has been muted for ${ms(ms(mutetime))}`);
+        await message.channel.send({content:`<@${tomute.id}> has been muted for ${ms(ms(mutetime))}`});
 
         client.dataStorage.addUserMute(tomute.id, message.guild.id, ms(mutetime));
 

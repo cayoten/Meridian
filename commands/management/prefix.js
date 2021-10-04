@@ -1,3 +1,4 @@
+const Discord = require("discord.js");
 const utils = require('../../lib/utils.js');
 module.exports = {
     name: "prefix",
@@ -5,6 +6,12 @@ module.exports = {
     permlevel: "MANAGE_SERVER",
     catergory: "management",
     description: `Sets the server's prefix.`,
+    /**
+     * @param client {Discord.Client}
+     * @param message {Discord.Message}
+     * @param args {string[]}
+     * @return {Promise<?>}
+     */
     run: async function (client, message, args) {
         if (args[0] === "set") {
             if (!utils.checkPermissionAndNotify(message.member, message.channel, "MANAGE_SERVER")) return;
@@ -13,12 +20,12 @@ module.exports = {
                 message.delete()
 
             client.dataStorage.serverData[message.guild.id]["prefix"] = args.slice(1).join(" ")
-            message.channel.send(`This guild's prefix has been set to \`${args.slice(1).join(" ")}\``)
+            message.channel.send({content:`This guild's prefix has been set to \`${args.slice(1).join(" ")}\``})
         } else if (args[0] === "del") {
              if (!utils.checkPermissionAndNotify(message.member, message.channel, "MANAGE_SERVER")) return;
              if (!client.dataStorage.serverData[message.guild.id]) client.dataStorage.serverData[message.guild.id] = {};
              if (client.dataStorage.serverData[message.guild.id]["prefix"]) delete client.dataStorage.serverData[message.guild.id]["prefix"]
-             message.reply("I deleted the prefix!")
+             message.reply({content:"I deleted the prefix!"})
         }
         else {
             const prefixes = ['$', '🐾', 'paw']
@@ -27,7 +34,7 @@ module.exports = {
                     if (client.dataStorage.serverData[message.guild.id]["prefix"]) prefixes.push(client.dataStorage.serverData[message.guild.id]["prefix"])
                 }
             } catch(e) {}
-            message.channel.send(`This guild's prefixes: ${prefixes.join(', ')}`)
+            message.channel.send({content:`This guild's prefixes: ${prefixes.join(', ')}`})
         }
     }
 }

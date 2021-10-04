@@ -17,8 +17,8 @@ module.exports = async function () {
                             if (guild) {
                                 let member = guild.members.cache.get(userId)
                                 if (member) {
-                                    let muterole = guild.roles.cache.find(r => r.name === "Muted");
-                                    member.roles.remove(muterole.id);
+                                    let muteRole = guild.roles.cache.find(r => r.name === "Muted");
+                                    member.roles.remove(muteRole.id);
                                 }
                             }
                         }

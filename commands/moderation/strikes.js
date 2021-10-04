@@ -1,3 +1,4 @@
+const Discord = require("discord.js");
 const utils = require('../../lib/utils.js');
 module.exports = {
     name: "strikes",
@@ -5,8 +6,14 @@ module.exports = {
     permlevel: "MANAGE_MESSAGES",
     catergory: "moderation",
     description:  `Shows the amount of Strikes for a user.`,
+    /**
+     * @param client {Discord.Client}
+     * @param message {Discord.Message}
+     * @param args {string[]}
+     * @return {Promise<?>}
+     */
     run: async function (client, message, args) {
-        if (!utils.checkPermissionAndNotify(message.member, message.channel, "MANAGE_MESSAGES"))
+        if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.MANAGE_MESSAGES))
             return;
         
         let wUser;
@@ -14,7 +21,7 @@ module.exports = {
             wUser = message.mentions.users.first() || await client.users.fetch(args[0]);
         } catch(e) {}
 
-        if (!wUser) return message.channel.send('Unable to find user.');
+        if (!wUser) return message.channel.send({content:'Unable to find user.'});
 
         let warns = client.dataStorage.warnings;
         if (!warns[message.guild.id]) warns[message.guild.id] = {};//Create a new empty object fot this guild.
@@ -27,9 +34,9 @@ module.exports = {
             userWarns.forEach((item, index) => {
                 warnMessage = warnMessage + `\`Strike ID:\` ${index} \`Strike Reason:\` ${item}\n`;
             })
-            await message.channel.send(warnMessage);
+            await message.channel.send({content:warnMessage});
         } else {
-            await message.reply(`this user doesn't have any strikes. They're a role model!`);
+            await message.reply({content:`this user doesn't have any strikes. They're a role model!`});
         }
 
     }
