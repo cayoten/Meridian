@@ -1,18 +1,20 @@
 const Discord = require("discord.js");
+const utils = require('../lib/utils.js');
+/**
+ * @param oldMessage {Discord.Message}
+ * @param newMessage {Discord.Message}
+ * @return {Promise<void>}
+ */
 module.exports = async function (oldMessage, newMessage) {
 
-    if (this.dataStorage.serverData[newMessage.guild.id]["nolog"].includes(newMessage.channel.id)) return;
-
-    if (oldMessage.content === newMessage.content) {
-        return;
-    }
-    if (oldMessage.author.bot) {
+    if (this.dataStorage.serverData[newMessage.guild.id]["nolog"]?.includes(newMessage.channel.id)) return;
+    if (oldMessage.content === newMessage.content ||
+        oldMessage.author.bot) {
         return;
     }
 
-    let uLogChannel = newMessage.guild.channels.cache.find(chan => chan.name === "chat-logs");
-
-    if (uLogChannel === undefined) {
+    let uLogChannel = utils.findTextChannel(newMessage.guild, "chat-logs");
+    if (!uLogChannel) {
         return console.log(`Logging channel does not exist!`)
     }
 
@@ -20,12 +22,8 @@ module.exports = async function (oldMessage, newMessage) {
         .setColor("#e8a726")
         .setDescription(`**From:** ${oldMessage.content} \n **To:** ${newMessage.content}`);
 
-    function numToDateString(num) {
-        let date = new Date(num)
-        return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-    }
-
-
-    uLogChannel.send(`\`[${numToDateString(Date.now())}]\` :warning:  **${oldMessage.author.tag}** *(${oldMessage.author.id})*'s message has been edited in ${oldMessage.channel}:`);
-    uLogChannel.send(cLog);
+    uLogChannel.send({
+        content: `\`[${utils.epochToHour(Date.now())}]\` :warning:  **${oldMessage.author.tag}** *(${oldMessage.author.id})*'s message has been edited in ${oldMessage.channel}:`,
+        embeds: [cLog]
+    });
 };

@@ -1,8 +1,18 @@
 const Discord = require("discord.js");
 const fs = require("fs");
-const client = new Discord.Client();
+const client = new Discord.Client({
+    intents: [
+        Discord.Intents.FLAGS.GUILDS,
+        Discord.Intents.FLAGS.GUILD_BANS,
+        Discord.Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+        Discord.Intents.FLAGS.GUILD_MEMBERS,
+        Discord.Intents.FLAGS.GUILD_MESSAGES, // too bad it will become privileged - juan
+        Discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+        Discord.Intents.FLAGS.GUILD_PRESENCES
+    ]
+});
 const readline = require('readline');
-client.commands = new Discord.Collection();
+client.chatCommands = new Discord.Collection();
 require('dotenv').config();
 
 const DataStorage = require('./lib/dataStorage.js');
@@ -68,7 +78,7 @@ const antiSpam = new AntiSpam({
 });
 
 // Trigger antispam
-client.on("message", async function (message) {
+client.on("messageCreate", async function (message) {
     antiSpam.message(message);
 
     // important return for some servers
@@ -96,7 +106,7 @@ client.on("message", async function (message) {
 
     if(message.author.bot) return;
 
-    let commandfile = client.commands.get(cmd.slice(foundPrefix.length));
+    let commandfile = client.chatCommands.get(cmd.slice(foundPrefix.length));
     if (commandfile) commandfile.run(client, message, args);
 
 });

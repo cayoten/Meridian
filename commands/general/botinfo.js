@@ -6,6 +6,11 @@ module.exports = {
     permlevel: "SEND_MESSAGES",
     catergory: "general",
     description: `Displays information about Meridian.`,
+     /**
+     * @param client {Discord.Client}
+     * @param message {Discord.Message}
+     * @return {Promise<?>}
+     */
     run: async function (client, message) {
 
         let infoEmbed = new Discord.MessageEmbed()
@@ -15,11 +20,11 @@ module.exports = {
             .addField("Bot Creator", "<@714663951320744037>", true)
             .addField("Creation Date", `Tuesday, May 14th 2019`, true)
             .addField("API Ping:", `${Math.round(client.ws.ping)} ms`, true)
-            .addField("Command Count:", `${client.commands.size} Commands`)
+            .addField("Command Count:", `${client.chatCommands.size} Commands`)
             .setFooter("Developed by Cayoten")
             .setTimestamp();
 
-        await message.channel.send(infoEmbed);
+        await message.channel.send({embeds: [infoEmbed]});
 
     }
 
