@@ -6,8 +6,14 @@ module.exports = {
     permlevel: "MANAGE_ROLES",
     catergory: "management",
     description: `Staff only command to make an announcement.`,
+    /**
+     * @param client {Discord.Client}
+     * @param message {Discord.Message}
+     * @param args {string[]}
+     * @return {Promise<?>}
+     */
     run: async function (client, message, args) {
-        if (!utils.checkPermissionAndNotify(message.member, message.channel, "MANAGE_ROLES"))
+        if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.MANAGE_ROLES))
             return;
 
         let botmessage = args.join(" ");
@@ -21,7 +27,7 @@ module.exports = {
             .setTimestamp();
 
         message.delete().catch();
-        await message.channel.send(anEmbed);
+        await message.channel.send({embeds:[anEmbed]});
     }
 
 };

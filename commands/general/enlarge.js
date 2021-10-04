@@ -1,14 +1,20 @@
+const Discord = require("discord.js");
 module.exports = {
     name: "enlarge",
     usage: "send emote",
     permlevel: "SEND_MESSAGES",
     catergory: "general",
     description: `Enlarge the specified emote.`,
+     /**
+     * @param client {Discord.Client}
+     * @param message {Discord.Message}
+     * @return {Promise<?>}
+     */
     run: async function (client, message) {
         const arg = message.content.split(" ");
 
-        if (message.channel.name === "general-chat" && !message.member.hasPermission("MANAGE_MESSAGES")) {
-            return message.reply("you cannot use that command in this channel!")
+        if (message.channel.name === "general-chat" && !message.member.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)) {
+            return message.channel.send("you cannot use that command in this channel!")
         }
 
         const emojiRegEx2 = /([<]a?:[a-zA-Z_]{1,32}:[0-9]{18}>)/g;

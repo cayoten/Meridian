@@ -10,10 +10,12 @@ module.exports = (client) => {
         const commands = readdirSync(`./commands/${dir}/`).filter(file => file.endsWith(".js"));
 
         for (let file of commands) {
+            // TODO: Change catergory to category and permlevel to permLevel - juan
+            /** @type{{name: string, usage: string, permlevel: string, catergory: string, description: string, aliases?:string[], run: function}}*/
             let pull = require(`../commands/${dir}/${file}`);
 
             if (pull.name) {
-                client.commands.set(pull.name, pull);
+                client.chatCommands.set(pull.name, pull);
                 table.addRow(file, '✅ -> Command Loaded!');
             } else {
                 table.addRow(file, `❌  -> missing a help.name, or help.name is not a string.`);

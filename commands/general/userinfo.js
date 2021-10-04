@@ -5,10 +5,15 @@ module.exports = {
     permlevel: "SEND_MESSAGES",
     catergory: "general",
     description: `Display's the @'ed user's information.`,
+    /**
+     * @param client {Discord.Client}
+     * @param message {Discord.Message}
+     * @return {Promise<?>}
+     */
     run: async function (client, message, args) {
 
         let tocheck = message.mentions.members.first() || message.guild.members.cache.get(args[0])
-        if (!tocheck) return message.reply("user not found.");
+        if (!tocheck) return message.channel.send(`${message.author}, user not found.`);
 
         const joinDate = tocheck.joinedAt;//Change this
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -29,11 +34,11 @@ module.exports = {
             .addField("ID", `${tocheck.id}`)
             .addField("Created At", `${tocheck.user.createdAt}`)
             .addField("Joined At", joinTime)
-            .addField("Status", `${tocheck.user.presence.status}`)
+            .addField("Status", `${tocheck.presence?.status || "unknown"}`)
             .setThumbnail(tocheck.user.displayAvatarURL())
             .setFooter("Developed by Cayoten")
             .setTimestamp();
 
-        await message.channel.send(memberinfo);
+        await message.channel.send({embeds:[memberinfo]});
     }
 }
