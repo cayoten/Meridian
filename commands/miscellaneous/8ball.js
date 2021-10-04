@@ -7,13 +7,19 @@ module.exports = {
     permlevel: "SEND_MESSAGES",
     catergory: "miscellaneous",
     description: `Roll the 8ball with a question.`,
+    /**
+     * @param client {Discord.Client}
+     * @param message {Discord.Message}
+     * @param args {string[]}
+     * @return {Promise<?>}
+     */
     run: async function (client, message, args) {
         if (client.cooldownManager.checkCooldownAndNotify("8ball", message.author.id, message)) {
             return;
         }
 
         if (args.length === 0)
-            return message.reply("you gotta have a question.");
+            return message.reply({content:"you gotta have a question."});
 
         client.cooldownManager.setCoolDown("8ball", message.author.id, 60);
 
@@ -24,6 +30,6 @@ module.exports = {
             .setFooter("Developed by Cayoten")
             .setTimestamp();
 
-        await message.channel.send(ballembed);
+        await message.channel.send({embeds:[ballembed]});
     }
 };

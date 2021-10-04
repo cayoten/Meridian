@@ -1,9 +1,15 @@
+const Discord = require("discord.js");
+const utils = require('../lib/utils.js');
+/**
+ * @param member {Discord.GuildMember}
+ * @return {Promise<void>}
+ */
 module.exports = async function (member) {
     this.joinThrottler.handleMember(member);
     member.send(`Welcome to **${member.guild.name}**. Check #verification in the server to get started. Please enjoy your stay!`)
         .catch(console.error);
 
-    let jlChannel = member.guild.channels.cache.find(chan => chan.name === "join-leave-log");
+    let jlChannel = utils.findTextChannel(member.guild, "join-leave-log")
     if (jlChannel === undefined) {
          return console.log(`A join and leave log channel doesn't exist!`)
     }
@@ -12,7 +18,7 @@ module.exports = async function (member) {
 
 
     if(this.dataStorage.isUserMuted(member.user.id, member.guild.id)) {
-        let muterole = member.guild.roles.cache.find(role => role.name === "Muted");
-        member.roles.add(muterole.id);
+        let muteRole = member.guild.roles.cache.find(role => role.name === "Muted");
+        member.roles.add(muteRole.id);
     }
 };

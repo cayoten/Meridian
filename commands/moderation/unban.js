@@ -1,3 +1,4 @@
+const Discord = require("discord.js");
 const utils = require('../../lib/utils.js');
 module.exports = {
     name: "unban",
@@ -5,28 +6,30 @@ module.exports = {
     permlevel: "BAN_MEMBERS",
     catergory: "moderation",
     description: `Unbans the tagged user.`,
+    /**
+     * @param client {Discord.Client}
+     * @param message {Discord.Message}
+     * @param args {string[]}
+     * @return {Promise<?>}
+     */
     run: async function (client, message, args) {
         if (message.deletable) message.delete();
 
-        if (!utils.checkPermissionAndNotify(message.member, message.channel, "BAN_MEMBERS"))
+        if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.BAN_MEMBERS))
             return;
 
         if (!args[0]) {
-            return message.channel.send("Either you didn't specify an ID, or the user wasn't banned.");
+            return message.channel.send({content: "Either you didn't specify an ID, or the user wasn't banned."});
         }
 
         client.users.fetch(args[0])
             .then(User => {
 
-                let infractionchannel = message.guild.channels.cache.find(x => x.name === "mod-logs");
+                let infractionchannel = utils.findTextChannel(message.guild, "mod-logs");
                 if (!infractionchannel) {
-                    return message.channel.send(`:warning: Cannot find the "mod-logs" channel.`);
+                    return message.channel.send({content: `:warning: Cannot find the "mod-logs" channel.`});
                 }
 
-                function numToDateString(num) {
-                    let date = new Date(num)
-                    return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-                }
 
                 const userId = User.id;
                 const guildId = message.guild.id;
@@ -36,9 +39,9 @@ module.exports = {
                 }
 
                 message.guild.members.unban(User.id);
-                message.reply("action \`unban\` applied successfully.")
-                    .then(m => m.delete({timeout: 5000}));
-                infractionchannel.send(`\`[${numToDateString(Date.now())}]\` :wave: **${message.author.tag}** has applied action: \`unban\` \n\`Affected User:\` **${User.tag}** *(${User.id})*`)
+                message.reply({content:"action \`unban\` applied successfully."})
+                    .then(m => setTimeout(() => m.delete(), 5000));
+                infractionchannel.send({content:`\`[${utils.epochToHour(Date.now())}]\` :wave: **${message.author.tag}** has applied action: \`unban\` \n\`Affected User:\` **${User.tag}** *(${User.id})*`})
             })
     }
 

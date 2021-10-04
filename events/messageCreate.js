@@ -1,19 +1,25 @@
+const Discord = require("discord.js");
 const spaceRegex = / /g
 const specialCharRegex = /[^a-zA-Z ]/g
-/***
- * @type {Map<string, number>}
- */
+/** @type {Map<string, number>}*/
 const flaggedUsers = new Map();
 const forgetAfter = 5; //time in seconds to forget about a flagged user
+/**
+ * @param message {Discord.Message}
+ * @return {Promise<void>}
+ */
 module.exports = async function (message) {
 
     if (message.guild == null) return;
     if (message.author.bot) return;
     if(message.channel.id === "865255351490052096") return; // TODO: make this not hardcoded for artist-commissions
-    if (message.member.hasPermission("MANAGE_MESSAGES")) return; //Replace with your role id for bypass, you might want to change it to permission based, like member has permission to delete message it will ignore.
+    if (message.member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) return; //Replace with your role id for bypass, you might want to change it to permission based, like member has permission to delete message it will ignore.
 
     let count = {};
     let flagged;
+    /**@type{Discord.TextChannel}*/
+    let channel = message.channel;
+
     message.content.split(spaceRegex).forEach(function (i) {
         count[i] = (count[i] || 0) + 1;
         if (count[i] >= 10) flagged = true;
@@ -24,12 +30,12 @@ module.exports = async function (message) {
             if ((forgetAfter * 1000) > Date.now() - flaggedAt) {
                 message.delete();
                 await message.member.kick("[AutoMod] Spamming");
-                await message.channel.send(`**${message.author}** has been kicked for chat flood. [ACTION]`);
+                await channel.send({content: `**${message.author}** has been kicked for chat flood. [ACTION]`});
                 return;
             }
         }
         flaggedUsers.set(message.author.id, Date.now());
-        message.delete().then(message.channel.send(`${message.author}, you've been flagged for chat flood. [ALERT]`));
+        message.delete().then(() => channel.send({content:`${message.author}, you've been flagged for chat flood. [ALERT]`}));
         return;
     }
 
@@ -50,6 +56,6 @@ module.exports = async function (message) {
         if (msgContent.includes(word)) matches = true;
     });
     if (matches) {
-        message.delete().then(message.channel.send(`${message.author}, don't post that! [WARN]`));
+        message.delete().then(() => channel.send({content:`${message.author}, don't post that! [WARN]`}));
     }
 };
