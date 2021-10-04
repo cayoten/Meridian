@@ -19,7 +19,7 @@ module.exports = {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.BAN_MEMBERS))
             return;
 
-        if (!args[0]) return message.reply({content:"Where the hell is the member I need to ban?"});
+        if (!args[0]) return message.channel.send({content:"Where the hell is the member I need to ban?"});
 
         let bUser;
         try {
@@ -30,7 +30,7 @@ module.exports = {
 
         const member = message.guild.members.cache.get(bUser.id);
         if (member && member.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)) {
-            return message.reply({content:"I can't ban that person."})
+            return message.channel.send({content:"I can't ban that person."})
             .then(m => setTimeout(() => m.delete(), 5000));
         }
 

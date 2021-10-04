@@ -32,7 +32,7 @@ module.exports = {
         // Define member
         const member = message.guild.members.cache.get(wUser.id);
         if (member && member.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)) {
-            return message.reply({content: "I can't strike that person."})
+            return message.channel.send({content: "I can't strike that person."})
                 .then(m => setTimeout(() => m.delete(), 5000));
         }
 

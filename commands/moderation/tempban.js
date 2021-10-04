@@ -21,7 +21,7 @@ module.exports = {
             return;
 
 
-        if (!args[0]) return message.reply({content: "Where the hell is the member I need to ban?"});
+        if (!args[0]) return message.channel.send({content: "Where the hell is the member I need to ban?"});
 
         let bUser;
         try {
@@ -32,16 +32,16 @@ module.exports = {
 
         const member = message.guild.members.cache.get(bUser.id);
         if (member && member.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)) {
-            return message.reply({content: "I can't ban that person."})
+            return message.channel.send({content: "I can't ban that person."})
                 .then(m => setTimeout(() => m.delete(), 5000));
         }
 
         let bantime = args[1];
         if (!bantime) {
-            return message.reply({content:"You didn't specify a time!"});
+            return message.channel.send({content:"You didn't specify a time!"});
         }
 
-        if((ms(bantime) === undefined)) { return message.reply({content:"an invalid ban time was supplied."})}
+        if((ms(bantime) === undefined)) { return message.channel.send({content:"an invalid ban time was supplied."})}
 
 
         const reason = args.slice(2).join(' ') || 'No reason specified.';

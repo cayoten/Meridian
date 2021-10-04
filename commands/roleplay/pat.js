@@ -20,8 +20,8 @@ module.exports = {
         if (message.deletable) message.delete();
 
         let patUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
-        if (!patUser) return message.reply({content:"user not found."});
-        if (message.mentions.members.first().user === message.author) return message.reply({content:"you can't roleplay with yourself!"});
+        if (!patUser) return message.channel.send({content:`${message.author}, user not found.`});
+        if (message.mentions.members.first().user === message.author) return message.channel.send({content:`${message.author}, you can't roleplay with yourself!`});
         
         client.cooldownManager.setCoolDown("rp", message.author.id, 45);
 

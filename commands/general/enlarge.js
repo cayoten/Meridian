@@ -14,7 +14,7 @@ module.exports = {
         const arg = message.content.split(" ");
 
         if (message.channel.name === "general-chat" && !message.member.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)) {
-            return message.reply("you cannot use that command in this channel!")
+            return message.channel.send("you cannot use that command in this channel!")
         }
 
         const emojiRegEx2 = /([<]a?:[a-zA-Z_]{1,32}:[0-9]{18}>)/g;

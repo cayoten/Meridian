@@ -13,9 +13,9 @@ module.exports = {
      */
     run: async function (client, message, args) {
 
-        let beUser = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));
+        let beUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
 
-        if (!args[0]) return message.reply({content:"Please specify a user!"});
+        if (!args[0]) return message.channel.send({content:"Please specify a user!"});
 
         await message.channel.send({content:`${beUser} has been beaned!`});
         message.delete().catch();

@@ -28,11 +28,11 @@ module.exports = {
         if (!warns[message.guild.id][wUser.id]) warns[message.guild.id][wUser.id] = [] ///Create a new empty array fot this user.
 
         if (warns[message.guild.id][wUser.id].length === 0) {
-            return message.reply({content:"This user has no strikes!"})
+            return message.channel.send({content:"This user has no strikes!"})
         }
 
         if (isNaN(args[1]) || args[1] < 0 || args[1] >= warns[message.guild.id][wUser.id].length) {
-            return message.reply({content:"Please provide a valid Strike ID!"})
+            return message.channel.send({content:"Please provide a valid Strike ID!"})
         }
 
         let removedWarn = warns[message.guild.id][wUser.id].splice(args[1], 1); //Remove the warn.

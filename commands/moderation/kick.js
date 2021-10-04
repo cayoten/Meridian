@@ -19,7 +19,7 @@ module.exports = {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.KICK_MEMBERS))
             return;
 
-        if (!args[0]) return message.reply({content:"You didn't specify a member."});
+        if (!args[0]) return message.channel.send({content:"You didn't specify a member."});
 
 
         let kUser;
@@ -31,7 +31,7 @@ module.exports = {
 
         const member = message.guild.members.cache.get(kUser.id);
         if (member && member.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)) {
-            return message.reply({content:"I can't kick that person."})
+            return message.channel.send({content:"I can't kick that person."})
                 .then(m => setTimeout(() => m.delete(), 5000));
         }
 

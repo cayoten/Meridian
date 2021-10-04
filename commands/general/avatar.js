@@ -14,11 +14,11 @@ module.exports = {
      */
     run: async function (client, message) {
         if (message.channel.name === "general-chat" && !message.member.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)) {
-            return message.reply("you cannot use that command in this channel!")
+            return message.channel.send("you cannot use that command in this channel!")
         }
 
         const user = message.mentions.users.first() || message.author;
-        if (!user) return message.reply("user not found.");
+        if (!user) return message.channel.send(`${message.author}, user not found.`);
 
         const avatarEmbed = new Discord.MessageEmbed()
             .setColor("RANDOM")

@@ -21,10 +21,10 @@ module.exports = {
 
         let restricted = message.guild.roles.cache.find(b => b.name === "Server Restricted");
         if (!restricted) {
-            return message.reply({content:`There isn't a "Server Restricted" role!`});
+            return message.channel.send({content:`There isn't a "Server Restricted" role!`});
         }
 
-        let members = message.mentions.members.array();
+        let members = [...message.mentions.members.values()];
         let canVerify = [];
 
         members.forEach(member => {
@@ -39,7 +39,8 @@ module.exports = {
         let roles = {
             "241268522792124416": "444518133018132480", // FoxedIn
             "588127059700613120": "693168060294496366", // Testing Server
-            "866825824966541332": "866827238842171403" // Glitch's New Server
+            "866825824966541332": "866827238842171403", // Glitch's New Server
+            "708087852449136801": "717120288760004628" // µ - juan
         };
 
 
@@ -51,10 +52,6 @@ module.exports = {
         let genchat = utils.findTextChannel(message.guild, "general-chat");
         if (!genchat) return message.channel.send({content:"Couldn't find general-chat channel."});
 
-        function numToDateString(num) {
-            let date = new Date(num)
-            return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-        }
 
         for (const toVerify of canVerify) {
 
@@ -65,13 +62,13 @@ module.exports = {
             if (message.content.includes("-sr")) {
 
                 await toVerify.roles.add(restricted.id);
-                log.send({content:`\`[${numToDateString(Date.now())}]\` :lock: **${toVerify.user.tag}** *(${toVerify.id})* has been approved as __**Server Restricted**__.`});
+                log.send({content:`\`[${utils.epochToHour(Date.now())}]\` :lock: **${toVerify.user.tag}** *(${toVerify.id})* has been approved as __**Server Restricted**__.`});
 
             } if (message.content.includes("-c")) {
 
             const pinned = (await message.channel.messages.fetch()).filter(msg => !msg.pinned)
                 let deletedMessages = await message.channel.bulkDelete(pinned.first(parseInt("15")), true).catch(console.error);
-                await log.send({content:`\`[${numToDateString(Date.now())}]\` :cloud: **${toVerify.user.tag}** (*${toVerify.id}*) has been approved, and chat was cleared.`});
+                await log.send({content:`\`[${utils.epochToHour(Date.now())}]\` :cloud: **${toVerify.user.tag}** (*${toVerify.id}*) has been approved, and chat was cleared.`});
                 if (deletedMessages === undefined || deletedMessages.size === 0) {
                     message.channel.send({content:"Error while attempting to clear messages, continuing..."}).then(m => setTimeout(() => m.delete(), 5000));
 
@@ -81,7 +78,7 @@ module.exports = {
                 }
 
             } else {
-                await log.send({content:`\`[${numToDateString(Date.now())}]\` :cloud: **${toVerify.user.tag}** (*${toVerify.id}*) has been approved.`});
+                await log.send({content:`\`[${utils.epochToHour(Date.now())}]\` :cloud: **${toVerify.user.tag}** (*${toVerify.id}*) has been approved.`});
             }
             await (toVerify.roles.add(memberrole));
             await genchat.send({content:`${responses[Math.round(Math.random() * (responses.length - 1))]} ${toVerify}!`});

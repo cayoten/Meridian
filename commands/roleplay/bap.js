@@ -18,8 +18,8 @@ module.exports = {
         }
 
         let bapUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
-        if (!bapUser) return message.reply({content:"user not found."});
-        if (message.mentions.members.first().user === message.author) return message.reply({content: "you can't roleplay with yourself!"});
+        if (!bapUser) return message.channel.send({content:`${message.author}, user not found.`});
+        if (message.mentions.members.first().user === message.author) return message.channel.send({content: `${message.author}, you can't roleplay with yourself!`});
 
         await message.channel.send({content:`*baps ${bapUser}* \nNO! BAD!`});
         message.delete().catch();
