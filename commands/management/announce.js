@@ -27,7 +27,7 @@ module.exports = {
             .setTimestamp();
 
         message.delete().catch();
-        await message.channel.send(anEmbed);
+        await message.channel.send({embeds:[anEmbed]});
     }
 
 };

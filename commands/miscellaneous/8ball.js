@@ -19,7 +19,7 @@ module.exports = {
         }
 
         if (args.length === 0)
-            return message.reply({content:"you gotta have a question."});
+            return message.channel.send({content:"you gotta have a question."});
 
         client.cooldownManager.setCoolDown("8ball", message.author.id, 60);
 

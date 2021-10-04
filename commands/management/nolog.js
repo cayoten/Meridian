@@ -42,14 +42,14 @@ module.exports = {
             if (message.deletable) message.delete();
 
             if (isNaN(args[1]) || args[1] < 0 || args[1] >= client.dataStorage.serverData[message.guild.id]["nolog"].length) {
-                return message.reply({content:"Please provide a valid log!"})
+                return message.channel.send({content:"Please provide a valid log!"})
             }
 
             client.dataStorage.serverData[message.guild.id]["nolog"].splice(args[1], 1); //Remove the warn.
 
             client.dataStorage.saveData();
 
-            message.reply({content:"I have removed the channel from the log!"});
+            message.channel.send({content:"I have removed the channel from the log!"});
 
         } else if (args[0] === "list") {
 
@@ -60,7 +60,7 @@ module.exports = {
                 client.dataStorage.serverData[message.guild.id]["nolog"].forEach((item, index) => {
                     nologMessage = nologMessage + `\`DB ID:\` ${index} \`Channel ID:\` ${item}\n`;
                 })
-                await message.reply({content:nologMessage})
+                await message.channel.send({content:nologMessage})
             }
         }
     }

@@ -19,12 +19,20 @@ module.exports = {
         if (!client.dataStorage.serverData[message.guild.id]) client.dataStorage.serverData[message.guild.id] = {};
         if (!client.dataStorage.serverData[message.guild.id]["filter"]) client.dataStorage.serverData[message.guild.id]["filter"] = ["discordgg", "discordcominvite"]
 
-        // FIXME: This is replying to a deleted messages, is this intended behavior? - juan
         if (args[0] === "add") {
 
             if (message.deletable) message.delete();
 
             let filterword = args.slice(1).join(" ");
+
+            if (utils.isBlank(filterword))
+                return message.channel.send({content:"Please specify a word to add."});
+
+            if(client.dataStorage.serverData[message.guild.id]["filter"][filterword])
+                return message.channel.send({content:"This word already exist in the filter."});
+
+            if(/\s/.test(filterword))
+                return message.channel.send({content:"Invalid filter entry! Filter entries must not contain any space."});
 
             client.dataStorage.serverData[message.guild.id]["filter"].push(filterword);
 
@@ -35,14 +43,14 @@ module.exports = {
 
             if (message.deletable) message.delete();
             if (isNaN(args[1]) || args[1] < 0 || args[1] >= client.dataStorage.serverData[message.guild.id]["filter"].length) {
-                return message.reply({content:"Please provide a valid Strike ID!"})
+                return message.channel.send({content:"Please provide a valid Filter Entry ID!"})
             }
 
             client.dataStorage.serverData[message.guild.id]["filter"].splice(args[1], 1); //Remove the warn.
 
             client.dataStorage.saveData();
 
-            message.reply({content:"I have removed the word from the filter!"});
+            message.channel.send({content:"I have removed the word from the filter!"});
 
         } else if (args[0] === "list") {
 
@@ -53,8 +61,10 @@ module.exports = {
                 client.dataStorage.serverData[message.guild.id]["filter"].forEach((item, index) => {
                     filterMessage = filterMessage + `\`Word ID:\` ${index} \`Word:\` ||${item}||\n`;
                 })
-                await message.reply({content:filterMessage})
+                await message.channel.send({content:filterMessage})
             }
+        } else {
+            message.channel.send({content:"Unknown subcommand!"});
         }
     }
 }

@@ -3,7 +3,7 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "prefix",
     usage: "prefix add / remove",
-    permlevel: "MANAGE_SERVER",
+    permlevel: "MANAGE_GUILD",
     catergory: "management",
     description: `Sets the server's prefix.`,
     /**
@@ -14,7 +14,7 @@ module.exports = {
      */
     run: async function (client, message, args) {
         if (args[0] === "set") {
-            if (!utils.checkPermissionAndNotify(message.member, message.channel, "MANAGE_SERVER")) return;
+            if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.MANAGE_GUILD)) return;
             if (!client.dataStorage.serverData[message.guild.id]) client.dataStorage.serverData[message.guild.id] = {};
             if (message.deletable)
                 message.delete()
@@ -22,10 +22,10 @@ module.exports = {
             client.dataStorage.serverData[message.guild.id]["prefix"] = args.slice(1).join(" ")
             message.channel.send({content:`This guild's prefix has been set to \`${args.slice(1).join(" ")}\``})
         } else if (args[0] === "del") {
-             if (!utils.checkPermissionAndNotify(message.member, message.channel, "MANAGE_SERVER")) return;
+             if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.MANAGE_GUILD)) return;
              if (!client.dataStorage.serverData[message.guild.id]) client.dataStorage.serverData[message.guild.id] = {};
              if (client.dataStorage.serverData[message.guild.id]["prefix"]) delete client.dataStorage.serverData[message.guild.id]["prefix"]
-             message.reply({content:"I deleted the prefix!"})
+             message.channel.send({content:"I deleted the prefix!"})
         }
         else {
             const prefixes = ['$', '🐾', 'paw']

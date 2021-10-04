@@ -9,7 +9,7 @@ module.exports = async function (message) {
 
     let cLogChannel = utils.findTextChannel(message.guild, "chat-logs")
 
-    if (cLogChannel === undefined) {
+    if (!cLogChannel) {
         return console.log(`Logging channel does not exist!`)
     }
 
@@ -17,13 +17,8 @@ module.exports = async function (message) {
         .setColor("#e82631")
         .setDescription(`${message.content}`);
 
-    function numToDateString(num) {
-        let date = new Date(num)
-        return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-    }
-
     cLogChannel.send({
-        content:`\`[${numToDateString(Date.now())}]\` :x: **${message.author.tag}** *(${message.author.id})*'s message has been deleted from ${message.channel}:`,
+        content:`\`[${utils.epochToHour(Date.now())}]\` :x: **${message.author.tag}** *(${message.author.id})*'s message has been deleted from ${message.channel}:`,
         embeds:[cLog]
     });
 

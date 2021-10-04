@@ -39,9 +39,9 @@ module.exports = {
 
         let mutetime = args[1];
         if (!mutetime) {
-            return message.reply({content:"You didn't specify a time!"});
+            return message.channel.send({content:"You didn't specify a time!"});
         }
-        if((ms(mutetime) === undefined)) { return message.reply({content:"an invalid mute time was supplied."})}
+        if((ms(mutetime) === undefined)) { return message.channel.send({content:"an invalid mute time was supplied."})}
 
         let reason = args.slice(2).join(' ') || "No reason specified";
 

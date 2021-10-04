@@ -13,11 +13,6 @@ module.exports = async function (member) {
 
     jlChannel.send({content:`➖ ${member} (**${member.user.tag}**) has left. (${member.guild.memberCount}M)`});
 
-    function numToDateString(num) {
-        let date = new Date(num)
-        return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-    }
-
     //Check if someone was kicked
     /** @type{Discord.GuildAuditLogs}*/
     let logs = await member.guild.fetchAuditLogs({type: 'MEMBER_KICK'});
@@ -35,7 +30,7 @@ module.exports = async function (member) {
             return;
         }
 
-        incidents.send({content: `\`[${numToDateString(Date.now())}]\` :boot: **${foundLog.executor.tag}** has performed action: \`kick\` \n\`Affected User:\` **${foundLog.target.tag}** *(${foundLog.target.id})* \n\`Reason:\` ${foundLog.reason ?? "No reason specified"}`});
+        incidents.send({content: `\`[${utils.epochToHour(Date.now())}]\` :boot: **${foundLog.executor.tag}** has performed action: \`kick\` \n\`Affected User:\` **${foundLog.target.tag}** *(${foundLog.target.id})* \n\`Reason:\` ${foundLog.reason ?? "No reason specified"}`});
 
     }
 
@@ -55,7 +50,7 @@ module.exports = async function (member) {
         if (!incidents) {
             return
         }
-        incidents.send({content:`\`[${numToDateString(Date.now())}]\` :hammer: **${foundBan.executor.tag}** has performed action: \`ban\` \n\`Affected User:\` **${foundBan.target.tag}** *(${foundBan.target.id})* \n\`Reason:\` ${foundBan.reason ?? "No reason specified"}`});
+        incidents.send({content:`\`[${utils.epochToHour(Date.now())}]\` :hammer: **${foundBan.executor.tag}** has performed action: \`ban\` \n\`Affected User:\` **${foundBan.target.tag}** *(${foundBan.target.id})* \n\`Reason:\` ${foundBan.reason ?? "No reason specified"}`});
     }
 
 };

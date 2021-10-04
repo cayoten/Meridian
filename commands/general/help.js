@@ -46,8 +46,8 @@ module.exports = {
 
         client.chatCommands.forEach((cmd, i) => {
                 if (cmd.catergory === 'general') {
-                    if (!message.guild === null) {
-                        if (message.member.hasPermission(cmd.permlevel)) {
+                    if (message.guild) {
+                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permlevel])) {
                             gHelpEmbed.addField(cmd.name, cmd.description)
                         }
                     } else {
@@ -55,8 +55,8 @@ module.exports = {
                     }
                 }
                 else if (cmd.catergory === 'miscellaneous') {
-                    if (!message.guild === null) {
-                        if (message.member.hasPermission(cmd.permlevel)) {
+                    if (message.guild) {
+                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permlevel])) {
                             miscHelpEmbed.addField(cmd.name, cmd.description)
                         }
                     } else {
@@ -64,8 +64,8 @@ module.exports = {
                     }
                 }
                 else if (cmd.catergory === 'moderation') {
-                    if (!message.guild === null) {
-                        if (message.member.hasPermission(cmd.permlevel)) {
+                    if (message.guild) {
+                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permlevel])) {
                             mHelpEmbed.addField(cmd.name, cmd.description)
                         }
                     } else {
@@ -73,8 +73,8 @@ module.exports = {
                     }
                 }
                 else if (cmd.catergory === 'management') {
-                    if (!message.guild === null) {
-                        if (message.member.hasPermission(cmd.permlevel)) {
+                    if (message.guild) {
+                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permlevel])) {
                             manageHelpEmbed.addField(cmd.name, cmd.description)
                         }
                     } else {
@@ -82,8 +82,8 @@ module.exports = {
                     }
                 }
                 else if (cmd.catergory === 'roleplay') {
-                    if (!message.guild === null) {
-                        if (message.member.hasPermission(cmd.permlevel)) {
+                    if (message.guild) {
+                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permlevel])) {
                             rpHelpEmbed.addField(cmd.name, cmd.description)
                         }
                     } else {

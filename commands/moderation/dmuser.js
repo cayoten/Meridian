@@ -25,7 +25,7 @@ module.exports = {
         if (!member) return message.channel.send({content:'Unable to find user.'});
 
         let dMessage = args.slice(1).join(" ");
-        if (dMessage.length < 1) return message.reply({content:'You must supply a message!'});
+        if (dMessage.length < 1) return message.channel.send({content:'You must supply a message!'});
 
         try {
             await member.send({content:`__You have a new message:__\n\n**${dMessage}**`});
