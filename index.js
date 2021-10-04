@@ -57,7 +57,7 @@ const antiSpam = new AntiSpam({
     maxInterval: 5000,
     maxDuplicatesInterval: 5000,
     muteRoleName: "Muted",
-    warnMessage: "{@user} has been flagged for spamming. [WARN]",
+    warnMessage: "{@user} has been flagged for spamming. [ALERT]",
     muteMessage: '**{user_tag}** has been muted for spamming. [MUTE]',
     kickMessage: '**{user_tag}** has been kicked for spamming. [KICK]',
     banMessage: '**{user_tag}** has been banned for spamming. [BAN]',
