@@ -20,9 +20,10 @@ module.exports = async function (oldMessage, newMessage) {
 
     let cLog = new Discord.MessageEmbed()
         .setColor("#e8a726")
-        .setDescription(`**From:** ${oldMessage.content} \n **To:** ${newMessage.content}`);
+        .setTitle("Edited Message")
+        .setDescription(`**From:** ${oldMessage.content} \n **To:** || ${newMessage.content} ||`);
 
-    uLogChannel.send({
+    await uLogChannel.send({
         content: `\`[${utils.epochToHour(Date.now())}]\` :warning:  **${oldMessage.author.tag}** *(${oldMessage.author.id})*'s message has been edited in ${oldMessage.channel}:`,
         embeds: [cLog]
     });
