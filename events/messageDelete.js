@@ -6,6 +6,7 @@ const utils = require('../lib/utils.js');
  */
 module.exports = async function (message) {
     if (this.dataStorage.serverData[message.guild.id]?.["nolog"]?.includes(message.channel.id)) return;
+    if (message.author.bot) return;
 
     let cLogChannel = utils.findTextChannel(message.guild, "chat-logs")
 
