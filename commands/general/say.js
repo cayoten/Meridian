@@ -22,7 +22,7 @@ module.exports = {
             await message.channel.send({content: "_ _"}); //Discord does not allow us to send a blank message, so send something similar.
         } else {
             message.delete().catch();
-            await message.channel.send({content: saytext, allowedMentions: []});
+            await message.channel.send({content: saytext, allowedMentions: {parse:[]}});
         }
     }
 
