@@ -5,8 +5,8 @@ const ms = require("ms");
 module.exports = {
     name: "mute",
     usage: "< id / mention > <reason>",
-    permlevel: "KICK_MEMBERS",
-    catergory: "moderation",
+    permLevel: "KICK_MEMBERS",
+    category: "moderation",
     description: `Mutes the tagged user with a time and reason.`,
     /**
      * @param client {Discord.Client}
@@ -50,7 +50,7 @@ module.exports = {
             return message.channel.send({content:`:warning: Cannot find the "mod-logs" channel.`});
         }
 
-        await mutechannel.send({content:`\`[${utils.epochToHour(Date.now())}]\` :no_mouth: **${message.author.tag}** has applied action: \`mute\`. \n**\`Affected User:\`${tomute.tag}** *(${tomute.id})*. \n\`Duration:\` ${mutetime}\n\`Reason:\` ${reason}`});
+        await mutechannel.send({content:`\`[${utils.epochToHour(Date.now())}]\` :no_mouth: **${message.author.tag}** has performed action: \`mute\`. \n**\`Affected User:\`${tomute.tag}** *(${tomute.id})*. \n\`Duration:\` ${mutetime}\n\`Reason:\` ${reason}`});
 
         try {
             await tomute.send({content:`You have been muted for \`${ms(ms(mutetime))}\` with the reason: **${reason}**`});

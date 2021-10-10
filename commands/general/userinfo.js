@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 module.exports = {
     name: "userinfo",
     usage: "display amount of users",
-    permlevel: "SEND_MESSAGES",
-    catergory: "general",
+    permLevel: "SEND_MESSAGES",
+    category: "general",
     description: `Display's the @'ed user's information.`,
     /**
      * @param client {Discord.Client}

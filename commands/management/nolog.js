@@ -3,8 +3,8 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "nolog",
     usage: "nolog add / remove",
-    permlevel: "MANAGE_CHANNELS",
-    catergory: "management",
+    permLevel: "MANAGE_CHANNELS",
+    category: "management",
     description: `A command to allow whitelisting of channels from logging.`,
     /**
      * @param client {Discord.Client}

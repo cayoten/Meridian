@@ -4,8 +4,8 @@ const ms = require("ms");
 module.exports = {
     name: "tempban",
     usage: "< id / mention >",
-    permlevel: "BAN_MEMBERS",
-    catergory: "moderation",
+    permLevel: "BAN_MEMBERS",
+    category: "moderation",
     description: `Temporarily ban a user. For example, $tempban @user 30m Reason`,
     /**
      * @param client {Discord.Client}
@@ -56,7 +56,7 @@ module.exports = {
         } catch (e) {
         }
         await message.channel.send({content:`Action \`tempban\` on user ${bUser} has been applied successfully.`});
-        incidents.send({content:`\`[${utils.epochToHour(Date.now())}]\` :timer: **${message.author.tag}** has applied action: \`tempban\` \n\`Affected User:\` **${bUser.tag}** *(${bUser.id})*\n\`Duration:\` ${ms(ms(bantime))} \n\`Reason:\` ${reason}`});
+        await incidents.send({content: `\`[${utils.epochToHour(Date.now())}]\` :timer: **${message.author.tag}** has performed action: \`tempban\` \n\`Affected User:\` **${bUser.tag}** *(${bUser.id})*\n\`Duration:\` ${ms(ms(bantime))} \n\`Reason:\` ${reason}`});
         await message.guild.members.ban(bUser, {reason: reason});
 
         client.dataStorage.addUserBan(bUser.id, message.guild.id, ms(bantime));

@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 module.exports = {
     name: "lick",
     usage: "< id / mention >",
-    permlevel: "SEND_MESSAGES",
-    catergory: "roleplay",
+    permLevel: "SEND_MESSAGES",
+    category: "roleplay",
     description: `Gives you the option to lick somebody's "face", "paws", or "talons".`,
     /**
      * @param client {Discord.Client}

@@ -4,8 +4,8 @@ const numberOnly = /^[0-9]+/;
 module.exports = {
     name: "throttler",
     usage: "< option > < value >",
-    permlevel: "BAN_MEMBERS",
-    catergory: "moderation",
+    permLevel: "BAN_MEMBERS",
+    category: "moderation",
     description: `Allows to configure the join throttler.`,
     /**
      * @param client {Discord.Client}

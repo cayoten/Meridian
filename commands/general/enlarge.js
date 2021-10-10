@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 module.exports = {
     name: "enlarge",
     usage: "send emote",
-    permlevel: "SEND_MESSAGES",
-    catergory: "general",
+    permLevel: "SEND_MESSAGES",
+    category: "general",
     description: `Enlarge the specified emote.`,
      /**
      * @param client {Discord.Client}

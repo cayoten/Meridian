@@ -4,8 +4,8 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "strike",
     usage: "< id / mention > < reason >",
-    permlevel: "MANAGE_MESSAGES",
-    catergory: "moderation",
+    permLevel: "MANAGE_MESSAGES",
+    category: "moderation",
     description: `Strikes the tagged user with a reason.`,
     /**
      * @param client {Discord.Client}
@@ -56,7 +56,7 @@ module.exports = {
 
 
         //Sends the warn to chat & DMs
-        warnchannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :triangular_flag_on_post: **${message.author.tag}** has applied action: \`strike\` \n\`Affected User:\` **${wUser.tag}** *(${wUser.id})* \n\`Reason:\` ${wReason}`});
+        warnchannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :triangular_flag_on_post: **${message.author.tag}** has performed action: \`strike\` \n\`Affected User:\` **${wUser.tag}** *(${wUser.id})* \n\`Reason:\` ${wReason}`});
         await message.channel.send({content: `Action \`strike\` on user ${wUser} applied successfully.`});
         try {
             await wUser.send({content: `__**New Strike Received**__ \n You have been given a strike for the reason: **${wReason}**`});

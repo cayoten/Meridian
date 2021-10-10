@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 module.exports = {
     name: "ping",
     usage: "shows bot ping",
-    permlevel: "SEND_MESSAGES",
-    catergory: "general",
+    permLevel: "SEND_MESSAGES",
+    category: "general",
     description: `Shows the bot's ping.`,
     /**
      * @param client {Discord.Client}

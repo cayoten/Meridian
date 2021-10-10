@@ -3,8 +3,8 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "announce",
     usage: "announcement message",
-    permlevel: "MANAGE_ROLES",
-    catergory: "management",
+    permLevel: "MANAGE_ROLES",
+    category: "management",
     description: `Staff only command to make an announcement.`,
     /**
      * @param client {Discord.Client}

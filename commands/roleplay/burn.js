@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 module.exports = {
     name: "burn",
     usage: "< id / mention >",
-    permlevel: "SEND_MESSAGES",
-    catergory: "roleplay",
+    permLevel: "SEND_MESSAGES",
+    category: "roleplay",
     description: `Burn the specified user.`,
     /**
      * @param client {Discord.Client}

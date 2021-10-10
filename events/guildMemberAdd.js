@@ -14,11 +14,11 @@ module.exports = async function (member) {
          return console.log(`A join and leave log channel doesn't exist!`)
     }
 
-    jlChannel.send(`➕ ${member} (**${member.user.tag}**) has joined. (${member.guild.memberCount}M)`);
+    await jlChannel.send(`➕ ${member} (**${member.user.tag}**) has joined. (${member.guild.memberCount}M)`);
 
 
     if(this.dataStorage.isUserMuted(member.user.id, member.guild.id)) {
         let muteRole = member.guild.roles.cache.find(role => role.name === "Muted");
-        member.roles.add(muteRole.id);
+        await member.roles.add(muteRole.id);
     }
 };

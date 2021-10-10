@@ -3,8 +3,8 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "prefix",
     usage: "prefix add / remove",
-    permlevel: "MANAGE_GUILD",
-    catergory: "management",
+    permLevel: "MANAGE_GUILD",
+    category: "management",
     description: `Sets the server's prefix.`,
     /**
      * @param client {Discord.Client}

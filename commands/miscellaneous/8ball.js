@@ -4,8 +4,8 @@ const responses = ["Oh HELL nah", "Try again when I feel like answering", "Did y
 module.exports = {
     name: "8ball",
     usage: "< question > ",
-    permlevel: "SEND_MESSAGES",
-    catergory: "miscellaneous",
+    permLevel: "SEND_MESSAGES",
+    category: "miscellaneous",
     description: `Roll the 8ball with a question.`,
     /**
      * @param client {Discord.Client}

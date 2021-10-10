@@ -30,7 +30,7 @@ module.exports = async function (member) {
             return;
         }
 
-        incidents.send({content: `\`[${utils.epochToHour(Date.now())}]\` :boot: **${foundLog.executor.tag}** has performed action: \`kick\` \n\`Affected User:\` **${foundLog.target.tag}** *(${foundLog.target.id})* \n\`Reason:\` ${foundLog.reason ?? "No reason specified"}`});
+        await incidents.send({content: `\`[${utils.epochToHour(Date.now())}]\` :boot: **${foundLog.executor.tag}** has performed action: \`kick\` \n\`Affected User:\` **${foundLog.target.tag}** *(${foundLog.target.id})* \n\`Reason:\` ${foundLog.reason ?? "No reason specified"}`});
 
     }
 
@@ -50,7 +50,7 @@ module.exports = async function (member) {
         if (!incidents) {
             return
         }
-        incidents.send({content:`\`[${utils.epochToHour(Date.now())}]\` :hammer: **${foundBan.executor.tag}** has performed action: \`ban\` \n\`Affected User:\` **${foundBan.target.tag}** *(${foundBan.target.id})* \n\`Reason:\` ${foundBan.reason ?? "No reason specified"}`});
+        await incidents.send({content: `\`[${utils.epochToHour(Date.now())}]\` :hammer: **${foundBan.executor.tag}** has performed action: \`ban\` \n\`Affected User:\` **${foundBan.target.tag}** *(${foundBan.target.id})* \n\`Reason:\` ${foundBan.reason ?? "No reason specified"}`});
     }
 
 };

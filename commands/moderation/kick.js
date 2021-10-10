@@ -3,8 +3,8 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "kick",
     usage: "< id / mention >",
-    permlevel: "KICK_MEMBERS",
-    catergory: "moderation",
+    permLevel: "KICK_MEMBERS",
+    category: "moderation",
     description: `Kicks the tagged user with a reason.`,
     /**
      * @param client {Discord.Client}
@@ -47,7 +47,7 @@ module.exports = {
         } catch (e) {
         }
         await message.channel.send(`The user ${kUser} has been kicked.`);
-        incidents.send({content:`\`[${utils.epochToHour(Date.now())}]\` :boot: **${message.author.tag}** has performed action: \`kick\` \n\`Affected User:\` **${kUser.tag}** *(${kUser.id})* \n\`Reason:\` ${reason}`});
+        await incidents.send({content: `\`[${utils.epochToHour(Date.now())}]\` :boot: **${message.author.tag}** has performed action: \`kick\` \n\`Affected User:\` **${kUser.tag}** *(${kUser.id})* \n\`Reason:\` ${reason}`});
         await member.kick(reason);
     }
 };

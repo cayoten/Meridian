@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 module.exports = {
     name: "hug",
     usage: "< id / mention >",
-    permlevel: "SEND_MESSAGES",
-    catergory: "roleplay",
+    permLevel: "SEND_MESSAGES",
+    category: "roleplay",
     description: `Gives the tagged user a hug.`,
     /**
      * @param client {Discord.Client}

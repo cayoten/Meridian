@@ -3,8 +3,8 @@ const Discord = require("discord.js");
 module.exports = {
     name: "botinfo",
     usage: "displays bot information",
-    permlevel: "SEND_MESSAGES",
-    catergory: "general",
+    permLevel: "SEND_MESSAGES",
+    category: "general",
     description: `Displays information about Meridian.`,
      /**
      * @param client {Discord.Client}

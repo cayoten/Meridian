@@ -3,8 +3,8 @@ const replies = ["ur mom is cleaner than this chat\nand thats saying something",
 module.exports = {
     name: "sfw",
     usage: "< id / mention >",
-    permlevel: "SEND_MESSAGES",
-    catergory: "miscellaneous",
+    permLevel: "SEND_MESSAGES",
+    category: "miscellaneous",
     description: `CAN'T YOU FUCKERS KEEP IT APPROPRIATE??`,
     /**
      * @param client {Discord.Client}

@@ -4,8 +4,8 @@ const responses = ["Welcome, glad to have you here", "Welcome to the server,", "
 module.exports = {
     name: "approve",
     usage: "< id / mention >",
-    permlevel: "MANAGE_MESSAGES",
-    catergory: "moderation",
+    permLevel: "MANAGE_MESSAGES",
+    category: "moderation",
     description: `Verifies the @'ed user and sends them to the main lobby.\nAvailable flags: -sr, -c`,
     /**
      * @param client {Discord.Client}
