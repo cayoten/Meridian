@@ -3,8 +3,8 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "filter",
     usage: "filter add / remove",
-    permlevel: "MANAGE_ROLES",
-    catergory: "management",
+    permLevel: "MANAGE_ROLES",
+    category: "management",
     description: `A complex filter command per-server. Use $filter add (word or words WITHOUT SPACES) to create a word, $filter remove (ID) to remove a word, and $filter list to view word IDs.`,
     /**
      * @param client {Discord.Client}

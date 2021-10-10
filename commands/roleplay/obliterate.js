@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 module.exports = {
     name: "obliterate",
     usage: "< id / mention >",
-    permlevel: "SEND_MESSAGES",
-    catergory: "roleplay",
+    permLevel: "SEND_MESSAGES",
+    category: "roleplay",
     description: `Wipe the tagged user from existence.`,
     /**
      * @param client {Discord.Client}

@@ -4,8 +4,8 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "avatar",
     usage: "display amount of users",
-    permlevel: "SEND_MESSAGES",
-    catergory: "general",
+    permLevel: "SEND_MESSAGES",
+    category: "general",
     description: `Display's the @'ed user's avatar.`,
     /**
      * @param client {Discord.Client}

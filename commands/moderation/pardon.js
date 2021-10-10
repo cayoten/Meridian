@@ -3,8 +3,8 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "pardon",
     usage: "< id > < warnId>",
-    permlevel: "MANAGE_MESSAGES",
-    catergory: "moderation",
+    permLevel: "MANAGE_MESSAGES",
+    category: "moderation",
     description: `Pardons a strike from the tagged user.`,
     /**
      * @param client {Discord.Client}
@@ -44,7 +44,7 @@ module.exports = {
             return message.channel.send({content:`:warning: Cannot find the "mod-logs" channel.`});
         }
 
-        warnchannel.send({content:`\`[${utils.epochToHour(Date.now())}]\` :heavy_minus_sign: **${message.author.tag}** has applied action: \`pardon\`\n\`Affected User:\` **${wUser.tag}** *(${wUser.id})*\n\`Strike Reason:\`${removedWarn[0]}\n\`Active Strike Count:\` ${warns[message.guild.id][wUser.id].length}`});
+        await warnchannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :heavy_minus_sign: **${message.author.tag}** has performed action: \`pardon\`\n\`Affected User:\` **${wUser.tag}** *(${wUser.id})*\n\`Strike Reason:\`${removedWarn[0]}\n\`Active Strike Count:\` ${warns[message.guild.id][wUser.id].length}`});
         message.channel.send({content: "The user has been pardoned!"});
     }
 };

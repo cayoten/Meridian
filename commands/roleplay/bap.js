@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 module.exports = {
     name: "bap",
     usage: "< id / mention >",
-    permlevel: "SEND_MESSAGES",
-    catergory: "miscellaneous",
+    permLevel: "SEND_MESSAGES",
+    category: "miscellaneous",
     description: `Beans the user tagged.`,
     /**
      * @param client {Discord.Client}

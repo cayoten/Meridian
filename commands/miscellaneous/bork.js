@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 module.exports = {
     name: "bork",
     usage: "f!bork",
-    permlevel: "SEND_MESSAGES",
-    catergory: "miscellaneous",
+    permLevel: "SEND_MESSAGES",
+    category: "miscellaneous",
     description: `Bork bork bork!`,
     /**
      * @param client {Discord.Client}

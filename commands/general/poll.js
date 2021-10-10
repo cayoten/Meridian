@@ -3,8 +3,8 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "poll",
     usage: "{question}",
-    permlevel: "SEND_MESSAGES",
-    catergory: "general",
+    permLevel: "SEND_MESSAGES",
+    category: "general",
     description: `Staff only command to create a poll with the specified question.`,
     /**
      * @param client {Discord.Client}

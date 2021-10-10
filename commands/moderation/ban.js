@@ -3,8 +3,8 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "ban",
     usage: "< id / mention >",
-    permlevel: "BAN_MEMBERS",
-    catergory: "moderation",
+    permLevel: "BAN_MEMBERS",
+    category: "moderation",
     description: `Bans the tagged user with a reason.`,
     /**
      * @param client {Discord.Client}
@@ -52,7 +52,7 @@ module.exports = {
         } catch (e) {
         }
         await message.channel.send({content:`The user ${bUser} has been banned.`});
-        incidents.send({content:`\`[${utils.epochToHour(Date.now())}]\` :hammer: **${message.author.tag}** has applied action: \`ban\` \n\`Affected User:\` **${bUser.tag}** *(${bUser.id})* \n\`Reason:\` ${reason}`});
+        await incidents.send({content: `\`[${utils.epochToHour(Date.now())}]\` :hammer: **${message.author.tag}** has performed action: \`ban\` \n\`Affected User:\` **${bUser.tag}** *(${bUser.id})* \n\`Reason:\` ${reason}`});
         await message.guild.members.ban(bUser, {days: 7, reason: reason});
     }
 

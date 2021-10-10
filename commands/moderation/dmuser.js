@@ -4,8 +4,8 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "dmuser",
     usage: "amount of messages",
-    permlevel: "BAN_MEMBERS",
-    catergory: "moderation",
+    permLevel: "BAN_MEMBERS",
+    category: "moderation",
     description: `DMs the tagged user with the specified text.`,
     /**
      * @param client {Discord.Client}
@@ -33,7 +33,7 @@ module.exports = {
 
         let logChannel = utils.findTextChannel(message.guild, "mod-logs");
 
-        logChannel.send({content:`\`[${utils.epochToHour(Date.now())}]\` :speak_no_evil:  **${message.author.tag}** has sent an automated DM to **${member.tag}** *(${member.id})* \n\`Message Content:\` ${dMessage}`});
+        await logChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :speak_no_evil:  **${message.author.tag}** has sent an automated DM to **${member.tag}** *(${member.id})* \n\`Message Content:\` ${dMessage}`});
 
         await message.channel.send({content:`You have sent the message to ${member}.`});
 

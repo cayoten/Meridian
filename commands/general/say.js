@@ -3,8 +3,8 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "say",
     usage: "make the bot say whatever you want",
-    permlevel: "BAN_MEMBERS",
-    catergory: "general",
+    permLevel: "BAN_MEMBERS",
+    category: "general",
     description: `Staff only command to make the bot say whatever you type.`,
     /**
      * @param client {Discord.Client}

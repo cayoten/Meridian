@@ -3,8 +3,8 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "strikes",
     usage: "< id / mention > ",
-    permlevel: "MANAGE_MESSAGES",
-    catergory: "moderation",
+    permLevel: "MANAGE_MESSAGES",
+    category: "moderation",
     description:  `Shows the amount of Strikes for a user.`,
     /**
      * @param client {Discord.Client}

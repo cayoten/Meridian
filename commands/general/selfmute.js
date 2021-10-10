@@ -4,8 +4,8 @@ const replies = ["I have shut up", "I poofed", "GET THE FUCK OUTTA HERE", "*forc
 module.exports = {
     name: "selfmute",
     usage: "mutes yourself",
-    permlevel: "SEND_MESSAGES",
-    catergory: "general",
+    permLevel: "SEND_MESSAGES",
+    category: "general",
     description: `Mute yourself for 10 minutes.`,
     /**
      * @param client {Discord.Client}

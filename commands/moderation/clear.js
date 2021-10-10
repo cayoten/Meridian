@@ -3,8 +3,8 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "clear",
     usage: "amount of messages",
-    permlevel: "MANAGE_MESSAGES",
-    catergory: "moderation",
+    permLevel: "MANAGE_MESSAGES",
+    category: "moderation",
     description: `Clears the specified amount of messages from a channel.`,
     /**
      * @param client {Discord.Client}
@@ -34,7 +34,7 @@ module.exports = {
             return message.channel.send({content:"Unable to clear messages."})
         }
         message.channel.send({content:`${deletedMessages.size} messages have been cleared from this chat.`}).then(m => setTimeout(() => m.delete(), 5000));
-        await incidents.send({content:`\`[${utils.epochToHour(Date.now())}]\` :broom: **${message.author.tag}** (*${message.author.id}*) has applied action: \`chat clear\`\n\`Cleared:\` **${deletedMessages.size}** messages.`});
+        await incidents.send({content:`\`[${utils.epochToHour(Date.now())}]\` :broom: **${message.author.tag}** (*${message.author.id}*) has performed action: \`chat clear\`\n\`Cleared:\` **${deletedMessages.size}** messages.`});
 
     }
 

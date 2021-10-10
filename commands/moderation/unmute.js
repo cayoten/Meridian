@@ -3,8 +3,8 @@ const utils = require('../../lib/utils.js');
 module.exports = {
     name: "unmute",
     usage: "< id / mention >",
-    permlevel: "KICK_MEMBERS",
-    catergory: "moderation",
+    permLevel: "KICK_MEMBERS",
+    category: "moderation",
     description: `Unbans the tagged user.`,
     /**
      * @param client {Discord.Client}
@@ -43,7 +43,7 @@ module.exports = {
 
         client.dataStorage.removeMute(member.id, message.guild.id);
         await (member.roles.remove(muterole.id));
-        unmutechannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :speaking_head:  **${message.author.tag}** has applied action: \`unmute\` \n\`Affected User:\` **${tomute.tag}** *(${tomute.id})*`});
+        await unmutechannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :speaking_head:  **${message.author.tag}** has performed action: \`unmute\` \n\`Affected User:\` **${tomute.tag}** *(${tomute.id})*`});
         await message.channel.send({content: `${tomute} has been unmuted!`});
 
     }

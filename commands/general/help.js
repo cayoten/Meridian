@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 module.exports = {
     name: "help",
     usage: "",
-    permlevel: "SEND_MESSAGES",
-    catergory: "general",
+    permLevel: "SEND_MESSAGES",
+    category: "general",
     description: `Well, this command, of course!`,
      /**
      * @param client {Discord.Client}
@@ -45,45 +45,45 @@ module.exports = {
             .setTimestamp();
 
         client.chatCommands.forEach((cmd, i) => {
-                if (cmd.catergory === 'general') {
+                if (cmd.category === 'general') {
                     if (message.guild) {
-                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permlevel])) {
+                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permLevel])) {
                             gHelpEmbed.addField(cmd.name, cmd.description)
                         }
                     } else {
                         gHelpEmbed.addField(cmd.name, cmd.description)
                     }
                 }
-                else if (cmd.catergory === 'miscellaneous') {
+                else if (cmd.category === 'miscellaneous') {
                     if (message.guild) {
-                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permlevel])) {
+                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permLevel])) {
                             miscHelpEmbed.addField(cmd.name, cmd.description)
                         }
                     } else {
                         miscHelpEmbed.addField(cmd.name, cmd.description)
                     }
                 }
-                else if (cmd.catergory === 'moderation') {
+                else if (cmd.category === 'moderation') {
                     if (message.guild) {
-                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permlevel])) {
+                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permLevel])) {
                             mHelpEmbed.addField(cmd.name, cmd.description)
                         }
                     } else {
                         mHelpEmbed.addField(cmd.name, cmd.description)
                     }
                 }
-                else if (cmd.catergory === 'management') {
+                else if (cmd.category === 'management') {
                     if (message.guild) {
-                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permlevel])) {
+                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permLevel])) {
                             manageHelpEmbed.addField(cmd.name, cmd.description)
                         }
                     } else {
                         manageHelpEmbed.addField(cmd.name, cmd.description)
                     }
                 }
-                else if (cmd.catergory === 'roleplay') {
+                else if (cmd.category === 'roleplay') {
                     if (message.guild) {
-                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permlevel])) {
+                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permLevel])) {
                             rpHelpEmbed.addField(cmd.name, cmd.description)
                         }
                     } else {
