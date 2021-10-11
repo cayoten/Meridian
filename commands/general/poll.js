@@ -30,7 +30,7 @@ module.exports = {
         await msg.react("✔");
         await msg.react("✖");
 
-        message.delete({timeout: 1000});
+        await message.delete();
 
     }
 

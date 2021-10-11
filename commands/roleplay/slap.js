@@ -17,7 +17,7 @@ module.exports = {
             return;
         }
 
-        if (message.deletable) message.delete();
+        if (message.deletable) await message.delete();
 
         let bsUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
         if (!bsUser) return message.channel.send({content:`${message.author}, user not found.`});

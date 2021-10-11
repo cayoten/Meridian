@@ -13,7 +13,7 @@ module.exports = {
      * @return {Promise<?>}
      */
     run: async function (client, message, args) {
-        if (message.deletable) message.delete();
+        if (message.deletable) await message.delete();
 
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.BAN_MEMBERS))
             return;

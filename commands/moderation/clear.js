@@ -19,7 +19,7 @@ module.exports = {
         const pinned = (await message.channel.messages.fetch()).filter(msg => !msg.pinned);
 
         if (message.deletable) 
-            message.delete();
+            await message.delete();
         
         if (!args[0]) 
             return message.channel.send({content:"You didn't define an amount to clear."});

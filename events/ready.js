@@ -1,7 +1,24 @@
+const ms = require("ms");
 module.exports = async function () {
     console.log(`\n-------------------------\n${this.user.username} is online!\n-------------------------`);
 
     await this.user.setActivity(`https://github.com/cayoten | v3.0.3`, {type: "WATCHING"});
+
+    //Auto broadcast in FoxedIn gen chat every 2 hours about the server
+   setInterval(async () => {
+
+       let array = [
+           "[Auto] Did you know FoxedIn has a Minecraft Server, and a Telegram? You can join the Telegram by going to https://t.me/FoxedIn or the MC by joining `play.foxedin.xyz` on Java or Bedrock!",
+           "[Auto] Have you voted for us yet? If not, use `!vote` in <#575332169610821654>!",
+           "[Auto] Need help, but want to stay anonymous? DM the ModMail bot for fast, private help!",
+           "[Auto] Interested in supporting the server? Check out <#457355636276199445> on how to do so."
+       ]
+       const channel = this.channels.resolve("588863799281451069");
+       await channel.send({content: array[Math.round(Math.random() * (array.length - 1))]});
+
+   },  7200000);
+
+
 
     setInterval(() => {
         for (const guildId in this.dataStorage.mutes) {
