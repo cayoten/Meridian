@@ -62,13 +62,13 @@ module.exports = {
             if (message.content.includes("-sr")) {
 
                 await toVerify.roles.add(restricted.id);
-                log.send({content:`\`[${utils.epochToHour(Date.now())}]\` :lock: **${toVerify.user.tag}** *(${toVerify.id})* has been approved as __**Server Restricted**__.`});
+                await log.send({content: `\`[${utils.epochToHour(Date.now())}]\` :lock: **${toVerify.user.tag}** *(${toVerify.id})* has been __**Server Restricted**__ by **${message.author.tag}**.`});
 
             } if (message.content.includes("-c")) {
 
             const pinned = (await message.channel.messages.fetch()).filter(msg => !msg.pinned)
                 let deletedMessages = await message.channel.bulkDelete(pinned.first(parseInt("15")), true).catch(console.error);
-                await log.send({content:`\`[${utils.epochToHour(Date.now())}]\` :cloud: **${toVerify.user.tag}** (*${toVerify.id}*) has been approved, and chat was cleared.`});
+                await log.send({content:`\`[${utils.epochToHour(Date.now())}]\` :cloud: **${toVerify.user.tag}** (*${toVerify.id}*) has been approved, and chat was cleared by **${message.author.tag}**.`});
                 if (deletedMessages === undefined || deletedMessages.size === 0) {
                     message.channel.send({content:"Error while attempting to clear messages, continuing..."}).then(m => setTimeout(() => m.delete(), 5000));
 
@@ -78,7 +78,7 @@ module.exports = {
                 }
 
             } else {
-                await log.send({content:`\`[${utils.epochToHour(Date.now())}]\` :cloud: **${toVerify.user.tag}** (*${toVerify.id}*) has been approved.`});
+                await log.send({content:`\`[${utils.epochToHour(Date.now())}]\` :cloud: **${toVerify.user.tag}** (*${toVerify.id}*) has been approved by **${message.author.tag}**.`});
             }
             await (toVerify.roles.add(memberrole));
             await genchat.send({content:`${responses[Math.round(Math.random() * (responses.length - 1))]} ${toVerify}!`});
