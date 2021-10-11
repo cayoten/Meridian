@@ -12,7 +12,7 @@ module.exports = {
      */
     run: async function (client, message) {
 
-        if (message.deletable) message.delete({reason: "Auto-Delete"});
+        if (message.deletable) await message.delete({reason: "Auto-Delete"});
 
         let gHelpEmbed = new Discord.MessageEmbed()
             .setDescription("**General Commands**")
