@@ -6,8 +6,11 @@ const utils = require('../lib/utils.js');
  */
 module.exports = async function (member) {
     this.joinThrottler.handleMember(member);
-    member.send(`Welcome to **${member.guild.name}**. Check #verification in the server to get started. Please enjoy your stay!`)
-        .catch(console.error);
+
+    //Attempt to DM users, if it fails, lol
+    try {
+        await member.send(`Welcome to **${member.guild.name}**. Check #verification in the server to get started. Please enjoy your stay!`);
+    } catch(e) {}
 
     let jlChannel = utils.findTextChannel(member.guild, "join-leave-log")
     if (jlChannel === undefined) {
