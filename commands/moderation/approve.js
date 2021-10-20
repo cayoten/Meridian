@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const utils = require('../../lib/utils.js');
-const responses = ["Welcome, glad to have you here", "Welcome to the server,", "NEW MEMBER INCOMING WELCOME TO", "Welcome on in,"]
+const responses = ["Welcome, glad to have you here", "Welcome to the server,", "NEW MEMBER INCOMING WELCOME TO", "Welcome on in,", "Greetings and welcome", "Welcome to the fur zone", "Drumroll for the new member"]
 module.exports = {
     name: "approve",
     usage: "< id / mention >",
@@ -70,11 +70,11 @@ module.exports = {
                 let deletedMessages = await message.channel.bulkDelete(pinned.first(parseInt("15")), true).catch(console.error);
                 await log.send({content:`\`[${utils.epochToHour(Date.now())}]\` :cloud: **${toVerify.user.tag}** (*${toVerify.id}*) has been approved, and chat was cleared by **${message.author.tag}**.`});
                 if (deletedMessages === undefined || deletedMessages.size === 0) {
-                    message.channel.send({content:"Error while attempting to clear messages, continuing..."}).then(m => setTimeout(() => m.delete(), 5000));
+                    message.channel.send({content:"Action \`chat clear\` via flag failed!"}).then(m => setTimeout(() => m.delete(), 5000));
 
                 }
                 else {
-                    message.channel.send({content:":warning: Chat cleared via flag"}).then(m => setTimeout(() => m.delete(), 5000));
+                    message.channel.send({content:"Action \`chat clear\` via flag applied successfully."}).then(m => setTimeout(() => m.delete(), 5000));
                 }
 
             } else {
@@ -83,6 +83,6 @@ module.exports = {
             await (toVerify.roles.add(memberrole));
             await genchat.send({content:`${responses[Math.round(Math.random() * (responses.length - 1))]} ${toVerify}!`});
         }
-        await message.channel.send({content:`:white_check_mark: User(s) approved.`}).then(m => setTimeout(() => m.delete(), 5000));
+        await message.channel.send({content:`Action \`approve user\` applied successfully.`}).then(m => setTimeout(() => m.delete(), 5000));
     }
 };
