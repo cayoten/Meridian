@@ -104,8 +104,6 @@ client.on("messageCreate", async function (message) {
     let cmd = messageArray[0];
     let args = messageArray.slice(1);
 
-    if(message.author.bot) return;
-
     let commandfile = client.chatCommands.get(cmd.slice(foundPrefix.length));
     if (commandfile) commandfile.run(client, message, args);
 
