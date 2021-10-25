@@ -56,6 +56,8 @@ module.exports = async function (message) {
         if (msgContent.includes(word)) matches = true;
     });
     if (matches) {
-        message.delete().then(() => channel.send({content:`${message.author}, don't post that! [WARN]`}));
+        message.delete().then(() => channel.send({content:`${message.author}, you cannot post that! [WARN]`})
+            .then(m => setTimeout(() => m.delete(), 5000)));
+
     }
 };
