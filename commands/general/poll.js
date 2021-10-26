@@ -16,6 +16,8 @@ module.exports = {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.MANAGE_ROLES))
             return;
 
+        if(message.deletable) await message.delete();
+
         if (!args[0]) return message.channel.send({content: "Usage for this command: $poll {question}."});
 
         const pollEmbed = new Discord.MessageEmbed()
@@ -29,8 +31,6 @@ module.exports = {
 
         await msg.react("✔");
         await msg.react("✖");
-
-        await message.delete();
 
     }
 
