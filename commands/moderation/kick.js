@@ -46,7 +46,7 @@ module.exports = {
             await kUser.send({content:`You have been kicked for the reason: **${reason}**`});
         } catch (e) {
         }
-        await message.channel.send(`The user ${kUser} has been kicked.`);
+        await message.channel.send(`Action \`kick user\` applied to ${kUser} successfully.`);
         await incidents.send({content: `\`[${utils.epochToHour(Date.now())}]\` :boot: **${message.author.tag}** has performed action: \`kick\` \n\`Affected User:\` **${kUser.tag}** *(${kUser.id})* \n\`Reason:\` ${reason}`});
         await member.kick(reason);
     }

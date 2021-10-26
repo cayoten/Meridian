@@ -36,7 +36,7 @@ module.exports = {
             })
             await message.channel.send({content:warnMessage});
         } else {
-            await message.channel.send({content:`this user doesn't have any strikes. They're a role model!`});
+            await message.channel.send({content:`This user holds 0 strikes.`});
         }
 
     }

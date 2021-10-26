@@ -39,7 +39,7 @@ module.exports = {
                 }
 
                 message.guild.members.unban(User.id);
-                message.channel.send({content:"action \`unban\` applied successfully."})
+                message.channel.send({content:"Action \`unban\` applied successfully."})
                     .then(m => setTimeout(() => m.delete(), 5000));
                 infractionchannel.send({content:`\`[${utils.epochToHour(Date.now())}]\` :wave: **${message.author.tag}** has performed action: \`unban\` \n\`Affected User:\` **${User.tag}** *(${User.id})*`})
             })
