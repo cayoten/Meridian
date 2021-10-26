@@ -51,7 +51,7 @@ module.exports = {
             await bUser.send({content:`You have been banned for the reason: **${reason}**`});
         } catch (e) {
         }
-        await message.channel.send({content:`The user ${bUser} has been banned.`});
+        await message.channel.send({content:`Action \`ban user\` applied to ${bUser} successfully.`});
         await incidents.send({content: `\`[${utils.epochToHour(Date.now())}]\` :hammer: **${message.author.tag}** has performed action: \`ban\` \n\`Affected User:\` **${bUser.tag}** *(${bUser.id})* \n\`Reason:\` ${reason}`});
         await message.guild.members.ban(bUser, {days: 7, reason: reason});
     }

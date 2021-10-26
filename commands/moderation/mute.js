@@ -57,7 +57,7 @@ module.exports = {
         } catch (e) {
         }
         await (member.roles.add(muterole.id));
-        await message.channel.send({content:`<@${tomute.id}> has been muted for ${ms(ms(mutetime))}`});
+        await message.channel.send({content:`Action \`mute user\` has been applied successfully to <@${tomute.id}> for ${ms(ms(mutetime))}`});
 
         client.dataStorage.addUserMute(tomute.id, message.guild.id, ms(mutetime));
 

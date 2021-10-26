@@ -35,7 +35,7 @@ module.exports = {
 
         await logChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :speak_no_evil:  **${message.author.tag}** has sent an automated DM to **${member.tag}** *(${member.id})* \n\`Message Content:\` ${dMessage}`});
 
-        await message.channel.send({content:`You have sent the message to ${member}.`});
+        await message.channel.send({content:`Action \`dm user\` applied to ${member} successfully.`});
 
     }
 };
