@@ -13,7 +13,7 @@ module.exports = {
     run: async function (client, message) {
         /**@type {Discord.Message}*/
         const msg = await message.channel.send({content: "WHO HATH PING ME???"});
-        await msg.edit(`Pong! The Bot's Latency is **${msg.createdTimestamp - message.createdTimestamp}ms**, and the API Latency is **${Math.round(client.ws.ping)}ms**.`);
+        await msg.edit(`Current bot latency is \`${msg.createdTimestamp - message.createdTimestamp}ms\` with API latency \`${Math.round(client.ws.ping)}ms\`.`);
 
     }
 
