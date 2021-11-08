@@ -12,7 +12,7 @@ module.exports = async function (message) {
 
     if (message.guild == null) return;
     if (message.author.bot) return;
-    if(message.channel.id === "865255351490052096") return; // TODO: make this not hardcoded for artist-commissions
+    if(message.channel.id === "677744407583129600") return; // TODO: make this not hardcoded for artist-commissions
     if (message.member.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)) return; //Replace with your role id for bypass, you might want to change it to permission based, like member has permission to delete message it will ignore.
 
     let count = {};
