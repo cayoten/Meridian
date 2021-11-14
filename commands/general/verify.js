@@ -92,7 +92,8 @@ module.exports = {
                     .then(m => setTimeout(() => m.delete(), 5000));
                 await newthread.delete();
 
-                const collectore = verifychat.createMessageComponentCollector({time: -1});
+                const collectore = verifychat.createMessageComponentCollector({time: 604800000});
+                // 7 days lmao
 
                 collectore.on('collect', async i => {
                     if (i.customId === 'approve') {
