@@ -15,6 +15,8 @@ module.exports = {
      */
     run: async function (client, message) {
 
+        if (message.deletable) await message.delete();
+
         let roles = {
             "241268522792124416": "444518133018132480", // FoxedIn
             "588127059700613120": "693168060294496366", // Testing Server
@@ -56,13 +58,14 @@ module.exports = {
         const message1 = new Discord.MessageEmbed()
             .setTitle(`New Verification for user ${message.author.username}`)
         try {
-            await message.channel.send("Verification started. Please check the new thread I just opened as to how to verify!");
+            await message.channel.send("Verification started. Please check the new thread I just opened as to how to verify!")
+                .then(m => setTimeout(() => m.delete(), 5000));
             newthread.send(`Hello <@${message.author.id}>! In order to get verified, please respond to these 3 questions.`)
             questions.forEach((q) => {
                 newthread.send(q)
             })
             const filter = m => m.author.id === message.author.id
-            const collector = newthread.createMessageCollector({filter, time: 15000, max: 3});
+            const collector = newthread.createMessageCollector({filter, time: 45000, max: 3});
 
             const row = new Discord.MessageActionRow()
                 .addComponents(
@@ -86,9 +89,10 @@ module.exports = {
                 })
                 const del = await verifychat.send({embeds: [message1], components: [row]})
                 await message.channel.send(`Your verification has been sent, ${message.author}!`)
+                    .then(m => setTimeout(() => m.delete(), 5000));
                 await newthread.delete();
 
-                const collectore = verifychat.createMessageComponentCollector({time: 15000});
+                const collectore = verifychat.createMessageComponentCollector({time: -1});
 
                 collectore.on('collect', async i => {
                     if (i.customId === 'approve') {
