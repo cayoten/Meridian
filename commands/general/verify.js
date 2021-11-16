@@ -106,18 +106,25 @@ module.exports = {
                     .then(m => setTimeout(() => m.delete(), 5000));
                 await newthread.delete();
 
-                //Button items
-                const collectore = verifychat.createMessageComponentCollector({time: 604800000, max: 1});
-                // 7 days lmao
+                //Button items, 7 days to respond
+                const collectore = verifychat.createMessageComponentCollector({time: 604800000});
 
                 //Do X thing on Y button
-                collectore.on('collect', async i => {
+                    collectore.on('collect', async i => {
+                        if (!i.member.permissions.has("MANAGE_MESSAGES")) {
+                            await i.reply(`Member \`${i.user.username}\` missing permissions.`);
+                            await i.editReply({embeds: [message1], components: [row]});
+                            try { return del.delete(); } catch (e) {}
+                        }
+
                     if (i.customId === 'approve') {
                         await log.send({content: `\`[${utils.epochToHour(Date.now())}]\` :cloud: **${message.author.tag}** (*${message.author.id}*) has been approved by **${message.author.tag}**.`});
                         await (message.member.roles.add(memberrole));
                         await genchat.send({content: `${responses[Math.round(Math.random() * (responses.length - 1))]} ${message.author}!`});
                         await verifychat.send(`Approved user with parameters \`none\`.`).then(m => setTimeout(() => m.delete(), 5000));
-                        await i.update({content: `Action applied`, components: []});
+                        await i.update({content: `Success`, components: []});
+                        await collectore.stop();
+                        try { return del.delete(); } catch (e) {}
                     }
 
                     if (i.customId === 'restrict') {
@@ -126,19 +133,18 @@ module.exports = {
                         await log.send({content: `\`[${utils.epochToHour(Date.now())}]\` :lock: **${message.author.tag}** *(${message.author.id})* has been __**Server Restricted**__ by **${message.author.tag}**.`});
                         await genchat.send({content: `${responses[Math.round(Math.random() * (responses.length - 1))]} ${message.author}!`});
                         await verifychat.send(`Approved user with parameters \`restrict\`.`).then(m => setTimeout(() => m.delete(), 5000));
-                        await i.update({content: `Action applied`, components: []});
+                        await i.update({content: `Success`, components: []});
+                        await collectore.stop();
+                        try { return del.delete(); } catch (e) {}
                     }
                     if (i.customId === 'kick') {
                         await message.member.kick();
                         await log.send({content: `\`[${utils.epochToHour(Date.now())}]\` :boot: **${message.author.tag}** *(${message.author.id})* has been __**denied entry**__ by **${message.author.tag}**.`});
                         await verifychat.send(`Declined user.`).then(m => setTimeout(() => m.delete(), 5000));
-                        await i.update({content: `Action applied`, components: []});
+                        await i.update({content: `Success`, components: []});
+                        await collectore.stop();
+                        try { return del.delete(); } catch (e) {}
                     }
-
-                    //Once the event ends, delete the embed
-                    collectore.on("end", async () => {
-                        await del.delete();
-                    })
                 });
             });
         } catch (e) {
