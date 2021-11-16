@@ -51,11 +51,11 @@ module.exports = {
         const newthread = await message.channel.threads.create({
             name: `verify-${message.author.id}`,
             autoArchiveDuration: 60,
-            reason: `Verification for new user`
+            reason: `Verification for user ${message.author.tag}`
         });
 
         const message1 = new Discord.MessageEmbed()
-            .setTitle(`New Verification for user ${message.author.username}`)
+            .setTitle(`Verification received for user \`${message.author.tag}\``)
         try {
             await message.channel.send("Verification started. Please check the new thread I just opened as to how to verify!")
                 .then(m => setTimeout(() => m.delete(), 5000));
