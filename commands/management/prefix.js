@@ -17,7 +17,7 @@ module.exports = {
             if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.MANAGE_GUILD)) return;
             if (!client.dataStorage.serverData[message.guild.id]) client.dataStorage.serverData[message.guild.id] = {};
             if (message.deletable)
-                message.delete()
+                await message.delete()
 
             client.dataStorage.serverData[message.guild.id]["prefix"] = args.slice(1).join(" ")
             message.channel.send({content:`This guild's prefix has been set to \`${args.slice(1).join(" ")}\``})

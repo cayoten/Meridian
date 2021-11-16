@@ -26,8 +26,9 @@ module.exports = {
 
         let memberrole = message.guild.roles.cache.get(roles[message.guild.id]); //null/undefined if there's no member role.
 
-        let log = utils.findTextChannel(message.guild, "join-approval-logs");
-        if (!log) return message.channel.send({content: `Couldn't find "join-approval-logs" channel.`});
+        if(message.member.roles.cache.find(x => x.name === "Member")) {
+            return message.channel.send("You are already verified!");
+        }
 
         let genchat = utils.findTextChannel(message.guild, "general-chat");
         if (!genchat) return message.channel.send({content: "Couldn't find general-chat channel."});
@@ -58,7 +59,7 @@ module.exports = {
         try {
             await message.channel.send("Verification started. Please check the new thread I just opened as to how to verify!")
                 .then(m => setTimeout(() => m.delete(), 5000));
-            newthread.send(`Hello <@${message.author.id}>! In order to get verified, please respond to these 3 questions, __each in a new message__!`)
+            newthread.send(`Hello, and welcome <@${message.author.id}>! In order to get verified, please respond to these 3 questions, __each in a new message__!`)
             questions.forEach((q) => {
                 newthread.send(q)
             })
@@ -118,7 +119,6 @@ module.exports = {
                         }
 
                     if (i.customId === 'approve') {
-                        await log.send({content: `\`[${utils.epochToHour(Date.now())}]\` :cloud: **${message.author.tag}** (*${message.author.id}*) has been approved by **${message.author.tag}**.`});
                         await (message.member.roles.add(memberrole));
                         await genchat.send({content: `${responses[Math.round(Math.random() * (responses.length - 1))]} ${message.author}!`});
                         await verifychat.send(`Approved user with parameters \`none\`.`).then(m => setTimeout(() => m.delete(), 5000));
@@ -130,7 +130,6 @@ module.exports = {
                     if (i.customId === 'restrict') {
                         await message.member.roles.add(restricted.id);
                         await (message.member.roles.add(memberrole));
-                        await log.send({content: `\`[${utils.epochToHour(Date.now())}]\` :lock: **${message.author.tag}** *(${message.author.id})* has been __**Server Restricted**__ by **${message.author.tag}**.`});
                         await genchat.send({content: `${responses[Math.round(Math.random() * (responses.length - 1))]} ${message.author}!`});
                         await verifychat.send(`Approved user with parameters \`restrict\`.`).then(m => setTimeout(() => m.delete(), 5000));
                         await i.update({content: `Success`, components: []});
@@ -139,7 +138,6 @@ module.exports = {
                     }
                     if (i.customId === 'kick') {
                         await message.member.kick();
-                        await log.send({content: `\`[${utils.epochToHour(Date.now())}]\` :boot: **${message.author.tag}** *(${message.author.id})* has been __**denied entry**__ by **${message.author.tag}**.`});
                         await verifychat.send(`Declined user.`).then(m => setTimeout(() => m.delete(), 5000));
                         await i.update({content: `Success`, components: []});
                         await collectore.stop();
