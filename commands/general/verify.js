@@ -58,7 +58,7 @@ module.exports = {
         try {
             await message.channel.send("Verification started. Please check the new thread I just opened as to how to verify!")
                 .then(m => setTimeout(() => m.delete(), 5000));
-            newthread.send(`Hello <@${message.author.id}>! In order to get verified, please respond to these 3 questions, __each on a new line__.`)
+            newthread.send(`Hello <@${message.author.id}>! In order to get verified, please respond to these 3 questions, __each in a new message__!`)
             questions.forEach((q) => {
                 newthread.send(q)
             })
