@@ -1,8 +1,7 @@
-const ms = require("ms");
 module.exports = async function () {
     console.log(`\n-------------------------\n${this.user.username} is online!\n-------------------------`);
 
-    await this.user.setActivity(`https://github.com/cayoten | v3.0.5`, {type: "WATCHING"});
+    await this.user.setActivity(`https://github.com/cayoten | v3.1.0`, {type: "WATCHING"});
 
     //Auto broadcast in FoxedIn gen chat every 2 hours about the server
    // setInterval(async () => {
