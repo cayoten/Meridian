@@ -122,7 +122,7 @@ module.exports = {
                         await (message.member.roles.add(memberrole));
                         await genchat.send({content: `${responses[Math.round(Math.random() * (responses.length - 1))]} ${message.author}!`});
                         await verifychat.send(`Approved user with parameters \`none\`.`).then(m => setTimeout(() => m.delete(), 5000));
-                        await i.update({content: `Success`, components: []});
+                        await i.message.edit({content: `Success`, components: []});
                         await collectore.stop();
                         try { return del.delete(); } catch (e) {}
                     }
@@ -132,14 +132,14 @@ module.exports = {
                         await (message.member.roles.add(memberrole));
                         await genchat.send({content: `${responses[Math.round(Math.random() * (responses.length - 1))]} ${message.author}!`});
                         await verifychat.send(`Approved user with parameters \`restrict\`.`).then(m => setTimeout(() => m.delete(), 5000));
-                        await i.update({content: `Success`, components: []});
+                        await i.message.edit({content: `Success`, components: []});
                         await collectore.stop();
                         try { return del.delete(); } catch (e) {}
                     }
                     if (i.customId === 'kick') {
                         await message.member.kick();
                         await verifychat.send(`Declined user.`).then(m => setTimeout(() => m.delete(), 5000));
-                        await i.update({content: `Success`, components: []});
+                        await i.message.edit({content: `Success`, components: []});
                         await collectore.stop();
                         try { return del.delete(); } catch (e) {}
                     }
