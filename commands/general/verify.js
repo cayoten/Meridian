@@ -91,6 +91,10 @@ module.exports = {
                     .setCustomId('kick')
                     .setLabel('Kick')
                     .setStyle('DANGER'),
+                new Discord.MessageButton()
+                    .setCustomId('left')
+                    .setLabel('Member Left')
+                    .setStyle('SECONDARY'),
             );
 
         //End the question collector, log everything
@@ -172,6 +176,14 @@ module.exports = {
                         return del.delete();
                     } catch (e) {
                     }
+                }
+                if (i.customId === 'left') {
+                    try {
+                        await del.delete();
+                    } catch (e) {
+                    }
+                    await verifychat.send(`Cancelled with reason \`member left\`.`).then(m => setTimeout(() => m.delete(), 5000));
+                    return collectore.stop();
                 }
             });
         });
