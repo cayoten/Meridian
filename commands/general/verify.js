@@ -5,7 +5,7 @@ module.exports = {
     name: "verify",
     usage: "< id / mention >",
     category: "general",
-    description: `Verifies the @'ed user and sends them to the main lobby.\nAvailable flags: -sr, -c`,
+    description: `Threaded verification system for new members.\nMod-only portion is button controlled.`,
     /**
      * @param client {Discord.Client}
      * @param message {Discord.Message}
