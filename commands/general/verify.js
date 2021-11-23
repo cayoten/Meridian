@@ -74,7 +74,7 @@ module.exports = {
 
         //Create filter and give 60 seconds for questions
         const filter = m => m.author.id === message.author.id
-        const collector = newthread.createMessageCollector({filter, time: 60000, max: 3});
+        const collector = newthread.createMessageCollector({filter, time: 120000, max: 3});
 
         //Button assembly
         const row = new Discord.MessageActionRow()
@@ -124,19 +124,15 @@ module.exports = {
             await newthread.delete();
 
             //Button items, 7 days to respond
-            const collectore = verifychat.createMessageComponentCollector({time: 604800000});
+            const collectore = del.createMessageComponentCollector({time: 604800000});
 
             //Do X thing on Y button
             collectore.on('collect', async i => {
 
                 //No perms? Get outta here. (Decline perms)
                 if (!i.member.permissions.has("MANAGE_MESSAGES")) {
-                    await i.reply(`Member \`${i.user.username}\` missing permissions.`);
-                    await i.editReply({embeds: [message1], components: [row]});
-                    try {
-                        return del.delete();
-                    } catch (e) {
-                    }
+                    await i.reply(`Member \`${i.user.username}\` missing permissions.`).then(m => setTimeout(() => m.delete(), 5000));;
+                    return;
                 }
 
                 //Approve a member
