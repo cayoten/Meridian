@@ -6,17 +6,12 @@ module.exports = {
     permLevel: "SEND_MESSAGES",
     category: "general",
     description: `Staff only command to create a poll with the specified question.`,
-    /**
-     * @param client {Discord.Client}
-     * @param message {Discord.Message}
-     * @param args {string[]}
-     * @return {Promise<?>}
-     */
+
     run: async function (client, message, args) {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.MANAGE_ROLES))
             return;
 
-        if(message.deletable) await message.delete();
+        if (message.deletable) await message.delete();
 
         if (!args[0]) return message.channel.send({content: "Usage for this command: $poll {question}."});
 
@@ -27,7 +22,7 @@ module.exports = {
             .setFooter("Developed by Cayoten")
             .setTimestamp();
 
-        let msg = await message.channel.send({embeds:[pollEmbed]});
+        let msg = await message.channel.send({embeds: [pollEmbed]});
 
         await msg.react("✔");
         await msg.react("✖");

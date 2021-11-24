@@ -6,12 +6,7 @@ module.exports = {
     permLevel: "KICK_MEMBERS",
     category: "moderation",
     description: `Kicks the tagged user with a reason.`,
-    /**
-     * @param client {Discord.Client}
-     * @param message {Discord.Message}
-     * @param args {string[]}
-     * @return {Promise<?>}
-     */
+
     run: async function (client, message, args) {
 
         if (message.deletable) await message.delete();
@@ -19,19 +14,20 @@ module.exports = {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.KICK_MEMBERS))
             return;
 
-        if (!args[0]) return message.channel.send({content:"You didn't specify a member."});
+        if (!args[0]) return message.channel.send({content: "You didn't specify a member."});
 
 
         let kUser;
         try {
             kUser = message.mentions.users.first() || await client.users.fetch(args[0]);
-        } catch(e) {}
+        } catch (e) {
+        }
 
-        if (!kUser) return message.channel.send({content:'Unable to find user.'});
+        if (!kUser) return message.channel.send({content: 'Unable to find user.'});
 
         const member = message.guild.members.cache.get(kUser.id);
         if (member && member.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)) {
-            return message.channel.send({content:"I can't kick that person."})
+            return message.channel.send({content: "I can't kick that person."})
                 .then(m => setTimeout(() => m.delete(), 5000));
         }
 
@@ -39,11 +35,11 @@ module.exports = {
 
         let incidents = utils.findTextChannel(message.guild, "mod-logs")
         if (!incidents) {
-            return message.channel.send({content:`:warning: Cannot find the "mod-logs" channel.`});
+            return message.channel.send({content: `:warning: Cannot find the "mod-logs" channel.`});
         }
 
         try {
-            await kUser.send({content:`You have been kicked for the reason: **${reason}**`});
+            await kUser.send({content: `You have been kicked for the reason: **${reason}**`});
         } catch (e) {
         }
         await message.channel.send(`Action \`kick user\` applied to ${kUser} successfully.`);

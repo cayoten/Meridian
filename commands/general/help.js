@@ -5,11 +5,7 @@ module.exports = {
     permLevel: "SEND_MESSAGES",
     category: "general",
     description: `Well, this command, of course!`,
-     /**
-     * @param client {Discord.Client}
-     * @param message {Discord.Message}
-     * @return {Promise<?>}
-     */
+
     run: async function (client, message) {
 
         if (message.deletable) await message.delete({reason: "Auto-Delete"});
@@ -20,6 +16,12 @@ module.exports = {
             .setFooter("Developed by Cayoten")
             .setTimestamp();
 
+        let rpHelpEmbed = new Discord.MessageEmbed()
+            .setDescription("**Roleplay Commands**")
+            .setColor("#a82fff")
+            .setFooter("Developed by Cayoten")
+            .setTimestamp();
+
         let miscHelpEmbed = new Discord.MessageEmbed()
             .setDescription("**Miscellaneous Commands**")
             .setColor("#e7dfdf")
@@ -27,72 +29,63 @@ module.exports = {
             .setTimestamp();
 
         let mHelpEmbed = new Discord.MessageEmbed()
-            .setDescription("**Moderation Commands**")
+            .setDescription("**Moderation Commands (Staff Only)**")
             .setColor("#c91c1c")
             .setFooter("Developed by Cayoten")
             .setTimestamp();
 
-        let rpHelpEmbed = new Discord.MessageEmbed()
-            .setDescription("**Roleplay Commands**")
-            .setColor("#a82fff")
-            .setFooter("Developed by Cayoten")
-            .setTimestamp();
-
         let manageHelpEmbed = new Discord.MessageEmbed()
-            .setDescription("**Management Commands**")
+            .setDescription("**Management Commands (Admin Only)**")
             .setColor("#ffd394")
             .setFooter("Developed by Cayoten")
             .setTimestamp();
 
-        client.chatCommands.forEach((cmd, i) => {
+        client.chatCommands.forEach((cmd/*, i */) => {
                 if (cmd.category === 'general') {
-                    if (message.guild) {
-                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permLevel])) {
-                            gHelpEmbed.addField(cmd.name, cmd.description)
-                        }
-                    } else {
-                        gHelpEmbed.addField(cmd.name, cmd.description)
-                    }
+                    // if (message.guild) {
+                    //     if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permLevel])) {
+                    //         gHelpEmbed.addField(cmd.name, cmd.description)
+                    //     }
+                    // } else {
+                    gHelpEmbed.addField(cmd.name, cmd.description)
+                    // }
+                } else if (cmd.category === 'roleplay') {
+                    // if (message.guild) {
+                    //     if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permLevel])) {
+                    //         rpHelpEmbed.addField(cmd.name, cmd.description)
+                    //     }
+                    // } else {
+                    rpHelpEmbed.addField(cmd.name, cmd.description)
+                    // }
+                } else if (cmd.category === 'miscellaneous') {
+                    // if (message.guild) {
+                    //     if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permLevel])) {
+                    //         miscHelpEmbed.addField(cmd.name, cmd.description)
+                    //     }
+                    // } else {
+                    miscHelpEmbed.addField(cmd.name, cmd.description)
+                    // }
+                } else if (cmd.category === 'moderation') {
+                    // if (message.guild) {
+                    //     if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permLevel])) {
+                    //         mHelpEmbed.addField(cmd.name, cmd.description)
+                    //     }
+                    // } else {
+                    mHelpEmbed.addField(cmd.name, cmd.description)
                 }
-                else if (cmd.category === 'miscellaneous') {
-                    if (message.guild) {
-                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permLevel])) {
-                            miscHelpEmbed.addField(cmd.name, cmd.description)
-                        }
-                    } else {
-                        miscHelpEmbed.addField(cmd.name, cmd.description)
-                    }
-                }
-                else if (cmd.category === 'moderation') {
-                    if (message.guild) {
-                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permLevel])) {
-                            mHelpEmbed.addField(cmd.name, cmd.description)
-                        }
-                    } else {
-                        mHelpEmbed.addField(cmd.name, cmd.description)
-                    }
-                }
+                // }
                 else if (cmd.category === 'management') {
-                    if (message.guild) {
-                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permLevel])) {
-                            manageHelpEmbed.addField(cmd.name, cmd.description)
-                        }
-                    } else {
-                        manageHelpEmbed.addField(cmd.name, cmd.description)
-                    }
-                }
-                else if (cmd.category === 'roleplay') {
-                    if (message.guild) {
-                        if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permLevel])) {
-                            rpHelpEmbed.addField(cmd.name, cmd.description)
-                        }
-                    } else {
-                        rpHelpEmbed.addField(cmd.name, cmd.description)
-                    }
+                    // if (message.guild) {
+                    //     if (message.member.permissions.has(Discord.Permissions.FLAGS[cmd.permLevel])) {
+                    //         manageHelpEmbed.addField(cmd.name, cmd.description)
+                    //     }
+                    // } else {
+                    manageHelpEmbed.addField(cmd.name, cmd.description)
+                    // }
                 }
             }
         )
-        let embedArray = [gHelpEmbed, miscHelpEmbed, mHelpEmbed, rpHelpEmbed, manageHelpEmbed]
+        let embedArray = [gHelpEmbed, rpHelpEmbed, miscHelpEmbed, mHelpEmbed, manageHelpEmbed]
         const Pagination = require('discord-paginationembed');
 
         await new Pagination.Embeds(embedArray)
