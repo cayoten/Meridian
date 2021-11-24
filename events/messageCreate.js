@@ -12,7 +12,7 @@ module.exports = async function (message) {
 
     if (message.guild == null) return;
     if (message.author.bot) return;
-    if(message.channel.id === "677744407583129600") return; // TODO: make this not hardcoded for artist-commissions
+    if (message.channel.id === "677744407583129600") return; // TODO: make this not hardcoded for artist-commissions
     if (message.member.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)) return; //Replace with your role id for bypass, you might want to change it to permission based, like member has permission to delete message it will ignore.
 
     let count = {};
@@ -35,7 +35,7 @@ module.exports = async function (message) {
             }
         }
         flaggedUsers.set(message.author.id, Date.now());
-        message.delete().then(() => channel.send({content:`${message.author}, you've been flagged for chat flood. [ALERT]`}));
+        message.delete().then(() => channel.send({content: `${message.author}, you've been flagged for chat flood. [ALERT]`}));
         return;
     }
 
@@ -56,7 +56,7 @@ module.exports = async function (message) {
         if (msgContent.includes(word)) matches = true;
     });
     if (matches) {
-        message.delete().then(() => channel.send({content:`${message.author}, you cannot post that! [WARN]`})
+        message.delete().then(() => channel.send({content: `${message.author}, you cannot post that! [WARN]`})
             .then(m => setTimeout(() => m.delete(), 5000)));
 
     }

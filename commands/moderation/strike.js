@@ -7,12 +7,7 @@ module.exports = {
     permLevel: "MANAGE_MESSAGES",
     category: "moderation",
     description: `Strikes the tagged user with a reason.`,
-    /**
-     * @param client {Discord.Client}
-     * @param message {Discord.Message}
-     * @param args {string[]}
-     * @return {Promise<?>}
-     */
+
     run: async function (client, message, args) {
         //$strike @Raimu being a bean
         //Check perms

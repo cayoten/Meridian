@@ -5,23 +5,19 @@ module.exports = {
     usage: "< id / mention > ",
     permLevel: "MANAGE_MESSAGES",
     category: "moderation",
-    description:  `Shows the amount of Strikes for a user.`,
-    /**
-     * @param client {Discord.Client}
-     * @param message {Discord.Message}
-     * @param args {string[]}
-     * @return {Promise<?>}
-     */
+    description: `Shows the amount of Strikes for a user.`,
+
     run: async function (client, message, args) {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.MANAGE_MESSAGES))
             return;
-        
+
         let wUser;
         try {
             wUser = message.mentions.users.first() || await client.users.fetch(args[0]);
-        } catch(e) {}
+        } catch (e) {
+        }
 
-        if (!wUser) return message.channel.send({content:'Unable to find user.'});
+        if (!wUser) return message.channel.send({content: 'Unable to find user.'});
 
         let warns = client.dataStorage.warnings;
         if (!warns[message.guild.id]) warns[message.guild.id] = {};//Create a new empty object fot this guild.
@@ -34,9 +30,9 @@ module.exports = {
             userWarns.forEach((item, index) => {
                 warnMessage = warnMessage + `\`Strike ID:\` ${index} \`Strike Reason:\` ${item}\n`;
             })
-            await message.channel.send({content:warnMessage});
+            await message.channel.send({content: warnMessage});
         } else {
-            await message.channel.send({content:`This user holds 0 strikes.`});
+            await message.channel.send({content: `This user holds 0 strikes.`});
         }
 
     }

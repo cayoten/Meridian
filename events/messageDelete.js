@@ -17,7 +17,7 @@ module.exports = async function (message) {
     let cLog = new Discord.MessageEmbed()
         .setColor("#e82631")
         .setTitle("Deleted Message")
-        .setDescription(`|| ${utils.isBlank(message.content)? "<empty>" : message.content} ||`);
+        .setDescription(`|| ${utils.isBlank(message.content) ? "<empty>" : message.content} ||`);
 
     let urls = [...message.attachments.values()];
     for (let i = 0; i < urls.length; i++) {

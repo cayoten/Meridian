@@ -6,12 +6,7 @@ module.exports = {
     usage: "< id / mention >",
     category: "general",
     description: `Threaded verification system for new members.\nMod-only portion is button controlled.`,
-    /**
-     * @param client {Discord.Client}
-     * @param message {Discord.Message}
-     * @return {Promise<?>}
 
-     */
     run: async function (client, message) {
 
         //Delete command
@@ -131,7 +126,7 @@ module.exports = {
 
                 //No perms? Get outta here. (Decline perms)
                 if (!i.member.permissions.has("MANAGE_MESSAGES")) {
-                    await i.reply(`Member \`${i.user.username}\` missing permissions.`).then(m => setTimeout(() => m.delete(), 5000));;
+                    await i.reply(`Member \`${i.user.username}\` missing permissions.`).then(m => setTimeout(() => m.delete(), 5000));
                     return;
                 }
 
@@ -164,7 +159,7 @@ module.exports = {
 
                 //Get the heck outta here (kick them)
                 if (i.customId === 'kick') {
-                    await message.member.kick();
+                    await i.member.kick();
                     await verifychat.send(`Declined user.`).then(m => setTimeout(() => m.delete(), 5000));
                     await i.message.edit({content: `Success`, components: []});
                     await collectore.stop();

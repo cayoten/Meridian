@@ -6,12 +6,7 @@ module.exports = {
     permLevel: "MANAGE_CHANNELS",
     category: "management",
     description: `Staff only command to set slowmode. Define seconds to set to Discord Slowmode`,
-    /**
-     * @param client {Discord.Client}
-     * @param message {Discord.Message}
-     * @param args {string[]}
-     * @return {Promise<?>}
-     */
+
     run: async function (client, message, args) {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.MANAGE_CHANNELS))
             return;

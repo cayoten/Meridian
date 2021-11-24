@@ -5,11 +5,7 @@ module.exports = {
     permLevel: "SEND_MESSAGES",
     category: "general",
     description: `Enlarge the specified emote.`,
-     /**
-     * @param client {Discord.Client}
-     * @param message {Discord.Message}
-     * @return {Promise<?>}
-     */
+
     run: async function (client, message) {
         const arg = message.content.split(" ");
 

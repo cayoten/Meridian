@@ -6,12 +6,7 @@ module.exports = {
     permLevel: "BAN_MEMBERS",
     category: "moderation",
     description: `Unbans the tagged user.`,
-    /**
-     * @param client {Discord.Client}
-     * @param message {Discord.Message}
-     * @param args {string[]}
-     * @return {Promise<?>}
-     */
+
     run: async function (client, message, args) {
         if (message.deletable) await message.delete();
 
@@ -39,9 +34,9 @@ module.exports = {
                 }
 
                 message.guild.members.unban(User.id);
-                message.channel.send({content:"Action \`unban\` applied successfully."})
+                message.channel.send({content: "Action \`unban\` applied successfully."})
                     .then(m => setTimeout(() => m.delete(), 5000));
-                infractionchannel.send({content:`\`[${utils.epochToHour(Date.now())}]\` :wave: **${message.author.tag}** has performed action: \`unban\` \n\`Affected User:\` **${User.tag}** *(${User.id})*`})
+                infractionchannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :wave: **${message.author.tag}** has performed action: \`unban\` \n\`Affected User:\` **${User.tag}** *(${User.id})*`})
             })
     }
 

@@ -1,17 +1,11 @@
 const Discord = require("discord.js");
-const utils = require('../../lib/utils.js');
-
 module.exports = {
     name: "avatar",
     usage: "display amount of users",
     permLevel: "SEND_MESSAGES",
     category: "general",
     description: `Display's the @'ed user's avatar.`,
-    /**
-     * @param client {Discord.Client}
-     * @param message {Discord.Message}
-     * @return {Promise<?>}
-     */
+
     run: async function (client, message) {
         if (message.channel.name === "general-chat" && !message.member.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)) {
             return message.channel.send("You cannot use that command in this channel!");
@@ -25,6 +19,6 @@ module.exports = {
             .setAuthor(user.username)
             .setImage(user.avatarURL() + "?size=512");
         await message.channel.send(`Displaying avatar for user \`${user.username}\``);
-        await message.channel.send({embeds:[avatarEmbed]});
+        await message.channel.send({embeds: [avatarEmbed]});
     }
 }

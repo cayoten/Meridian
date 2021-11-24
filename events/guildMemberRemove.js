@@ -1,20 +1,13 @@
-const Discord = require("discord.js");
 const utils = require('../lib/utils.js');
-/**
- * @param member {Discord.GuildMember}
- * @returns {Promise<void>}
- */
 module.exports = async function (member) {
-    /** @type{Discord.TextChannel}*/
     let jlChannel = utils.findTextChannel(member.guild, "join-leave-log")
     if (!jlChannel) {
         return console.log(`A join and leave log channel doesn't exist!`)
     }
 
-    jlChannel.send({content:`➖ ${member} (**${member.user.tag}**) has left. (${member.guild.memberCount}M)`});
+    await jlChannel.send({content: `➖ ${member} (**${member.user.tag}**) has left. (${member.guild.memberCount}M)`});
 
     //Check if someone was kicked
-    /** @type{Discord.GuildAuditLogs}*/
     let logs = await member.guild.fetchAuditLogs({type: 'MEMBER_KICK'});
     let entries = [...logs.entries.values()];
     let foundLog;
@@ -35,7 +28,6 @@ module.exports = async function (member) {
     }
 
     //Check if someone was banned
-    /** @type{Discord.GuildAuditLogs}*/
     let logsBan = await member.guild.fetchAuditLogs({type: 'MEMBER_BAN_ADD'});
     let entriesBan = [...logsBan.entries.values()];
     let foundBan;

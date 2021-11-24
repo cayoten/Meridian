@@ -6,11 +6,7 @@ module.exports = {
     permLevel: "SEND_MESSAGES",
     category: "general",
     description: `Displays information about Meridian.`,
-     /**
-     * @param client {Discord.Client}
-     * @param message {Discord.Message}
-     * @return {Promise<?>}
-     */
+
     run: async function (client, message) {
 
         let infoEmbed = new Discord.MessageEmbed()

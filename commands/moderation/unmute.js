@@ -6,12 +6,7 @@ module.exports = {
     permLevel: "KICK_MEMBERS",
     category: "moderation",
     description: `Unbans the tagged user.`,
-    /**
-     * @param client {Discord.Client}
-     * @param message {Discord.Message}
-     * @param args {string[]}
-     * @return {Promise<?>}
-     */
+
     run: async function (client, message, args) {
 
         //!mute @user 1s/m/h/d reason
@@ -23,9 +18,10 @@ module.exports = {
         let tomute;
         try {
             tomute = message.mentions.users.first() || await client.users.fetch(args[0]);
-        } catch(e) {}
+        } catch (e) {
+        }
 
-        if (!tomute) return message.channel.send({content:'Unable to find user.'});
+        if (!tomute) return message.channel.send({content: 'Unable to find user.'});
         const member = message.guild.members.cache.get(tomute.id);
         // FIXME: Is this permission check right? - juan
         if (member.permissions.has(Discord.Permissions.FLAGS.KICK_MEMBERS)) {

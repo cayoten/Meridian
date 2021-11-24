@@ -5,11 +5,7 @@ module.exports = {
     permLevel: "SEND_MESSAGES",
     category: "general",
     description: `Display's the @'ed user's information.`,
-    /**
-     * @param client {Discord.Client}
-     * @param message {Discord.Message}
-     * @return {Promise<?>}
-     */
+
     run: async function (client, message, args) {
 
         let tocheck = message.mentions.members.first() || message.guild.members.cache.get(args[0])
@@ -39,6 +35,6 @@ module.exports = {
             .setFooter("Developed by Cayoten")
             .setTimestamp();
 
-        await message.channel.send({embeds:[memberinfo]});
+        await message.channel.send({embeds: [memberinfo]});
     }
 }

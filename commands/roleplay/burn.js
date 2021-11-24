@@ -1,16 +1,10 @@
-const Discord = require("discord.js");
 module.exports = {
     name: "burn",
     usage: "< id / mention >",
     permLevel: "SEND_MESSAGES",
     category: "roleplay",
     description: `Burn the specified user.`,
-    /**
-     * @param client {Discord.Client}
-     * @param message {Discord.Message}
-     * @param args {string[]}
-     * @return {Promise<?>}
-     */
+
     run: async function (client, message, args) {
 
         if (client.cooldownManager.checkCooldownAndNotify("rp", message.author.id, message)) {
@@ -26,7 +20,7 @@ module.exports = {
         client.cooldownManager.setCoolDown("rp", message.author.id, 45);
 
         let array = ["roasted", "has roasted", "scorched", "burned"];
-        await message.channel.send({content:`${message.author} ${array[Math.round(Math.random() * (array.length - 1))]} ${burnUser}!`});
+        await message.channel.send({content: `${message.author} ${array[Math.round(Math.random() * (array.length - 1))]} ${burnUser}!`});
     }
 
 };
