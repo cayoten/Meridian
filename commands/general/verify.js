@@ -56,16 +56,25 @@ module.exports = {
         });
 
         //Create embed
+
+        const merge = "https://images.google.com/searchbyimage?image_url=";
+
         const message1 = new Discord.MessageEmbed()
-            .setTitle(`Verification received for user \`${message.author.tag}\``)
+            .setTitle(`New Verification Recieved!`)
+            .setDescription(`[**Avatar Reverse Image Search**](${merge + message.member.displayAvatarURL()})`)
+            .addField(`Username`, `<@${message.author.id}>`)
+            .setThumbnail(message.member.displayAvatarURL())
+            .setFooter(`User account created at: ${message.member.user.createdAt}`)
         await message.channel.send("Verification started. Please check the new thread I just opened as to how to verify!")
             .then(m => setTimeout(() => m.delete(), 5000));
 
         //Send messages to thread and then send questions
-        newthread.send(`Hello, and welcome <@${message.author.id}>! In order to get verified, please respond to these 3 questions, __each in a new message__!`)
-        questions.forEach((q) => {
-            newthread.send(q)
-        })
+        await newthread.send(`Hello, and welcome <@${message.author.id}>! In order to get verified, please respond to these 3 questions, __each in a new message__!`)
+
+        //Async send all questions
+        for (const q of questions) {
+            await newthread.send(q)
+        }
 
         //Create filter and give 60 seconds for questions
         const filter = m => m.author.id === message.author.id
@@ -115,7 +124,7 @@ module.exports = {
             //Set up delete variable for buttons, successfully send verification, and delete thread
             const del = await verifychat.send({embeds: [message1], components: [row]})
             await message.channel.send(`Your verification has been sent, ${message.author}!`)
-                .then(m => setTimeout(() => m.delete(), 5000));
+                .then(m => setTimeout(() => m.delete(), 30000));
             await newthread.delete();
 
             //Button items, 7 days to respond
