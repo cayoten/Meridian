@@ -168,7 +168,7 @@ module.exports = {
 
                 //Get the heck outta here (kick them)
                 if (i.customId === 'kick') {
-                    await i.member.kick();
+                    await message.member.kick();
                     await verifychat.send(`Declined user.`).then(m => setTimeout(() => m.delete(), 5000));
                     await i.message.edit({content: `Success`, components: []});
                     await collectore.stop();
