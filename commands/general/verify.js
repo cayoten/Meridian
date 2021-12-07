@@ -21,7 +21,7 @@ module.exports = {
         };
 
 
-        let memberrole = message.guild.roles.cache.get(roles[message.guild.id]); //null/undefined if there's no member role.
+        let memberRole = message.guild.roles.cache.get(roles[message.guild.id]); //null/undefined if there's no member role.
 
         // Verified? Go away.
         if (message.member.roles.cache.find(x => x.name === "Member")) {
@@ -29,14 +29,14 @@ module.exports = {
         }
 
         // Define chats & roles
-        let genchat = utils.findTextChannel(message.guild, "general-chat");
-        if (!genchat) return message.channel.send({content: "Couldn't find general-chat channel."});
+        let genChat = utils.findTextChannel(message.guild, "general-chat");
+        if (!genChat) return message.channel.send({content: "Couldn't find general-chat channel."});
 
-        let verifychat = utils.findTextChannel(message.guild, "verify-members");
-        if (!verifychat) return message.channel.send({content: "Couldn't find verify-members channel."});
+        let verifyChat = utils.findTextChannel(message.guild, "verify-members");
+        if (!verifyChat) return message.channel.send({content: "Couldn't find verify-members channel."});
 
-        let restricted = message.guild.roles.cache.find(b => b.name === "Server Restricted");
-        if (!restricted) {
+        let restrictRole = message.guild.roles.cache.find(b => b.name === "Server Restricted");
+        if (!restrictRole) {
             return message.channel.send({content: `There isn't a "Server Restricted" role!`});
         }
 
@@ -49,7 +49,7 @@ module.exports = {
         ];
 
         //Thread creator
-        const newthread = await message.channel.threads.create({
+        const newThread = await message.channel.threads.create({
             name: `verify-${message.author.id}`,
             autoArchiveDuration: 60,
             reason: `Verification for user ${message.author.tag}`
@@ -60,25 +60,25 @@ module.exports = {
         const merge = "https://images.google.com/searchbyimage?image_url=";
 
         const message1 = new Discord.MessageEmbed()
-            .setTitle(`New Verification Recieved!`)
+            .setTitle(`New Verification Received!`)
             .setDescription(`[**Avatar Reverse Image Search**](${merge + message.member.displayAvatarURL()})`)
             .addField(`Username`, `<@${message.author.id}> - ${message.author.tag}`)
             .setThumbnail(message.member.displayAvatarURL())
             .setFooter(`User account created at: ${message.member.user.createdAt}`)
-        await message.channel.send("Verification started. Please check the new thread I just opened as to how to verify!")
+        await message.channel.send("Your verification has been started! Please join the thread I just created to continue.")
             .then(m => setTimeout(() => m.delete(), 5000));
 
         //Send messages to thread and then send questions
-        await newthread.send(`Hello, and welcome <@${message.author.id}>! In order to get verified, please respond to these 3 questions, __each in a new message__!`)
+        await newThread.send(`Hello, and welcome <@${message.author.id}>! All you have to do to get verified is respond to these 3 questions. __Please put each answer in a new message__!`)
 
         //Async send all questions
         for (const q of questions) {
-            await newthread.send(q)
+            await newThread.send(q)
         }
 
-        //Create filter and give 60 seconds for questions
+        //Create filter and give 5 minutes for questions
         const filter = m => m.author.id === message.author.id
-        const collector = newthread.createMessageCollector({filter, time: 120000, max: 3});
+        const messageCollector = newThread.createMessageCollector({filter, time: 300000, max: 3});
 
         //Button assembly
         const row = new Discord.MessageActionRow()
@@ -102,17 +102,17 @@ module.exports = {
             );
 
         //End the question collector, log everything
-        collector.on('end', async collected => {
+        messageCollector.on('end', async collected => {
 
             //Close thread & return if nothing was sent
             if (collected.size === 0) {
-                await newthread.delete();
+                await newThread.delete();
                 return message.channel.send(`Verification timeout due to reason \`time runout\`. Verify again by typing $verify, <@${message.author.id}>!`).then(m => setTimeout(() => m.delete(), 10000));
             }
 
             //Close thread & return if there wasn't 3 responses
             if (collected.size !== 3) {
-                await newthread.delete();
+                await newThread.delete();
                 return message.channel.send(`Verification timeout due to reason \`not 3 responses\`. Make sure you put each answer on a separate line, and then verify by typing $verify, <@${message.author.id}>!`).then(m => setTimeout(() => m.delete(), 10000));
             }
 
@@ -122,16 +122,16 @@ module.exports = {
             })
 
             //Set up delete variable for buttons, successfully send verification, and delete thread
-            const del = await verifychat.send({embeds: [message1], components: [row]})
+            const del = await verifyChat.send({embeds: [message1], components: [row]})
             await message.channel.send(`Your verification has been sent, ${message.author}!`)
                 .then(m => setTimeout(() => m.delete(), 30000));
-            await newthread.delete();
+            await newThread.delete();
 
             //Button items, 7 days to respond
-            const collectore = del.createMessageComponentCollector({time: 604800000});
+            const buttonCollector = del.createMessageComponentCollector({time: 604800000});
 
             //Do X thing on Y button
-            collectore.on('collect', async i => {
+            buttonCollector.on('collect', async i => {
 
                 //No perms? Get outta here. (Decline perms)
                 if (!i.member.permissions.has("MANAGE_MESSAGES")) {
@@ -141,11 +141,11 @@ module.exports = {
 
                 //Approve a member
                 if (i.customId === 'approve') {
-                    await (message.member.roles.add(memberrole));
-                    await genchat.send({content: `${responses[Math.round(Math.random() * (responses.length - 1))]} ${message.author}!`});
-                    await verifychat.send(`Approved user with parameters \`none\`.`).then(m => setTimeout(() => m.delete(), 5000));
+                    await (message.member.roles.add(memberRole));
+                    await genChat.send({content: `${responses[Math.round(Math.random() * (responses.length - 1))]} ${message.author}!`});
+                    await verifyChat.send(`Approved user with parameters \`none\`.`).then(m => setTimeout(() => m.delete(), 5000));
                     await i.message.edit({content: `Success`, components: []});
-                    await collectore.stop();
+                    await buttonCollector.stop();
                     try {
                         return del.delete();
                     } catch (e) {
@@ -154,12 +154,12 @@ module.exports = {
 
                 //Restrict them and approve
                 if (i.customId === 'restrict') {
-                    await message.member.roles.add(restricted.id);
-                    await (message.member.roles.add(memberrole));
-                    await genchat.send({content: `${responses[Math.round(Math.random() * (responses.length - 1))]} ${message.author}!`});
-                    await verifychat.send(`Approved user with parameters \`restrict\`.`).then(m => setTimeout(() => m.delete(), 5000));
+                    await message.member.roles.add(restrictRole.id);
+                    await (message.member.roles.add(memberRole));
+                    await genChat.send({content: `${responses[Math.round(Math.random() * (responses.length - 1))]} ${message.author}!`});
+                    await verifyChat.send(`Approved user with parameters \`restrict\`.`).then(m => setTimeout(() => m.delete(), 5000));
                     await i.message.edit({content: `Success`, components: []});
-                    await collectore.stop();
+                    await buttonCollector.stop();
                     try {
                         return del.delete();
                     } catch (e) {
@@ -169,9 +169,9 @@ module.exports = {
                 //Get the heck outta here (kick them)
                 if (i.customId === 'kick') {
                     await message.member.kick();
-                    await verifychat.send(`Declined user.`).then(m => setTimeout(() => m.delete(), 5000));
+                    await verifyChat.send(`Declined user.`).then(m => setTimeout(() => m.delete(), 5000));
                     await i.message.edit({content: `Success`, components: []});
-                    await collectore.stop();
+                    await buttonCollector.stop();
                     try {
                         return del.delete();
                     } catch (e) {
@@ -182,8 +182,8 @@ module.exports = {
                         await del.delete();
                     } catch (e) {
                     }
-                    await verifychat.send(`Cancelled with reason \`member left\`.`).then(m => setTimeout(() => m.delete(), 5000));
-                    return collectore.stop();
+                    await verifyChat.send(`Cancelled with reason \`member left\`.`).then(m => setTimeout(() => m.delete(), 5000));
+                    return buttonCollector.stop();
                 }
             });
         });
