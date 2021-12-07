@@ -62,7 +62,7 @@ module.exports = {
         const message1 = new Discord.MessageEmbed()
             .setTitle(`New Verification Recieved!`)
             .setDescription(`[**Avatar Reverse Image Search**](${merge + message.member.displayAvatarURL()})`)
-            .addField(`Username`, `<@${message.author.id}>`)
+            .addField(`Username`, `<@${message.author.id}> - ${message.author.tag}`)
             .setThumbnail(message.member.displayAvatarURL())
             .setFooter(`User account created at: ${message.member.user.createdAt}`)
         await message.channel.send("Verification started. Please check the new thread I just opened as to how to verify!")
