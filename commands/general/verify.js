@@ -97,7 +97,7 @@ module.exports = {
                     .setStyle('DANGER'),
                 new Discord.MessageButton()
                     .setCustomId('left')
-                    .setLabel('Member Left')
+                    .setLabel('Cancel')
                     .setStyle('SECONDARY'),
             );
 
@@ -177,6 +177,8 @@ module.exports = {
                     } catch (e) {
                     }
                 }
+
+                //Cancel the embed
                 if (i.customId === 'left') {
                     try {
                         await del.delete();
