@@ -18,13 +18,13 @@ module.exports = {
 
         client.cooldownManager.setCoolDown("8ball", message.author.id, 60);
 
-        let ballembed = new Discord.MessageEmbed()
+        let ballEmbed = new Discord.MessageEmbed()
             .setTitle("Your sassy 8ball answer is:")
             .setColor("#f6ca2e")
             .setDescription(`${responses[Math.round(Math.random() * (responses.length - 1))]}`)
             .setFooter("Developed by Cayoten")
             .setTimestamp();
 
-        await message.channel.send({embeds: [ballembed]});
+        await message.channel.send({embeds: [ballEmbed]});
     }
 };

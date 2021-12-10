@@ -19,7 +19,7 @@ module.exports = {
 
         client.cooldownManager.setCoolDown("rp", message.author.id, 45);
 
-        let array = ["tried to hide the body of", "stabbed and killed", "placed a banana to slip on for", "murdered"];
+        let array = ["hid the dead body of", "stabbed and killed", "shot and killed", "murdered", "snuck poison into the food of", "blew up"];
         await message.channel.send({content: `${message.author} ${array[Math.round(Math.random() * (array.length - 1))]} ${killUser}!`});
     }
 

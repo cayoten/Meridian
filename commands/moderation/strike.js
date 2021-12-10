@@ -9,93 +9,92 @@ module.exports = {
     description: `Strikes the tagged user with a reason.`,
 
     run: async function (client, message, args) {
-        //$strike @Raimu being a bean
+        //$strike <@user | ID> reason
+
         //Check perms
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.MANAGE_MESSAGES))
             return;
 
         //Define user
-        let wUser;
+        let warnUser;
         try {
-            wUser = message.mentions.users.first() || await client.users.fetch(args[0]);
+            warnUser = message.mentions.users.first() || await client.users.fetch(args[0]);
         } catch (e) {
         }
 
         // Return if user isn't found
-        if (!wUser) return message.channel.send({content: 'Unable to find user.'});
+        if (!warnUser) return message.channel.send({content: 'Unable to find user.'});
 
         // Define member
-        const member = message.guild.members.cache.get(wUser.id);
+        const member = message.guild.members.cache.get(warnUser.id);
         if (member && member.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)) {
-            return message.channel.send({content: "I can't strike that person."})
+            return message.channel.send({content: "I cannot strike a user with the permission \`MANAGE_MESSAGES\!."})
                 .then(m => setTimeout(() => m.delete(), 5000));
         }
 
         // Define reason or create default reason
-        let wReason = args.slice(1).join(" ");
-        if (!wReason) return message.channel.send({content: "Please specify a reason for striking this user!"});
+        let warnReason = args.slice(1).join(" ");
+        if (!warnReason) return message.channel.send({content: "Please specify a reason for striking this user!"});
 
         //Warn creation and storage
         let warns = client.dataStorage.warnings;
         if (!warns[message.guild.id]) warns[message.guild.id] = {};//Create a new empty object fot this guild.
-        if (!warns[message.guild.id][wUser.id]) warns[message.guild.id][wUser.id] = [] ///Create a new empty array fot this user.
+        if (!warns[message.guild.id][warnUser.id]) warns[message.guild.id][warnUser.id] = [] ///Create a new empty array fot this user.
 
-        warns[message.guild.id][wUser.id].push(wReason);
+        await warns[message.guild.id][warnUser.id].push(warnReason);
 
         //Writes the warning to a file
-        client.dataStorage.saveData()
+        await client.dataStorage.saveData()
 
-        //Finds the warn embed
-        let warnchannel = utils.findTextChannel(message.guild, "mod-logs");
-        if (!warnchannel) return message.channel.send({content: `:warning: Cannot find the "mod-logs" channel.`});
+        //Finds the strike embed
+        let warnChannel = utils.findTextChannel(message.guild, "mod-logs");
+        if (!warnChannel) return message.channel.send({content: `:warning: Cannot find the "mod-logs" channel.`});
 
 
-        //Sends the warn to chat & DMs
-        await warnchannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :triangular_flag_on_post: **${message.author.tag}** has performed action: \`strike\` \n\`Affected User:\` **${wUser.tag}** *(${wUser.id})* \n\`Reason:\` ${wReason}`});
-        await message.channel.send({content: `Action \`strike\` on user ${wUser} applied successfully.`});
+        //Sends the strike to chat & DMs
+        await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :triangular_flag_on_post: **${message.author.tag}** has performed action: \`strike\` \n\`Affected User:\` **${warnUser.tag}** *(${warnUser.id})* \n\`Reason:\` ${warnReason}`});
+        await message.channel.send({content: `Action \`strike\` on user ${warnUser} applied successfully.`});
         try {
-            await wUser.send({content: `__**New Strike Received**__ \n You have been given a strike for the reason: **${wReason}**`});
+            await warnUser.send({content: `__**New Strike Received**__ \n You have been given a strike for the reason: **${warnReason}**`});
         } catch (e) {
         }
 
         // Defines amount of warns
-        let WarnAmount = warns[message.guild.id][wUser.id].length;
+        let WarnAmount = warns[message.guild.id][warnUser.id].length;
 
 
         //Actions on X warns.
 
-        let muterole = message.guild.roles.cache.find(role => role.name === "Muted");
-        if (!muterole) return message.channel.send({content: `There's no role called \`Muted\`, please create one.`});
+        let muteRole = message.guild.roles.cache.find(role => role.name === "Muted");
+        if (!muteRole) return message.channel.send({content: `There's no role called \`Muted\`, please create one.`});
 
 
         if (WarnAmount === 2) {
-            await (member.roles.add(muterole.id));
-            await client.dataStorage.addUserMute(wUser.id, message.guild.id, ms("30 minutes"));
-            await warnchannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :no_mouth: **Meridian Automation** has performed action: \`mute\` \n\`Affected User:\` **${wUser.tag}** *(${wUser.id})* \n\`Duration:\` 30m \n\`Reason:\` 2 strikes reached.`});
-            await message.channel.send({content: `${wUser} has had an automatic 30m mute applied for passing the **2** strike threshold.`});
+            await (member.roles.add(muteRole.id));
+            await client.dataStorage.addUserMute(warnUser.id, message.guild.id, ms("30 minutes"));
+            await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :no_mouth: **Meridian Automation** has performed action: \`mute\` \n\`Affected User:\` **${warnUser.tag}** *(${warnUser.id})* \n\`Duration:\` 30m \n\`Reason:\` 2 strikes reached.`});
+            await message.channel.send({content: `${warnUser} has had an automatic 30m mute applied for passing the **2** strike threshold.`});
 
         } else if (WarnAmount === 3) {
-            await (member.roles.add(muterole.id));
-            await client.dataStorage.addUserMute(wUser.id, message.guild.id, ms("2 hours"));
-            await warnchannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :no_mouth: **Meridian Automation** has performed action: \`mute\` \n\`Affected User:\` **${wUser.tag}** *(${wUser.id})* \n\`Duration:\` 2h \n\`Reason:\` 3 strikes reached.`});
-            await message.channel.send({content: `${wUser} has had an automatic 2h mute applied for passing the **3** strike threshold.`});
+            await (member.roles.add(muteRole.id));
+            await client.dataStorage.addUserMute(warnUser.id, message.guild.id, ms("2 hours"));
+            await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :no_mouth: **Meridian Automation** has performed action: \`mute\` \n\`Affected User:\` **${warnUser.tag}** *(${warnUser.id})* \n\`Duration:\` 2h \n\`Reason:\` 3 strikes reached.`});
+            await message.channel.send({content: `${warnUser} has had an automatic 2h mute applied for passing the **3** strike threshold.`});
 
         } else if (WarnAmount === 4) {
-            await member.kick(wReason);
-            await message.channel.send({content: `${wUser} has been automatically kicked for passing the **4** strike threshold.`});
-            await warnchannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :boot: **Meridian Automation** has performed action: \`kick\` \n\`Affected User:\` **${wUser.tag}** *(${wUser.id})*`});
+            await member.kick(warnReason);
+            await message.channel.send({content: `${warnUser} has been automatically kicked for passing the **4** strike threshold.`});
+            await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :boot: **Meridian Automation** has performed action: \`kick\` \n\`Affected User:\` **${warnUser.tag}** *(${warnUser.id})*`});
 
         } else if (WarnAmount === 5) {
-            await wUser.send({content: "------------------------------\n⚠ __**Automated Alert**__ ⚠\n------------------------------\nYou are on your **fifth** strike. Your next strike will result in an automatic ban."})
-            await warnchannel.send({content: `\`[${utils.epochToHour(Date.now())}]\`‼ The user **${wUser.tag}** *(${wUser.id})* has reached **5/6** strikes.`})
-        }
-        if (WarnAmount >= 6) {
-            await message.guild.members.ban(wUser, {reason: wReason});
-            await warnchannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :hammer: **Meridian Automation**  has applied action: \`ban\`\n\`Affected User:\` **${wUser.tag}** *(${wUser.id})* \n\`Reason:\` 6 strikes reached.`});
-            await message.channel.send({content: `${wUser} has been banned for reaching 6 strikes.`});
-        }
+            await warnUser.send({content: "------------------------------\n⚠ __**Automated Alert**__ ⚠\n------------------------------\nYou are on your **fifth** strike. Your next strike will result in an automatic ban."})
+            await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\`‼ The user **${warnUser.tag}** *(${warnUser.id})* has reached **5/6** strikes. Their next strike is an automatic ban.`})
 
-        //If this shit goes bonkers ignore it (It won't, but I'm a bad coder too so...)
+        } else if (WarnAmount >= 6) {
+            await message.guild.members.ban(warnUser, {reason: warnReason});
+            await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :hammer: **Meridian Automation**  has applied action: \`ban\`\n\`Affected User:\` **${warnUser.tag}** *(${warnUser.id})* \n\`Reason:\` 6 strikes reached.`});
+            await message.channel.send({content: `${warnUser} has been banned for reaching 6 strikes.`});
 
+        }
     }
 };

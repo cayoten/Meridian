@@ -11,22 +11,22 @@ module.exports = {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.MANAGE_MESSAGES))
             return;
 
-        let wUser;
+        let warnUser;
         try {
-            wUser = message.mentions.users.first() || await client.users.fetch(args[0]);
+            warnUser = message.mentions.users.first() || await client.users.fetch(args[0]);
         } catch (e) {
         }
 
-        if (!wUser) return message.channel.send({content: 'Unable to find user.'});
+        if (!warnUser) return message.channel.send({content: 'Unable to find user.'});
 
         let warns = client.dataStorage.warnings;
         if (!warns[message.guild.id]) warns[message.guild.id] = {};//Create a new empty object fot this guild.
-        if (!warns[message.guild.id][wUser.id]) warns[message.guild.id][wUser.id] = [] ///Create a new empty array fot this user.
+        if (!warns[message.guild.id][warnUser.id]) warns[message.guild.id][warnUser.id] = [] ///Create a new empty array fot this user.
 
-        let userWarns = warns[message.guild.id][wUser.id];
+        let userWarns = warns[message.guild.id][warnUser.id];
         //Let's list warns by index
         if (userWarns.length > 0) {
-            let warnMessage = `Listing **${userWarns.length}** strikes for user ${wUser}.\n`;
+            let warnMessage = `Listing **${userWarns.length}** strikes for user ${warnUser}.\n`;
             userWarns.forEach((item, index) => {
                 warnMessage = warnMessage + `\`Strike ID:\` ${index} \`Strike Reason:\` ${item}\n`;
             })

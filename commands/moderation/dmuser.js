@@ -20,18 +20,18 @@ module.exports = {
 
         if (!member) return message.channel.send({content: 'Unable to find user.'});
 
-        let dMessage = args.slice(1).join(" ");
-        if (dMessage.length < 1) return message.channel.send({content: 'You must supply a message!'});
+        let pmMessage = args.slice(1).join(" ");
+        if (pmMessage.length < 1) return message.channel.send({content: 'You must supply a message!'});
 
         try {
-            await member.send({content: `__You have a new message:__\n\n**${dMessage}**`});
+            await member.send({content: `__You have a new message:__\n\n**${pmMessage}**`});
         } catch (e) {
             return message.channel.send({content: "I couldn't deliver the message, their DMs are closed or they aren't in the server."})
         }
 
         let logChannel = utils.findTextChannel(message.guild, "mod-logs");
 
-        await logChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :speak_no_evil:  **${message.author.tag}** has sent an automated DM to **${member.tag}** *(${member.id})* \n\`Message Content:\` ${dMessage}`});
+        await logChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :speak_no_evil:  **${message.author.tag}** has sent an automated DM to **${member.tag}** *(${member.id})* \n\`Message Content:\` ${pmMessage}`});
 
         await message.channel.send({content: `Action \`dm user\` applied to ${member} successfully.`});
 

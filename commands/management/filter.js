@@ -18,18 +18,18 @@ module.exports = {
 
             if (message.deletable) message.delete();
 
-            let filterword = args.slice(1).join(" ");
+            let filterWord = args.slice(1).join(" ");
 
-            if (utils.isBlank(filterword))
+            if (utils.isBlank(filterWord))
                 return message.channel.send({content: "Please specify a word to add."});
 
-            if (client.dataStorage.serverData[message.guild.id]["filter"][filterword])
+            if (client.dataStorage.serverData[message.guild.id]["filter"][filterWord])
                 return message.channel.send({content: "This word already exist in the filter."});
 
-            if (/\s/.test(filterword))
+            if (/\s/.test(filterWord))
                 return message.channel.send({content: "Invalid filter entry! Filter entries must not contain any space."});
 
-            client.dataStorage.serverData[message.guild.id]["filter"].push(filterword);
+            client.dataStorage.serverData[message.guild.id]["filter"].push(filterWord);
 
             client.dataStorage.saveData();
 

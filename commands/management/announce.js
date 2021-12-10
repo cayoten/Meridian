@@ -11,12 +11,12 @@ module.exports = {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.MANAGE_ROLES))
             return;
 
-        let botmessage = args.join(" ");
+        let botMessage = args.join(" ");
 
         let anEmbed = new Discord.MessageEmbed()
             .setTitle(`Staff Announcement`)
             .setColor("#ff9d4b")
-            .addField("Message:", `**${botmessage}**`)
+            .addField("Message:", `**${botMessage}**`)
             .addField("Sent by", `${message.author}`)
             .setFooter("Developed by Cayoten")
             .setTimestamp();

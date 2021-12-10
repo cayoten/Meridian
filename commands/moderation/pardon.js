@@ -11,36 +11,36 @@ module.exports = {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.MANAGE_MESSAGES))
             return;
 
-        let wUser;
+        let warnUser;
         try {
-            wUser = message.mentions.users.first() || await client.users.fetch(args[0]);
+            warnUser = message.mentions.users.first() || await client.users.fetch(args[0]);
         } catch (e) {
         }
 
-        if (!wUser) return message.channel.send({content: 'Unable to find user.'});
+        if (!warnUser) return message.channel.send({content: 'Unable to find user.'});
 
         let warns = client.dataStorage.warnings;
         if (!warns[message.guild.id]) warns[message.guild.id] = {};//Create a new empty object fot this guild.
-        if (!warns[message.guild.id][wUser.id]) warns[message.guild.id][wUser.id] = [] ///Create a new empty array fot this user.
+        if (!warns[message.guild.id][warnUser.id]) warns[message.guild.id][warnUser.id] = [] ///Create a new empty array fot this user.
 
-        if (warns[message.guild.id][wUser.id].length === 0) {
+        if (warns[message.guild.id][warnUser.id].length === 0) {
             return message.channel.send({content: "This user has no strikes!"})
         }
 
-        if (isNaN(args[1]) || args[1] < 0 || args[1] >= warns[message.guild.id][wUser.id].length) {
+        if (isNaN(args[1]) || args[1] < 0 || args[1] >= warns[message.guild.id][warnUser.id].length) {
             return message.channel.send({content: "Please provide a valid Strike ID!"})
         }
 
-        let removedWarn = warns[message.guild.id][wUser.id].splice(args[1], 1); //Remove the warn.
+        let removedWarn = warns[message.guild.id][warnUser.id].splice(args[1], 1); //Remove the warn.
 
         client.dataStorage.saveData()
 
-        let warnchannel = utils.findTextChannel(message.guild, "mod-logs");
-        if (!warnchannel) {
+        let warnChannel = utils.findTextChannel(message.guild, "mod-logs");
+        if (!warnChannel) {
             return message.channel.send({content: `:warning: Cannot find the "mod-logs" channel.`});
         }
 
-        await warnchannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :heavy_minus_sign: **${message.author.tag}** has performed action: \`pardon\`\n\`Affected User:\` **${wUser.tag}** *(${wUser.id})*\n\`Strike Reason:\`${removedWarn[0]}\n\`Active Strike Count:\` ${warns[message.guild.id][wUser.id].length}`});
+        await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :heavy_minus_sign: **${message.author.tag}** has performed action: \`pardon\`\n\`Affected User:\` **${warnUser.tag}** *(${warnUser.id})*\n\`Strike Reason:\`${removedWarn[0]}\n\`Active Strike Count:\` ${warns[message.guild.id][warnUser.id].length}`});
         message.channel.send({content: "Action \`pardon user\` applied successfully."});
     }
 };

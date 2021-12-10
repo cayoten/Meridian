@@ -8,10 +8,10 @@ module.exports = {
 
     run: async function (client, message, args) {
 
-        let tocheck = message.mentions.members.first() || message.guild.members.cache.get(args[0])
-        if (!tocheck) return message.channel.send(`${message.author}, user not found.`);
+        let checkUser = message.mentions.members.first() || message.guild.members.cache.get(args[0])
+        if (!checkUser) return message.channel.send(`${message.author}, user not found.`);
 
-        const joinDate = tocheck.joinedAt;//Change this
+        const joinDate = checkUser.joinedAt;//Change this
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         const year = joinDate.getFullYear();
         const month = months[joinDate.getMonth()];
@@ -24,17 +24,17 @@ module.exports = {
         const merge = "https://images.google.com/searchbyimage?image_url=";
 
 
-        const memberinfo = new Discord.MessageEmbed()
-            .setTitle(`${tocheck.user.username}`)
-            .setDescription(`[**Avatar Reverse Image Search**](${merge + tocheck.user.displayAvatarURL()})`)
-            .addField("ID", `${tocheck.id}`)
-            .addField("Created At", `${tocheck.user.createdAt}`)
+        const memberInfo = new Discord.MessageEmbed()
+            .setTitle(`${checkUser.user.username}`)
+            .setDescription(`[**Avatar Reverse Image Search**](${merge + checkUser.user.displayAvatarURL()})`)
+            .addField("ID", `${checkUser.id}`)
+            .addField("Created At", `${checkUser.user.createdAt}`)
             .addField("Joined At", joinTime)
-            .addField("Status", `${tocheck.presence?.status || "unknown"}`)
-            .setThumbnail(tocheck.user.displayAvatarURL())
+            .addField("Status", `${checkUser.presence?.status || "unknown"}`)
+            .setThumbnail(checkUser.user.displayAvatarURL())
             .setFooter("Developed by Cayoten")
             .setTimestamp();
 
-        await message.channel.send({embeds: [memberinfo]});
+        await message.channel.send({embeds: [memberInfo]});
     }
 }
