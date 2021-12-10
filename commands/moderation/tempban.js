@@ -18,26 +18,26 @@ module.exports = {
 
         if (!args[0]) return message.channel.send({content: "Where the hell is the member I need to ban?"});
 
-        let bUser;
+        let banUser;
         try {
-            bUser = message.mentions.users.first() || await client.users.fetch(args[0]);
+            banUser = message.mentions.users.first() || await client.users.fetch(args[0]);
         } catch (e) {
         }
 
-        if (!bUser) return message.channel.send({content: 'Unable to find user.'});
+        if (!banUser) return message.channel.send({content: 'Unable to find user.'});
 
-        const member = message.guild.members.cache.get(bUser.id);
+        const member = message.guild.members.cache.get(banUser.id);
         if (member && member.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)) {
             return message.channel.send({content: "I can't ban that person."})
                 .then(m => setTimeout(() => m.delete(), 5000));
         }
 
-        let bantime = args[1];
-        if (!bantime) {
+        let banTime = args[1];
+        if (!banTime) {
             return message.channel.send({content: "You didn't specify a time!"});
         }
 
-        if ((ms(bantime) === undefined)) {
+        if ((ms(banTime) === undefined)) {
             return message.channel.send({content: "an invalid ban time was supplied."})
         }
 
@@ -50,14 +50,14 @@ module.exports = {
         }
 
         try {
-            await bUser.send({content: `You have been banned for ${ms(ms(bantime))} for the reason: **${reason}**`});
+            await banUser.send({content: `You have been banned for ${ms(ms(banTime))} for the reason: **${reason}**`});
         } catch (e) {
         }
-        await message.channel.send({content: `Action \`tempban\` on user ${bUser} has been applied successfully.`});
-        await incidents.send({content: `\`[${utils.epochToHour(Date.now())}]\` :timer: **${message.author.tag}** has performed action: \`tempban\` \n\`Affected User:\` **${bUser.tag}** *(${bUser.id})*\n\`Duration:\` ${ms(ms(bantime))} \n\`Reason:\` ${reason}`});
-        await message.guild.members.ban(bUser, {reason: reason});
+        await message.channel.send({content: `Action \`tempban\` on user ${banUser} has been applied successfully.`});
+        await incidents.send({content: `\`[${utils.epochToHour(Date.now())}]\` :timer: **${message.author.tag}** has performed action: \`tempban\` \n\`Affected User:\` **${banUser.tag}** *(${banUser.id})*\n\`Duration:\` ${ms(ms(banTime))} \n\`Reason:\` ${reason}`});
+        await message.guild.members.ban(banUser, {reason: reason});
 
-        client.dataStorage.addUserBan(bUser.id, message.guild.id, ms(bantime));
+        client.dataStorage.addUserBan(banUser.id, message.guild.id, ms(banTime));
 
     }
 

@@ -12,14 +12,14 @@ module.exports = {
 
         const member = message.member;
 
-        let muterole = message.guild.roles.cache.find(role => role.name === "Muted");
-        if (!muterole)
+        let muteRole = message.guild.roles.cache.find(role => role.name === "Muted");
+        if (!muteRole)
             return message.channel.send("There isn't a `Muted` role.");
 
         if (message.member.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES))
             return message.channel.send("You're a staff, you can't use this!");
 
-        await (member.roles.add(muterole.id));
+        await (member.roles.add(muteRole.id));
 
         message.channel.send({content: `${replies[Math.round(Math.random() * (replies.length - 1))]} <@${member.id}>`});
 

@@ -69,7 +69,7 @@ module.exports = {
             .then(m => setTimeout(() => m.delete(), 5000));
 
         //Send messages to thread and then send questions
-        await newThread.send(`Hello, and welcome <@${message.author.id}>! All you have to do to get verified is respond to these 3 questions. __Please put each answer in a new message__!`)
+        await newThread.send(`Hello, and welcome <@${message.author.id}>! All you have to do to get verified is reply to all 3 questions __individually__!`)
 
         //Async send all questions
         for (const q of questions) {

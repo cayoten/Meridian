@@ -20,8 +20,8 @@ module.exports = {
         client.users.fetch(args[0])
             .then(User => {
 
-                let infractionchannel = utils.findTextChannel(message.guild, "mod-logs");
-                if (!infractionchannel) {
+                let modLogChannel = utils.findTextChannel(message.guild, "mod-logs");
+                if (!modLogChannel) {
                     return message.channel.send({content: `:warning: Cannot find the "mod-logs" channel.`});
                 }
 
@@ -36,7 +36,7 @@ module.exports = {
                 message.guild.members.unban(User.id);
                 message.channel.send({content: "Action \`unban\` applied successfully."})
                     .then(m => setTimeout(() => m.delete(), 5000));
-                infractionchannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :wave: **${message.author.tag}** has performed action: \`unban\` \n\`Affected User:\` **${User.tag}** *(${User.id})*`})
+                modLogChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :wave: **${message.author.tag}** has performed action: \`unban\` \n\`Affected User:\` **${User.tag}** *(${User.id})*`})
             })
     }
 

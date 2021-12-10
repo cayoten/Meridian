@@ -18,11 +18,11 @@ module.exports = {
 
             if (message.deletable) message.delete();
 
-            let nologchannel = args.slice(1).join(" ");
+            let noLogChannel = args.slice(1).join(" ");
 
-            if (message.guild.channels.cache.get(nologchannel)) {
+            if (message.guild.channels.cache.get(noLogChannel)) {
 
-                client.dataStorage.serverData[message.guild.id]["nolog"].push(nologchannel);
+                client.dataStorage.serverData[message.guild.id]["nolog"].push(noLogChannel);
 
                 client.dataStorage.saveData();
 

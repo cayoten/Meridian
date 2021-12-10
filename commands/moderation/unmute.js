@@ -13,23 +13,23 @@ module.exports = {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.KICK_MEMBERS))
             return;
 
-        let muterole = message.guild.roles.cache.find(r => r.name === "Muted");
+        let muteRole = message.guild.roles.cache.find(r => r.name === "Muted");
 
-        let tomute;
+        let toMute;
         try {
-            tomute = message.mentions.users.first() || await client.users.fetch(args[0]);
+            toMute = message.mentions.users.first() || await client.users.fetch(args[0]);
         } catch (e) {
         }
 
-        if (!tomute) return message.channel.send({content: 'Unable to find user.'});
-        const member = message.guild.members.cache.get(tomute.id);
+        if (!toMute) return message.channel.send({content: 'Unable to find user.'});
+        const member = message.guild.members.cache.get(toMute.id);
         // FIXME: Is this permission check right? - juan
         if (member.permissions.has(Discord.Permissions.FLAGS.KICK_MEMBERS)) {
             return message.channel.send({content: ":heavy_multiplication_x: You cannot mute them!"});
         }
 
-        let unmutechannel = utils.findTextChannel(message.guild, "mod-logs");
-        if (!unmutechannel) {
+        let modLogChannel = utils.findTextChannel(message.guild, "mod-logs");
+        if (!modLogChannel) {
             return message.channel.send({content: `:warning: Cannot find the "mod-logs" channel.`});
         }
 
@@ -38,9 +38,9 @@ module.exports = {
 
 
         client.dataStorage.removeMute(member.id, message.guild.id);
-        await (member.roles.remove(muterole.id));
-        await unmutechannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :speaking_head:  **${message.author.tag}** has performed action: \`unmute\` \n\`Affected User:\` **${tomute.tag}** *(${tomute.id})*`});
-        await message.channel.send({content: `Action \`unmute\` applied to ${tomute} successfully.`});
+        await (member.roles.remove(muteRole.id));
+        await modLogChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :speaking_head:  **${message.author.tag}** has performed action: \`unmute\` \n\`Affected User:\` **${toMute.tag}** *(${toMute.id})*`});
+        await message.channel.send({content: `Action \`unmute\` applied to ${toMute} successfully.`});
 
     }
 

@@ -15,15 +15,15 @@ module.exports = {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.KICK_MEMBERS))
             return;
 
-        let tomute;
+        let toMute;
         try {
-            tomute = message.mentions.users.first() || await client.users.fetch(args[0]);
+            toMute = message.mentions.users.first() || await client.users.fetch(args[0]);
         } catch (e) {
         }
 
-        if (!tomute) return message.channel.send({content: 'Unable to find user.'});
+        if (!toMute) return message.channel.send({content: 'Unable to find user.'});
 
-        const member = message.guild.members.cache.get(tomute.id);
+        const member = message.guild.members.cache.get(toMute.id);
         try {
             if (member.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)) {
                 return message.channel.send({content: ":heavy_multiplication_x: You cannot mute them!"});
@@ -32,34 +32,34 @@ module.exports = {
             return message.channel.send({content: "This user isn't in the server.."});
         }
 
-        let muterole = message.guild.roles.cache.find(role => role.name === "Muted");
-        if (!muterole) return message.channel.send({content: `There's no role called \`Muted\`, please create one.`});
+        let muteRole = message.guild.roles.cache.find(role => role.name === "Muted");
+        if (!muteRole) return message.channel.send({content: `There's no role called \`Muted\`, please create one.`});
 
-        let mutetime = args[1];
-        if (!mutetime) {
+        let muteTime = args[1];
+        if (!muteTime) {
             return message.channel.send({content: "You didn't specify a time!"});
         }
-        if ((ms(mutetime) === undefined)) {
+        if ((ms(muteTime) === undefined)) {
             return message.channel.send({content: "an invalid mute time was supplied."})
         }
 
         let reason = args.slice(2).join(' ') || "No reason specified";
 
-        let mutechannel = utils.findTextChannel(message.guild, "mod-logs");
-        if (!mutechannel) {
+        let muteChannel = utils.findTextChannel(message.guild, "mod-logs");
+        if (!muteChannel) {
             return message.channel.send({content: `:warning: Cannot find the "mod-logs" channel.`});
         }
 
-        await mutechannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :no_mouth: **${message.author.tag}** has performed action: \`mute\`. \n**\`Affected User:\`${tomute.tag}** *(${tomute.id})*. \n\`Duration:\` ${mutetime}\n\`Reason:\` ${reason}`});
+        await muteChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :no_mouth: **${message.author.tag}** has performed action: \`mute\`. \n**\`Affected User:\`${toMute.tag}** *(${toMute.id})*. \n\`Duration:\` ${muteTime}\n\`Reason:\` ${reason}`});
 
         try {
-            await tomute.send({content: `You have been muted for \`${ms(ms(mutetime))}\` with the reason: **${reason}**`});
+            await toMute.send({content: `You have been muted for \`${ms(ms(muteTime))}\` with the reason: **${reason}**`});
         } catch (e) {
         }
-        await (member.roles.add(muterole.id));
-        await message.channel.send({content: `Action \`mute user\` has been applied successfully to <@${tomute.id}> for ${ms(ms(mutetime))}`});
+        await (member.roles.add(muteRole.id));
+        await message.channel.send({content: `Action \`mute user\` has been applied successfully to <@${toMute.id}> for ${ms(ms(muteTime))}`});
 
-        client.dataStorage.addUserMute(tomute.id, message.guild.id, ms(mutetime));
+        client.dataStorage.addUserMute(toMute.id, message.guild.id, ms(muteTime));
 
     }
 
