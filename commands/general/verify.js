@@ -107,13 +107,13 @@ module.exports = {
             //Close thread & return if nothing was sent
             if (collected.size === 0) {
                 await newThread.delete();
-                return message.channel.send(`Verification timeout due to reason \`time runout\`. Verify again by typing $verify, <@${message.author.id}>!`).then(m => setTimeout(() => m.delete(), 10000));
+                return message.channel.send(`Verification timeout due to reason \`time runout\`. Verify again by typing $verify, <@${message.author.id}>!`).then(m => setTimeout(() => m.delete(), 30000));
             }
 
             //Close thread & return if there wasn't 3 responses
             if (collected.size !== 3) {
                 await newThread.delete();
-                return message.channel.send(`Verification timeout due to reason \`not 3 responses\`. Make sure you put each answer on a separate line, and then verify by typing $verify, <@${message.author.id}>!`).then(m => setTimeout(() => m.delete(), 10000));
+                return message.channel.send(`Verification timeout due to reason \`not 3 responses\`. Make sure you put each answer on a separate line, and then verify by typing $verify, <@${message.author.id}>!`).then(m => setTimeout(() => m.delete(), 30000));
             }
 
             //Form responses
