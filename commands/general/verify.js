@@ -69,7 +69,7 @@ module.exports = {
             .then(m => setTimeout(() => m.delete(), 5000));
 
         //Send messages to thread and then send questions
-        await newThread.send(`Hello, and welcome <@${message.author.id}>! All you have to do to get verified is reply to all 3 questions __individually__!`)
+        await newThread.send(`Hello, and welcome <@${message.author.id}>! All you have to do to get verified is reply to all 3 questions __individually__! The bot does not accept all 3 responses in one message.`)
 
         //Async send all questions
         for (const q of questions) {
@@ -113,7 +113,7 @@ module.exports = {
             //Close thread & return if there wasn't 3 responses
             if (collected.size !== 3) {
                 await newThread.delete();
-                return message.channel.send(`Verification timeout due to reason \`not 3 responses\`. Make sure you put each answer on a separate line, and then verify by typing $verify, <@${message.author.id}>!`).then(m => setTimeout(() => m.delete(), 30000));
+                return message.channel.send(`Verification timeout due to reason \`not 3 responses\`. Make sure you put each answer separately, and then verify by typing $verify, <@${message.author.id}>!`).then(m => setTimeout(() => m.delete(), 30000));
             }
 
             //Form responses
