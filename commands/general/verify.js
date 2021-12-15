@@ -135,7 +135,7 @@ module.exports = {
             //Do X thing on Y button
             buttonCollector.on('collect', async i => {
 
-                //No perms? Get outta here. (Decline perms)
+                //No perms? Get out of here. (Decline perms)
                 if (!i.member.permissions.has("MANAGE_MESSAGES")) {
                     await i.reply(`Member \`${i.user.username}\` missing permissions.`).then(m => setTimeout(() => m.delete(), 5000));
                     return;
@@ -143,40 +143,46 @@ module.exports = {
 
                 //Approve a member
                 if (i.customId === 'approve') {
+                    try {
                     await (message.member.roles.add(memberRole));
                     await genChat.send({content: `${responses[Math.round(Math.random() * (responses.length - 1))]} ${message.author}!`});
                     await verifyChat.send(`Approved user with parameters \`none\`.`).then(m => setTimeout(() => m.delete(), 5000));
                     await i.message.edit({content: `Success`, components: []});
                     await buttonCollector.stop();
-                    try {
                         return del.delete();
                     } catch (e) {
+                        await del.delete();
+                        return verifyChat.send(`Failed - Closed with reason \`member left\`.`).then(m => setTimeout(() => m.delete(), 5000));
                     }
                 }
 
                 //Restrict them and approve
                 if (i.customId === 'restrict') {
+                    try {
                     await message.member.roles.add(restrictRole.id);
                     await (message.member.roles.add(memberRole));
                     await genChat.send({content: `${responses[Math.round(Math.random() * (responses.length - 1))]} ${message.author}!`});
                     await verifyChat.send(`Approved user with parameters \`restrict\`.`).then(m => setTimeout(() => m.delete(), 5000));
                     await i.message.edit({content: `Success`, components: []});
                     await buttonCollector.stop();
-                    try {
                         return del.delete();
                     } catch (e) {
+                        await del.delete();
+                        return verifyChat.send(`Failed - Closed with reason \`member left\`.`).then(m => setTimeout(() => m.delete(), 5000));
                     }
                 }
 
-                //Get the heck outta here (kick them)
+                //Get the heck out of here (kick them)
                 if (i.customId === 'kick') {
+                    try {
                     await message.member.kick();
                     await verifyChat.send(`Declined user.`).then(m => setTimeout(() => m.delete(), 5000));
                     await i.message.edit({content: `Success`, components: []});
                     await buttonCollector.stop();
-                    try {
                         return del.delete();
                     } catch (e) {
+                        await del.delete();
+                        return verifyChat.send(`Failed - Closed with reason \`member left\`.`).then(m => setTimeout(() => m.delete(), 5000));
                     }
                 }
 
@@ -186,7 +192,7 @@ module.exports = {
                         await del.delete();
                     } catch (e) {
                     }
-                    await verifyChat.send(`Cancelled with reason \`member left\`.`).then(m => setTimeout(() => m.delete(), 5000));
+                    await verifyChat.send(`Failed - Closed with reason \`member left\`.`).then(m => setTimeout(() => m.delete(), 5000));
                     return buttonCollector.stop();
                 }
             });
