@@ -110,6 +110,8 @@ module.exports = {
                 return message.channel.send(`Verification timeout due to reason \`no responses\`. Make sure to put your answers in the thread, <@${message.author.id}>!`).then(m => setTimeout(() => m.delete(), 30000));
             }
 
+            newThread.bulkDelete(25, true).catch(console.error);
+
             // Close thread & return if there wasn't 3 responses
             // DISABLED Due to people putting all answers on one line, Bot will still log single responses and close after designated time
 
