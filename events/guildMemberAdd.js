@@ -1,5 +1,7 @@
 const utils = require('../lib/utils.js');
 module.exports = async function (member) {
+
+    //Raid check
     this.joinThrottler.handleMember(member);
 
     //Attempt to DM users, if it fails, lol
@@ -8,16 +10,12 @@ module.exports = async function (member) {
     } catch (e) {
     }
 
+    //Define join-leave-log
     let jlChannel = utils.findTextChannel(member.guild, "join-leave-log")
     if (jlChannel === undefined) {
         return console.log(`A join and leave log channel doesn't exist!`)
     }
 
+    //Send message to JL log
     await jlChannel.send(`➕ ${member} (**${member.user.tag}**) has joined. (${member.guild.memberCount}M)`);
-
-
-    if (this.dataStorage.isUserMuted(member.user.id, member.guild.id)) {
-        let muteRole = member.guild.roles.cache.find(role => role.name === "Muted");
-        await member.roles.add(muteRole.id);
-    }
 };
