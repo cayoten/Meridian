@@ -6,8 +6,10 @@ module.exports = {
     description: `Shows the bot's ping.`,
 
     run: async function (client, message) {
-        /**@type {Discord.Message}*/
+
+        //Define message
         const msg = await message.channel.send({content: "WHO HATH PING ME???"});
+        //Edit message with info
         await msg.edit(`Current bot latency is \`${msg.createdTimestamp - message.createdTimestamp}ms\` with API latency \`${Math.round(client.ws.ping)}ms\`.`);
 
     }

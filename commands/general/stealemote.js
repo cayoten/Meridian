@@ -25,10 +25,10 @@ module.exports = {
             const emojiID = emoji.split(":")[2];
             const emojiLink = `https://cdn.discordapp.com/emojis/${emojiID}${emoji.split(":")[0] === "a" ? ".gif?v=1" : ""}`;
             message.guild.emojis.create(emojiLink, emojiName).then(() => {
-                return message.channel.send({content: "**The emoji was created!**"})
+                return message.channel.send({content: `Emoji created with name `})
             }).catch(e => {
                 console.log(e);
-                message.channel.send({content: "I could not create the emoji."});
+                message.channel.send({content: "Emoji creation failed."});
             });
 
         })
