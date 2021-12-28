@@ -9,6 +9,7 @@ module.exports = {
 
     run: async function (client, message) {
 
+        //Set up embed with bot info
         let infoEmbed = new Discord.MessageEmbed()
             .setTitle("Bot Information:")
             .setColor("#6bf442")
@@ -20,6 +21,7 @@ module.exports = {
             .setFooter("Developed by Cayoten")
             .setTimestamp();
 
+        //Send embed
         await message.channel.send({embeds: [infoEmbed]});
 
     }

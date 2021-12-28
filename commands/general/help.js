@@ -8,8 +8,10 @@ module.exports = {
 
     run: async function (client, message) {
 
+        //Delete command
         if (message.deletable) await message.delete({reason: "Auto-Delete"});
 
+        //Define all 4 embeds
         let gHelpEmbed = new Discord.MessageEmbed()
             .setDescription("**General Commands**")
             .setColor("#8be099")
@@ -40,6 +42,7 @@ module.exports = {
             .setFooter("Developed by Cayoten")
             .setTimestamp();
 
+        //Send embeds
         client.chatCommands.forEach((cmd/*, i */) => {
                 if (cmd.category === 'general') {
                     // if (message.guild) {
