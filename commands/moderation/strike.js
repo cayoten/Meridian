@@ -70,15 +70,13 @@ module.exports = {
 
 
         if (WarnAmount === 2) {
-            await (member.roles.add(muteRole.id));
-            await client.dataStorage.addUserMute(warnUser.id, message.guild.id, ms("30 minutes"));
-            await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :no_mouth: **Meridian Automation** has performed action: \`mute\` \n\`Affected User:\` **${warnUser.tag}** *(${warnUser.id})* \n\`Duration:\` 30m \n\`Reason:\` 2 strikes reached.`});
+            await member.disableCommunicationUntil(Date.now() + ms("30 minutes"), "2 strikes reached.")
+            await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :no_mouth: **Meridian Automation** has performed action: \`timeout\` \n\`Affected User:\` **${warnUser.tag}** *(${warnUser.id})* \n\`Duration:\` 30m \n\`Reason:\` 2 strikes reached.`});
             await message.channel.send({content: `${warnUser} has had an automatic 30m mute applied for passing the **2** strike threshold.`});
 
         } else if (WarnAmount === 3) {
-            await (member.roles.add(muteRole.id));
-            await client.dataStorage.addUserMute(warnUser.id, message.guild.id, ms("2 hours"));
-            await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :no_mouth: **Meridian Automation** has performed action: \`mute\` \n\`Affected User:\` **${warnUser.tag}** *(${warnUser.id})* \n\`Duration:\` 2h \n\`Reason:\` 3 strikes reached.`});
+            await member.disableCommunicationUntil(Date.now() + ms("2 hours"), "3 strikes reached.")
+            await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :no_mouth: **Meridian Automation** has performed action: \`timeout\` \n\`Affected User:\` **${warnUser.tag}** *(${warnUser.id})* \n\`Duration:\` 2h \n\`Reason:\` 3 strikes reached.`});
             await message.channel.send({content: `${warnUser} has had an automatic 2h mute applied for passing the **3** strike threshold.`});
 
         } else if (WarnAmount === 4) {
