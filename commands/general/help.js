@@ -15,31 +15,26 @@ module.exports = {
         let gHelpEmbed = new Discord.MessageEmbed()
             .setDescription("**General Commands**")
             .setColor("#8be099")
-            .setFooter("Developed by Cayoten")
             .setTimestamp();
 
         let rpHelpEmbed = new Discord.MessageEmbed()
             .setDescription("**Roleplay Commands**")
             .setColor("#a82fff")
-            .setFooter("Developed by Cayoten")
             .setTimestamp();
 
         let miscHelpEmbed = new Discord.MessageEmbed()
             .setDescription("**Miscellaneous Commands**")
             .setColor("#e7dfdf")
-            .setFooter("Developed by Cayoten")
             .setTimestamp();
 
         let mHelpEmbed = new Discord.MessageEmbed()
             .setDescription("**Moderation Commands (Staff Only)**")
             .setColor("#c91c1c")
-            .setFooter("Developed by Cayoten")
             .setTimestamp();
 
         let manageHelpEmbed = new Discord.MessageEmbed()
             .setDescription("**Management Commands (Admin Only)**")
             .setColor("#ffd394")
-            .setFooter("Developed by Cayoten")
             .setTimestamp();
 
         //Send embeds

@@ -24,7 +24,6 @@ module.exports = {
             .setColor("#FF0000")
             .setTitle(`Server Poll`)
             .setDescription(args.join(" "))
-            .setFooter("Developed by Cayoten")
             .setTimestamp();
 
         //Send message

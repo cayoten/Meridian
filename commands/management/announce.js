@@ -18,7 +18,6 @@ module.exports = {
             .setColor("#ff9d4b")
             .addField("Message:", `**${botMessage}**`)
             .addField("Sent by", `${message.author}`)
-            .setFooter("Developed by Cayoten")
             .setTimestamp();
 
         message.delete().catch();

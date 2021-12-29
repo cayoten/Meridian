@@ -32,7 +32,6 @@ module.exports = {
             .addField("Joined At", joinTime)
             .addField("Status", `${checkUser.presence?.status || "unknown"}`)
             .setThumbnail(checkUser.user.displayAvatarURL())
-            .setFooter("Developed by Cayoten")
             .setTimestamp();
 
         await message.channel.send({embeds: [memberInfo]});

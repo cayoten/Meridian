@@ -22,7 +22,6 @@ module.exports = {
             .setTitle("Your sassy 8ball answer is:")
             .setColor("#f6ca2e")
             .setDescription(`${responses[Math.round(Math.random() * (responses.length - 1))]}`)
-            .setFooter("Developed by Cayoten")
             .setTimestamp();
 
         await message.channel.send({embeds: [ballEmbed]});
