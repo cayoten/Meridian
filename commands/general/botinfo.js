@@ -18,7 +18,6 @@ module.exports = {
             .addField("Creation Date", `Tuesday, May 14th 2019`, true)
             .addField("API Ping:", `${Math.round(client.ws.ping)} ms`, true)
             .addField("Command Count:", `${client.chatCommands.size} Commands`)
-            .setFooter("Developed by Cayoten")
             .setTimestamp();
 
         //Send embed
