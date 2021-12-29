@@ -36,7 +36,7 @@ module.exports = {
             return message.channel.send({content: `:warning: Cannot find the "mod-logs" channel.`});
         }
 
-        //Wrap in a try incase DMs are closed, cringe!
+        //Wrap in a try in case DMs are closed, cringe!
         try {
             await toMute.send({content: `You have been given a timeout for \`${muteTime}\` with the reason: **${reason}**`});
         } catch (e) {

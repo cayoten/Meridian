@@ -68,12 +68,12 @@ module.exports = {
         if (WarnAmount === 2) {
             await member.disableCommunicationUntil(Date.now() + ms("30 minutes"), "2 strikes reached.")
             await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :no_mouth: **Meridian Automation** has performed action: \`timeout\` \n\`Affected User:\` **${warnUser.tag}** *(${warnUser.id})* \n\`Duration:\` 30m \n\`Reason:\` 2 strikes reached.`});
-            await message.channel.send({content: `${warnUser} has had an automatic 30m mute applied for passing the **2** strike threshold.`});
+            await message.channel.send({content: `${warnUser} has had an automatic 30m timeout applied for passing the **2** strike threshold.`});
 
         } else if (WarnAmount === 3) {
             await member.disableCommunicationUntil(Date.now() + ms("2 hours"), "3 strikes reached.")
             await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :no_mouth: **Meridian Automation** has performed action: \`timeout\` \n\`Affected User:\` **${warnUser.tag}** *(${warnUser.id})* \n\`Duration:\` 2h \n\`Reason:\` 3 strikes reached.`});
-            await message.channel.send({content: `${warnUser} has had an automatic 2h mute applied for passing the **3** strike threshold.`});
+            await message.channel.send({content: `${warnUser} has had an automatic 2h timeout applied for passing the **3** strike threshold.`});
 
         } else if (WarnAmount === 4) {
             await member.kick(warnReason);
