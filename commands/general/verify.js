@@ -93,7 +93,7 @@ module.exports = {
                     .setStyle('PRIMARY'),
                 new Discord.MessageButton()
                     .setCustomId('kick')
-                    .setLabel('Kick')
+                    .setLabel('Decline')
                     .setStyle('DANGER'),
                 new Discord.MessageButton()
                     .setCustomId('left')
@@ -194,7 +194,7 @@ module.exports = {
                         await del.delete();
                     } catch (e) {
                     }
-                    await verifyChat.send(`Failed - Closed with reason \`member left\`.`).then(m => setTimeout(() => m.delete(), 5000));
+                    await verifyChat.send(`Prompt closed.`).then(m => setTimeout(() => m.delete(), 5000));
                     return buttonCollector.stop();
                 }
             });
