@@ -21,7 +21,7 @@ module.exports = {
 
         let incidents = utils.findTextChannel(message.guild, "chat-logs");
         if (!incidents) {
-            return message.channel.send({content: `:warning: Cannot find the "chat-logs" channel.`});
+            return message.channel.send({content: "Error encountered: `MISSING_CHANNEL: chat-logs`."});
         }
 
         let deletedMessages = await message.channel.bulkDelete(pinned.first(parseInt(args[0])), true).catch(console.error);

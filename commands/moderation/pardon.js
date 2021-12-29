@@ -37,7 +37,7 @@ module.exports = {
 
         let warnChannel = utils.findTextChannel(message.guild, "mod-logs");
         if (!warnChannel) {
-            return message.channel.send({content: `:warning: Cannot find the "mod-logs" channel.`});
+            return message.channel.send({content: "Error encountered: `MISSING_CHANNEL: mod-logs`."});
         }
 
         await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :heavy_minus_sign: **${message.author.tag}** has performed action: \`pardon\`\n\`Affected User:\` **${warnUser.tag}** *(${warnUser.id})*\n\`Strike Reason:\`${removedWarn[0]}\n\`Active Strike Count:\` ${warns[message.guild.id][warnUser.id].length}`});

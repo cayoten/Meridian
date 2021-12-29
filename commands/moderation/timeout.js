@@ -23,8 +23,8 @@ module.exports = {
 
         //Define mute time
         let muteTime = args[1];
-        if (!muteTime) {
-            return message.channel.send({content: "Invalid time."});
+        if (!muteTime || ms(muteTime) === undefined) {
+            return message.channel.send({content: "Error encountered: `time unspecified`."});
         }
 
         //Set reason or set to None specified
@@ -33,7 +33,7 @@ module.exports = {
         //Set up mute channel and return if not found
         let muteChannel = utils.findTextChannel(message.guild, "mod-logs");
         if (!muteChannel) {
-            return message.channel.send({content: `:warning: Cannot find the "mod-logs" channel.`});
+            return message.channel.send({content: "Error encountered: `MISSING_CHANNEL: mod-logs`."});
         }
 
         //Wrap in a try in case DMs are closed, cringe!

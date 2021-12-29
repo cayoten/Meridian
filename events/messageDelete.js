@@ -11,7 +11,7 @@ module.exports = async function (message) {
     let cLogChannel = utils.findTextChannel(message.guild, "chat-logs")
 
     if (!cLogChannel) {
-        return console.log(`Logging channel does not exist!`)
+        return;
     }
 
     let cLog = new Discord.MessageEmbed()
