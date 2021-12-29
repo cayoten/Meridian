@@ -22,7 +22,7 @@ module.exports = {
         // Mod logging channel
         let modLogChannel = utils.findTextChannel(message.guild, "mod-logs");
         if (!modLogChannel) {
-            return message.channel.send({content: `:warning: Cannot find the "mod-logs" channel.`});
+            return message.channel.send({content: "Error encountered: `MISSING_CHANNEL: mod-logs`."});
         }
 
         //Take action

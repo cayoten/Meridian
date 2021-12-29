@@ -48,7 +48,7 @@ module.exports = {
 
         //Finds the strike embed
         let warnChannel = utils.findTextChannel(message.guild, "mod-logs");
-        if (!warnChannel) return message.channel.send({content: `:warning: Cannot find the "mod-logs" channel.`});
+        if (!warnChannel) return message.channel.send({content: "Error encountered: `MISSING_CHANNEL: mod-logs`."});
 
 
         //Sends the strike to chat & DMs
