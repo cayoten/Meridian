@@ -65,10 +65,6 @@ module.exports = {
 
         //Actions on X warns.
 
-        let muteRole = message.guild.roles.cache.find(role => role.name === "Muted");
-        if (!muteRole) return message.channel.send({content: `There's no role called \`Muted\`, please create one.`});
-
-
         if (WarnAmount === 2) {
             await member.disableCommunicationUntil(Date.now() + ms("30 minutes"), "2 strikes reached.")
             await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :no_mouth: **Meridian Automation** has performed action: \`timeout\` \n\`Affected User:\` **${warnUser.tag}** *(${warnUser.id})* \n\`Duration:\` 30m \n\`Reason:\` 2 strikes reached.`});
