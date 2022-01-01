@@ -35,7 +35,8 @@ module.exports = async function (message) {
             }
         }
         flaggedUsers.set(message.author.id, Date.now());
-        message.delete().then(() => channel.send({content: `${message.author}, you've been flagged for chat flood. [ALERT]`}));
+        message.delete().then(() => channel.send({content: `${message.author}, you've been flagged for chat flood. [ALERT]`}))
+            .then(m => setTimeout(() => m.delete(), 5000));
         return;
     }
 
