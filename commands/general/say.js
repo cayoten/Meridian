@@ -16,8 +16,10 @@ module.exports = {
         //Catch argument, or set to _ _ to prevent bot from throwing error then send
         let sayText = args.join(" ");
         if (utils.isBlank(sayText)) {
-            message.delete().catch();
-            await message.channel.send({content: "_ _"}); //Discord does not allow us to send a blank message, so send something similar.
+            return message.channel.send({content: "Error encountered: `blank text`."})
+                .then(m => setTimeout(() => m.delete(), 5000));
+            // message.delete().catch();
+            // await message.channel.send({content: "_ _"}); //Discord does not allow us to send a blank message, so send something similar.
         } else {
             message.delete().catch();
             await message.channel.send({content: sayText, allowedMentions: {parse: []}});
