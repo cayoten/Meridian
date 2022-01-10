@@ -64,7 +64,6 @@ module.exports = {
             .setDescription(`[**Avatar Reverse Image Search**](${merge + message.member.displayAvatarURL()})`)
             .addField(`Username`, `<@${message.author.id}> - ${message.author.tag}`)
             .setThumbnail(message.member.displayAvatarURL())
-            .setFooter(`User account created at: ${message.member.user.createdAt}`)
         await message.channel.send("Your verification has been started! Please join the thread I just created to continue.")
             .then(m => setTimeout(() => m.delete(), 5000));
 
