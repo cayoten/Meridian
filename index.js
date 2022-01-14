@@ -80,9 +80,8 @@ const antiSpam = new AntiSpam({
 // Trigger antispam
 client.on("messageCreate", async function (message) {
 
-    //Commented out due to mass error spamming
-    // TODO: fix later
-    // antiSpam.message(message);
+    // discord-anti-spam check
+    antiSpam.message(message);
 
     // important return for some servers
     if (message.author.bot) return;
