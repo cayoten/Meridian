@@ -32,8 +32,8 @@ module.exports = {
         let genChat = utils.findTextChannel(message.guild, "general-chat");
         if (!genChat) return message.channel.send({content: "Couldn't find general-chat channel."});
 
-        let verifyChat = utils.findTextChannel(message.guild, "verify-members");
-        if (!verifyChat) return message.channel.send({content: "Couldn't find verify-members channel."});
+        let verifyChat = utils.findTextChannel(message.guild, "gatekeeping");
+        if (!verifyChat) return message.channel.send({content: `Couldn't find "gatekeeping" channel.`});
 
         let restrictRole = message.guild.roles.cache.find(b => b.name === "Server Restricted");
         if (!restrictRole) {
@@ -50,9 +50,9 @@ module.exports = {
 
         //Thread creator
         const newThread = await message.channel.threads.create({
-            name: `verify-${message.author.id}`,
+            name: `gateway-${message.author.id}`,
             autoArchiveDuration: 60,
-            reason: `Verification for user ${message.author.tag}`
+            reason: `Entrance Application for user ${message.author.tag}`
         });
 
         //Create embed
@@ -150,7 +150,8 @@ module.exports = {
                         await verifyChat.send(`Approved user with parameters \`none\`.`).then(m => setTimeout(() => m.delete(), 5000));
                         await i.message.edit({content: `Success`, components: []});
                         await buttonCollector.stop();
-                        return del.delete();
+                        await del.delete();
+                        return verifyChat.send({content: `\`[${utils.epochToHour(Date.now())}]\` :wave: **${i.user.tag}** (*${i.user.id}*) has performed gateway action: \`approve\` \n \`Affected User\`: **${message.author.tag}** (*${message.author.id}*)`})
                     } catch (e) {
                         await del.delete();
                         return verifyChat.send(`Failed - Closed with reason \`member left\`.`).then(m => setTimeout(() => m.delete(), 5000));
@@ -166,7 +167,8 @@ module.exports = {
                         await verifyChat.send(`Approved user with parameters \`restrict\`.`).then(m => setTimeout(() => m.delete(), 5000));
                         await i.message.edit({content: `Success`, components: []});
                         await buttonCollector.stop();
-                        return del.delete();
+                        await del.delete();
+                        return verifyChat.send({content: `\`[${utils.epochToHour(Date.now())}]\` :lock: **${i.user.tag}** (*${i.user.id}*) has performed gateway action: \`restrict and approve\` \n \`Affected User\`: **${message.author.tag}** (*${message.author.id}*)`})
                     } catch (e) {
                         await del.delete();
                         return verifyChat.send(`Failed - Closed with reason \`member left\`.`).then(m => setTimeout(() => m.delete(), 5000));
@@ -180,7 +182,8 @@ module.exports = {
                         await verifyChat.send(`Declined user.`).then(m => setTimeout(() => m.delete(), 5000));
                         await i.message.edit({content: `Success`, components: []});
                         await buttonCollector.stop();
-                        return del.delete();
+                        await del.delete();
+                        return verifyChat.send({content: `\`[${utils.epochToHour(Date.now())}]\` :boot: **${i.user.tag}** (*${i.user.id}*) has performed gateway action: \`decline\` \n \`Affected User\`: **${message.author.tag}** (*${message.author.id}*)`})
                     } catch (e) {
                         await del.delete();
                         return verifyChat.send(`Failed - Closed with reason \`member left\`.`).then(m => setTimeout(() => m.delete(), 5000));
