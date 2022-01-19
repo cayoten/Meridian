@@ -138,7 +138,8 @@ module.exports = {
 
                 //No perms? Get out of here. (Decline perms)
                 if (!i.member.permissions.has("MANAGE_MESSAGES")) {
-                    await i.reply(`Member \`${i.user.username}\` missing permissions.`).then(m => setTimeout(() => m.delete(), 5000));
+                    await i.deferUpdate();
+                    await message.channel.send(`Member \`${i.user.username}\` missing permissions.`).then(m => setTimeout(() => m.delete(), 5000));
                     return;
                 }
 
