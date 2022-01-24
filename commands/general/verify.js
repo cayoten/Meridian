@@ -167,6 +167,9 @@ module.exports = {
                         await genChat.send({content: `${responses[Math.round(Math.random() * (responses.length - 1))]} ${message.author}!`});
                         await verifyChat.send(`Approved user with parameters \`restrict\`.`).then(m => setTimeout(() => m.delete(), 5000));
                         await i.message.edit({content: `Success`, components: []});
+                        try {
+                            await message.member.send({content: `Welcome to the server! You have been verified as **Server Restricted**, which is an automatic anti-raid flag. All you have to do to get this removed is to chat in the server for at least 20 minutes, then send a DM to the ModMail bot requesting removal! \nThank you for joining FoxedIn.`});
+                        } catch (e) {}
                         await buttonCollector.stop();
                         await del.delete();
                         return verifyChat.send({content: `\`[${utils.epochToHour(Date.now())}]\` :lock: **${i.user.tag}** (*${i.user.id}*) has performed gateway action: \`restrict and approve\` \n \`Affected User\`: **${message.author.tag}** (*${message.author.id}*)`})

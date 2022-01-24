@@ -20,7 +20,6 @@ module.exports = {
         //Set up embed
         const avatarEmbed = new Discord.MessageEmbed()
             .setColor("RANDOM")
-            .setAuthor(user.username)
             .setImage(user.avatarURL() + "?size=512");
 
         //Send avatar
