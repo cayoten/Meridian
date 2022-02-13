@@ -9,6 +9,8 @@
   "author": "Cayoten",
   "license": "ISC",
   "dependencies": {
+    "@sentry/node": "^6.17.7",
+    "@sentry/tracing": "^6.17.7",
     "discord-anti-spam": "^2.6.1",
     "discord-paginationembed": "github:gazmull/discord-paginationembed",
     "discord.js": "^13.6.0",
