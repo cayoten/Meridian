@@ -11,9 +11,24 @@ const client = new Discord.Client({
         Discord.Intents.FLAGS.GUILD_PRESENCES
     ]
 });
+
 const readline = require('readline');
 client.chatCommands = new Discord.Collection();
 require('dotenv').config();
+
+//Set up Sentry Logging
+const Sentry = require("@sentry/node");
+require("@sentry/tracing");
+const {BrowserTracing} = require("@sentry/tracing");
+
+Sentry.init({
+    dsn: process.env.SENTRY,
+    integrations: [new BrowserTracing()],
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: 1.0,
+});
 
 const DataStorage = require('./lib/dataStorage.js');
 const Utils = require('./lib/utils.js');
@@ -114,10 +129,16 @@ client.on("messageCreate", async function (message) {
 //Catch errors so they don't break the client
 process.on(`uncaughtException`, (err) => {
     const errmsg = err.stack.replace(new RegExp(`${__dirname}/`, `g`), `./`);
+
+    Sentry.captureException(err);
     console.error(`Uncaught Exception: `.red, errmsg);
+
 });
 process.on(`unhandledRejection`, err => {
+
+    Sentry.captureException(err);
     console.error(`Uncaught Promise Error: `.red, err);
+
 });
 
 //The bot's token to login
