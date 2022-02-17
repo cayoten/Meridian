@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
 const fs = require("fs");
+const readline = require('readline');
+require('dotenv').config();
 const client = new Discord.Client({
     intents: [
         Discord.Intents.FLAGS.GUILDS,
@@ -9,12 +11,8 @@ const client = new Discord.Client({
         Discord.Intents.FLAGS.GUILD_MESSAGES, // too bad it will become privileged - juan
         Discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
         Discord.Intents.FLAGS.GUILD_PRESENCES
-    ]
-});
-
-const readline = require('readline');
+    ]});
 client.chatCommands = new Discord.Collection();
-require('dotenv').config();
 
 //Set up Sentry Logging
 const Sentry = require("@sentry/node");
@@ -30,12 +28,14 @@ Sentry.init({
     tracesSampleRate: 1.0,
 });
 
+//Per-server core features & utilities
 const DataStorage = require('./lib/dataStorage.js');
 const Utils = require('./lib/utils.js');
 const JoinThrottler = require('./lib/joinThrottler.js');
 client.dataStorage = new DataStorage(client)
 client.cooldownManager = new Utils.CooldownManager();
 client.joinThrottler = new JoinThrottler(client);
+
 //Read Event Directory
 fs.readdir("./events", (err, files) => {
     if (err) {
@@ -50,14 +50,7 @@ fs.readdir("./events", (err, files) => {
     });
 });
 
-//Reads each command
-
-const ascii = require("ascii-table");
-
-let table = new ascii("Commands");
-table.setHeading("Command", "Load status");
-
-
+//Initialize command handler
 ["command"].forEach(handler => {
     require(`./handlers/${handler}`)(client);
 });
@@ -112,7 +105,7 @@ client.on("messageCreate", async function (message) {
     } catch (e) {
     }
     let foundPrefix = '';
-    prefixes.forEach((prefix, index) => {
+    prefixes.forEach((prefix) => {
         if (message.content.startsWith(prefix)) foundPrefix = prefix;
     })
     if (foundPrefix === '') return;
@@ -121,23 +114,23 @@ client.on("messageCreate", async function (message) {
     let cmd = messageArray[0];
     let args = messageArray.slice(1);
 
-    let commandfile = client.chatCommands.get(cmd.slice(foundPrefix.length));
-    if (commandfile) commandfile.run(client, message, args);
+    let cmdFile = client.chatCommands.get(cmd.slice(foundPrefix.length));
+    if (cmdFile) cmdFile.run(client, message, args);
 
 });
-
+``
 //Catch errors so they don't break the client
 process.on(`uncaughtException`, (err) => {
-    const errmsg = err.stack.replace(new RegExp(`${__dirname}/`, `g`), `./`);
+    const errMsg = err.stack.replace(new RegExp(`${__dirname}/`, `g`), `./`);
 
     Sentry.captureException(err);
-    console.error(`Uncaught Exception: `.red, errmsg);
+    console.error(`Uncaught Exception: `, errMsg);
 
 });
 process.on(`unhandledRejection`, err => {
 
     Sentry.captureException(err);
-    console.error(`Uncaught Promise Error: `.red, err);
+    console.error(`Uncaught Promise Error: `, err);
 
 });
 
@@ -150,7 +143,7 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 rl.on('close', () => {
-    console.info('Bot shutdown command recieved. Shutting down!');
+    console.info('Bot shutdown command received. Shutting down!');
     process.kill(process.pid, 'SIGTERM')
 })
 
