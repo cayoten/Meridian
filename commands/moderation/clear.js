@@ -28,7 +28,8 @@ module.exports = {
         if (deletedMessages === undefined || deletedMessages.size === 0) {
             return message.channel.send({content: "Unable to clear messages."})
         }
-        message.channel.send({content: `Action \`clear chat [size ${deletedMessages.size}]\` applied successfully.`}).then(m => setTimeout(() => m.delete(), 5000));
+        message.channel.send({content: `Action \`clear chat [size ${deletedMessages.size}]\` applied successfully.`})
+            .then(m => setTimeout(() => m.delete(), 5000));
         await incidents.send({content: `\`[${utils.epochToHour(Date.now())}]\` :broom: **${message.author.tag}** (*${message.author.id}*) has performed action: \`chat clear\`\n\`Cleared:\` **${deletedMessages.size}** messages.`});
 
     }

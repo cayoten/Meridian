@@ -12,6 +12,8 @@ module.exports = {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.BAN_MEMBERS))
             return;
 
+        if(message.deletable) await message.delete();
+
         let member;
         try {
             member = message.mentions.users.first() || await client.users.fetch(args[0]);

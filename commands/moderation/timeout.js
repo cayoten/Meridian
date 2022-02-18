@@ -15,6 +15,8 @@ module.exports = {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.KICK_MEMBERS))
             return;
 
+        if(message.deletable) await message.delete();
+
         //Define toMute and member
         let toMute = message.mentions.users.first() || await client.users.fetch(args[0]);
         if (!toMute) return message.channel.send({content: 'Unable to find user.'});
@@ -45,7 +47,8 @@ module.exports = {
         //Mute and log
         await member.disableCommunicationUntil(Date.now() + ms(muteTime), reason)
         await muteChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :no_mouth: **${message.author.tag}** has performed action: \`timeout\`. \n**\`Affected User:\`${toMute.tag}** *(${toMute.id})*. \n\`Duration:\` ${ms(ms(muteTime))}\n\`Reason:\` ${reason}`});
-        await message.channel.send({content: `Action \`timeout user\` has been applied successfully to <@${toMute.id}> for ${muteTime}`});
+        await message.channel.send({content: `Action \`timeout user\` has been applied successfully to <@${toMute.id}> for ${muteTime}`})
+            .then(m => setTimeout(() => m.delete(), 5000));
 
     }
 

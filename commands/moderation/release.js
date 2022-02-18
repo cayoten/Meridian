@@ -13,6 +13,8 @@ module.exports = {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.KICK_MEMBERS))
             return;
 
+        if(message.deletable) await message.delete();
+
         //Define toMute & member
         let toMute = message.mentions.users.first() || await client.users.fetch(args[0]);
         if (!toMute) return message.channel.send({content: 'Unable to find user.'});

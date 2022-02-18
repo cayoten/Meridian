@@ -11,6 +11,8 @@ module.exports = {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.MANAGE_MESSAGES))
             return;
 
+        if(message.deletable) await message.delete();
+
         let warnUser;
         try {
             warnUser = message.mentions.users.first() || await client.users.fetch(args[0]);
