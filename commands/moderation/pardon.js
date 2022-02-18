@@ -11,6 +11,8 @@ module.exports = {
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.MANAGE_MESSAGES))
             return;
 
+        if(message.deletable) await message.delete();
+
         let warnUser;
         try {
             warnUser = message.mentions.users.first() || await client.users.fetch(args[0]);
@@ -41,6 +43,7 @@ module.exports = {
         }
 
         await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :heavy_minus_sign: **${message.author.tag}** has performed action: \`pardon\`\n\`Affected User:\` **${warnUser.tag}** *(${warnUser.id})*\n\`Strike Reason:\`${removedWarn[0]}\n\`Active Strike Count:\` ${warns[message.guild.id][warnUser.id].length}`});
-        message.channel.send({content: "Action \`pardon user\` applied successfully."});
+        message.channel.send({content: "Action \`pardon user\` applied successfully."})
+            .then(m => setTimeout(() => m.delete(), 5000));
     }
 };

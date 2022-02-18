@@ -11,6 +11,8 @@ module.exports = {
     run: async function (client, message, args) {
         //$strike <@user | ID> reason
 
+        if(message.deletable) await message.delete();
+
         //Check perms
         if (!utils.checkPermissionAndNotify(message.member, message.channel, Discord.Permissions.FLAGS.MANAGE_MESSAGES))
             return;
@@ -23,7 +25,7 @@ module.exports = {
         }
 
         // Return if user isn't found
-        if (!warnUser) return message.channel.send({content: 'Unable to find user.'});
+        if (!warnUser) return message.channel.send({content: "Error encountered: `USER_NOT_FOUND`"});
 
         // Define member
         const member = message.guild.members.cache.get(warnUser.id);
@@ -53,7 +55,8 @@ module.exports = {
 
         //Sends the strike to chat & DMs
         await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :triangular_flag_on_post: **${message.author.tag}** has performed action: \`strike\` \n\`Affected User:\` **${warnUser.tag}** *(${warnUser.id})* \n\`Reason:\` ${warnReason}`});
-        await message.channel.send({content: `Action \`strike\` on user ${warnUser} applied successfully.`});
+        await message.channel.send({content: `Action \`strike\` on user ${warnUser} applied successfully.`})
+            .then(m => setTimeout(() => m.delete(), 5000));
         try {
             await warnUser.send({content: `__**New Strike Received**__ \n You have been given a strike for the reason: **${warnReason}**`});
         } catch (e) {
