@@ -39,6 +39,7 @@ client.joinThrottler = new JoinThrottler(client);
 //Read Event Directory
 fs.readdir("./events", (err, files) => {
     if (err) {
+        Sentry.captureException(err);
         return console.error(err)
     }
     files.forEach(file => {
@@ -134,7 +135,7 @@ process.on(`unhandledRejection`, err => {
 
 });
 
-//The bot's token to login
+//Bot login token
 client.login(process.env.TOKEN);
 
 //Terminate on SIGTERM
