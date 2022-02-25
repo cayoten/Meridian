@@ -79,6 +79,7 @@ module.exports = {
             await message.channel.send({content: `${warnUser} has had an automatic 2h timeout applied for passing the **3** strike threshold.`});
 
         } else if (WarnAmount === 4) {
+            await warnUser.send("[Automatic Punishment] You have been kicked from the server for reaching **4** strikes.");
             await member.kick(warnReason);
             await message.channel.send({content: `${warnUser} has been automatically kicked for passing the **4** strike threshold.`});
             await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :boot: **Meridian Automation** has performed action: \`kick\` \n\`Affected User:\` **${warnUser.tag}** *(${warnUser.id})*`});
@@ -88,6 +89,7 @@ module.exports = {
             await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\`‼ The user **${warnUser.tag}** *(${warnUser.id})* has reached **5/6** strikes. Their next strike is an automatic ban.`})
 
         } else if (WarnAmount >= 6) {
+            await warnUser.send("[Automatic Punishment] You have been banned from the server for reaching **6** strikes.");
             await message.guild.members.ban(warnUser, {reason: warnReason});
             await warnChannel.send({content: `\`[${utils.epochToHour(Date.now())}]\` :hammer: **Meridian Automation**  has applied action: \`ban\`\n\`Affected User:\` **${warnUser.tag}** *(${warnUser.id})* \n\`Reason:\` 6 strikes reached.`});
             await message.channel.send({content: `${warnUser} has been banned for reaching 6 strikes.`});
