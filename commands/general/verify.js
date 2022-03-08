@@ -43,9 +43,9 @@ module.exports = {
 
         //Questions
         const questions = [
-            "1) How old are you?",
-            "2) Where did you find us?",
-            "3) Why do you want to join our server?"
+            "`1) How old are you?`",
+            "`2) Where did you find us?`",
+            "`3) Why do you want to join our server?`"
         ];
 
         //Thread creator
@@ -68,7 +68,9 @@ module.exports = {
             .then(m => setTimeout(() => m.delete(), 5000));
 
         //Send messages to thread and then send questions
-        await newThread.send(`Hello, and welcome <@${message.author.id}>! All you have to do to get verified is reply to all 3 questions __individually__! The bot does not accept all 3 responses in one message.`)
+        await newThread.send(
+            `**Thank you for joining the server, <@${message.author.id}>!** All you have to do to get verified is click on each question and reply to them!
+            \n __Once you have used Discord's reply function to each question, the verification will automatically submit. You have 5 minutes to submit these answers!__`);
 
         //Async send all questions
         for (const q of questions) {
@@ -106,7 +108,9 @@ module.exports = {
             //Close thread & return if nothing was sent
             if (collected.size === 0) {
                 await newThread.delete();
-                return message.channel.send(`Verification timeout due to reason \`no responses\`. Make sure to put your answers in the thread, <@${message.author.id}>!`).then(m => setTimeout(() => m.delete(), 30000));
+                return message.channel.send(
+                    `Verification timeout due to reason \`no responses\`. Make sure to put your answers in the thread, <@${message.author.id}>!`)
+                    .then(m => setTimeout(() => m.delete(), 30000));
             }
 
             newThread.bulkDelete(25, true).catch(console.error);
@@ -116,7 +120,9 @@ module.exports = {
 
             // if (collected.size !== 3) {
             //     await newThread.delete();
-            //     return message.channel.send(`Verification timeout due to reason \`not 3 responses\`. Make sure you put each answer separately, and then verify by typing $verify, <@${message.author.id}>!`).then(m => setTimeout(() => m.delete(), 30000));
+            //     return message.channel.send(
+            //     `Verification timeout due to reason \`not 3 responses\`. Make sure you put each answer separately, and then verify
+            //     by typing $verify, <@${message.author.id}>!`).then(m => setTimeout(() => m.delete(), 30000));
             // }
 
             //Form responses
@@ -139,7 +145,8 @@ module.exports = {
                 //No perms? Get out of here. (Decline perms)
                 if (!i.member.permissions.has("MANAGE_MESSAGES")) {
                     await i.deferUpdate();
-                    await message.channel.send(`Member \`${i.user.username}\` missing permissions.`).then(m => setTimeout(() => m.delete(), 5000));
+                    await message.channel.send(`Member \`${i.user.username}\` missing permissions.`)
+                        .then(m => setTimeout(() => m.delete(), 5000));
                     return;
                 }
 
@@ -148,14 +155,16 @@ module.exports = {
                     try {
                         await (message.member.roles.add(memberRole));
                         await genChat.send({content: `${responses[Math.round(Math.random() * (responses.length - 1))]} ${message.author}!`});
-                        await verifyChat.send(`Approved user with parameters \`none\`.`).then(m => setTimeout(() => m.delete(), 5000));
+                        await verifyChat.send(`Approved user with parameters \`none\`.`)
+                            .then(m => setTimeout(() => m.delete(), 5000));
                         await i.message.edit({content: `Success`, components: []});
                         await buttonCollector.stop();
                         await del.delete();
                         return verifyChat.send({content: `\`[${utils.epochToHour(Date.now())}]\` :wave: **${i.user.tag}** (*${i.user.id}*) has performed gateway action: \`approve\` \n \`Affected User\`: **${message.author.tag}** (*${message.author.id}*)`})
                     } catch (e) {
                         await del.delete();
-                        return verifyChat.send(`Failed - Closed with reason \`member left\`.`).then(m => setTimeout(() => m.delete(), 5000));
+                        return verifyChat.send(`Failed - Closed with reason \`member left\`.`)
+                            .then(m => setTimeout(() => m.delete(), 5000));
                     }
                 }
 
@@ -165,17 +174,22 @@ module.exports = {
                         await message.member.roles.add(restrictRole.id);
                         await (message.member.roles.add(memberRole));
                         await genChat.send({content: `${responses[Math.round(Math.random() * (responses.length - 1))]} ${message.author}!`});
-                        await verifyChat.send(`Approved user with parameters \`restrict\`.`).then(m => setTimeout(() => m.delete(), 5000));
+                        await verifyChat.send(`Approved user with parameters \`restrict\`.`)
+                            .then(m => setTimeout(() => m.delete(), 5000));
                         await i.message.edit({content: `Success`, components: []});
                         try {
-                            await message.member.send({content: `Welcome to the server! You have been verified as **Server Restricted**, which is an automatic anti-raid flag. All you have to do to get this removed is to chat in the server for at least 20 minutes, then send a DM to the ModMail bot requesting removal! \nThank you for joining FoxedIn.`});
+                            await message.member.send({content:
+                                    `Welcome to the server! You have been verified as **Server Restricted**, which is an automatic anti-raid flag.
+                                     All you have to do to get this removed is to chat in the server for at least 20 minutes,
+                                      then send a DM to the ModMail bot requesting removal! \nThank you for joining FoxedIn.`});
                         } catch (e) {}
                         await buttonCollector.stop();
                         await del.delete();
                         return verifyChat.send({content: `\`[${utils.epochToHour(Date.now())}]\` :lock: **${i.user.tag}** (*${i.user.id}*) has performed gateway action: \`restrict and approve\` \n \`Affected User\`: **${message.author.tag}** (*${message.author.id}*)`})
                     } catch (e) {
                         await del.delete();
-                        return verifyChat.send(`Failed - Closed with reason \`member left\`.`).then(m => setTimeout(() => m.delete(), 5000));
+                        return verifyChat.send(`Failed - Closed with reason \`member left\`.`)
+                            .then(m => setTimeout(() => m.delete(), 5000));
                     }
                 }
 
@@ -190,7 +204,8 @@ module.exports = {
                         return verifyChat.send({content: `\`[${utils.epochToHour(Date.now())}]\` :boot: **${i.user.tag}** (*${i.user.id}*) has performed gateway action: \`decline\` \n \`Affected User\`: **${message.author.tag}** (*${message.author.id}*)`})
                     } catch (e) {
                         await del.delete();
-                        return verifyChat.send(`Failed - Closed with reason \`member left\`.`).then(m => setTimeout(() => m.delete(), 5000));
+                        return verifyChat.send(`Failed - Closed with reason \`member left\`.`)
+                            .then(m => setTimeout(() => m.delete(), 5000));
                     }
                 }
 
@@ -200,7 +215,8 @@ module.exports = {
                         await del.delete();
                     } catch (e) {
                     }
-                    await verifyChat.send(`Prompt closed.`).then(m => setTimeout(() => m.delete(), 5000));
+                    await verifyChat.send(`Prompt closed.`)
+                        .then(m => setTimeout(() => m.delete(), 5000));
                     return buttonCollector.stop();
                 }
             });
