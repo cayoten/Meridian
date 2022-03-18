@@ -15,12 +15,8 @@
     "discord-paginationembed": "github:gazmull/discord-paginationembed",
     "discord.js": "^13.6.0",
     "dotenv": "^8.2.0",
-    "fs": "0.0.1-security",
     "ms": "^2.1.2",
-    "snekfetch": "^4.0.4",
-    "stream-buffers": "^3.0.2",
-    "tweetnacl": "^1.0.3",
-    "ws": "^7.4.4"
+    "stream-buffers": "^3.0.2"
   },
   "devDependencies": {
     "ascii-table": "0.0.9"
