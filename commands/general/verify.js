@@ -98,7 +98,7 @@ module.exports = {
                     .setStyle('DANGER'),
                 new Discord.MessageButton()
                     .setCustomId('left')
-                    .setLabel('Cancel')
+                    .setLabel('Close')
                     .setStyle('SECONDARY'),
             );
 
