@@ -25,6 +25,10 @@ module.exports = async function (message) {
         if (count[i] >= 10) flagged = true;
     });
     if (flagged) {
+        try {   
+            await message.author.send({content: `Your message has been flagged for spam:\n**"** ${message.content} **"**`});
+        } catch (e) {
+        }
         if (flaggedUsers.has(message.author.id)) {
             let flaggedAt = flaggedUsers.get(message.author.id);
             if ((forgetAfter * 1000) > Date.now() - flaggedAt) {
