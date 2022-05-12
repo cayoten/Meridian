@@ -26,7 +26,7 @@ module.exports = async function (message) {
     });
     if (flagged) {
         try {   
-            await message.author.send({content: `Your message has been flagged for spam:\n**"** ${message.content} **"**`});
+            await message.author.send({content: `Your message has been flagged for spam:\n** " ${message.content} "**`});
         } catch (e) {
         }
         if (flaggedUsers.has(message.author.id)) {
